@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 import { fileURLToPath, URL } from 'url';
+import dts from 'vite-plugin-dts'
 
 export default defineConfig({
     server:{
@@ -12,6 +13,9 @@ export default defineConfig({
     },
     plugins: [
         vue(),
+        dts({
+            tsConfigFilePath: 'tsconfig.build.json',
+        }),
         laravel({
             //input: 'resources/js/app.ts',
             input: ["resources/css/app.css", "resources/js/app.js"],
