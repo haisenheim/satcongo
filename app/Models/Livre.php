@@ -9,6 +9,7 @@ class Livre extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    //
 
     public function domaine(){
         return $this->belongsTo('App\Models\Domaine');
