@@ -85,11 +85,20 @@
             async login(){
                  axios.post('/api/auth/login',this.user)
                 .then((res)=>{
-                    console.log(res.data)
+                    //console.log(res.data)
                     this.$store.commit('SET_AUTHENTICATION',res.data);
-                    this.checkData();
+                   // this.checkData();
                     this.$emit('log');
-                    this.$router.push({path:'/dashboard'});
+                    let role_id = res.data.user.role_id;
+                    console.log(role_id);
+                    if(role_id == 1){
+                        this.$router.push({path:'/dashboard'});
+                    }
+
+                    if(role_id == 2){
+                        this.$router.push({path:'/prof/dashboard'});
+                    }
+
                 })
                 .catch((err)=>{
                     console.log(err);

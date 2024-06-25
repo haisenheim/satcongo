@@ -2,7 +2,8 @@
     <!-- Link with submenu -->
 <li @click="toggle()"  class="nav-item">
 
-<router-link @click="setActive()" :title="title" data-toggle="tooltip" :data-bs-original-title="title" data-bs-placement="right" :to="{path:path}"  :class="collapsed?'collapsed':'',active" class="mininav-toggle nav-link"><i :class="icon" class="fs-2 me-2"></i>
+<router-link data-bs-toggle="popover" data-bs-trigger="hover"
+ @click="setActive()" :title="title" :data-bs-original-title="title" data-bs-placement="right" :to="{path:path}"  :class="collapsed?'collapsed':'',active" class="mininav-toggle nav-link"><i :class="icon" class="fs-2 me-2"></i>
     <span class="nav-label ms-1"><slot></slot></span>
 </router-link>
 
@@ -26,6 +27,12 @@
             return{
                 collapsed:true,
             }
+        },
+        mounted(){
+            let popoverTriggerEl = document.querySelectorAll(
+                '[data-bs-toggle="popover"]')[0];
+                //console.log(popoverTriggerEl);
+                //new bootstrap.Popover(popoverTriggerEl)
         },
         computed:{
             isActive(){

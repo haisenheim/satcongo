@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EtudiantResource;
@@ -29,7 +29,7 @@ class TuteurController extends Controller
         $etudiants = Etudiant::where('tuteur_id',$tuteur->id)->get();
         return response()->json(
             [
-                'tuteur'=>new TuteurResource($tuteur),
+                'tuteur'=>$tuteur,
                 'etudiants'=>EtudiantResource::collection($etudiants)
             ]
         );

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Teacher;
 
 use App\Http\Controllers\ExtendedController;
 use App\Http\Resources\CoursResource;
@@ -38,22 +38,21 @@ class EvaluationController extends ExtendedController
     }
 
     public function getExams(){
-        $evaluations = EvaluationResource::collection(Evaluation::orderBy('created_at','DESC')->get());
-        $mois = Mois::all();
-        $filieres = Filiere::all();
-        $types = EvaluationType::all();
-        $periodes = EvaluationPeriodicite::all();
-        $examens = ExamenResource::collection(Examen::orderBy('created_at','DESC')->get());
-        $cours = CoursResource::collection(Cours::all());
-        return response()->json([
-           'evaluations'=>$evaluations,
-           'examens'=>$examens,
-           'mois'=>$mois,
-           'types'=>$types,
-           'periodes'=>$periodes,
-           'cours'=>$cours,
-           'filieres'=>$filieres,
-        ]);
+        //$evaluations = EvaluationResource::collection(Evaluation::orderBy('created_at','DESC')->get());
+        //$mois = Mois::all();
+       // $filieres = Filiere::all();
+       // $types = EvaluationType::all();
+       // $periodes = EvaluationPeriodicite::all();
+       $emplois = Emploi::where('enseignant_id',auth()->user()->enseignant_id)->get();
+       //dd($emplois);
+       $cours_ids = $emplois->pluck('cours_id');
+       //dd($cours_ids);
+       $items = Examen::orderBy('created_at','DESC')
+                    ->where('annee_id',$this->getAnneeId())
+                    ->whereIn('cours_id',$cours_ids)
+                    ->get();
+        $examens = ExamenResource::collection($items);
+        return response()->json($examens);
     }
 
     public function getExam($token){

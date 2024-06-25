@@ -1,18 +1,34 @@
 <template>
     <Display>
-        <template v-slot:breadcrumb>
-          <BreadCrumb :link_1="{name:'ENSEIGNANTS',path:'/enseignants'}" :link_2="'LISTE DES ENSEIGNANTS'"></BreadCrumb>
-        </template>
         <template v-slot:page-header>
-            <PageHeader :p="description" :h1="'BASE DE DONNEES DES ENSEIGNANTS'" ></PageHeader>
-        </template>
-        <template v-slot:actions>
-            <li><router-link class="dropdown-item" to="/enseignants/create"><i class="demo-pli-add me-1 fs-5"></i> NOUVEL ENSEIGNANT</router-link></li>
+            <PageHeader :p="description" :h1="'BASE DE DONNEES DES ETUDIANTS'" ></PageHeader>
         </template>
         <template v-slot:content>
             <div class="">
                 <div class="">
-                    <div class="card" style="min-width: 400px;">
+                    <div>
+                        <div class="mb-2">
+                            <input @input="search" type="text" style="max-width: 400px;" class="form-control bg-light p-2 border-white" placeholder="Rechercher ...">
+                        </div>
+                        <div class="d-flex gap-2 flex-wrap justify-content-center">
+                            <div class="card etudiant" v-for="item in filtered" :key="item.id">
+                                <div class="card-header bg-primary">
+                                    <h6><router-link class="text-white" :to="{name:'etudiants_show',params:{tkn:item.token}}" >{{ item.name }}</router-link></h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <div><img :src="item.photo!=null?item.photo:avatar" class="img-circle img-rounded rounded-circle" alt="" style="width: 50px;"></div>
+                                    <div><strong>{{ item.matricule }}</strong></div>
+                                    <div>{{ item.classe }}</div>
+                                </div>
+                                <div class="card-footer bg-primary">
+                                    <div><i class="pli-user text-white"></i> <strong><router-link class="text-white" :to="{name:'tuteurs_show',params:{tkn:item.tuteur!=null?item.tuteur.token:'hdjshs'}}" >{{ item.tuteur?item.tuteur.name:'-' }}</router-link></strong></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card" style="min-width: 400px;">
                         <div class="card-body">
                             <ag-grid-vue
                             :rowData="rowData"
@@ -31,9 +47,6 @@
                             </ag-grid-vue>
                         </div>
                     </div>
-
-
-                </div>
             </div>
         </template>
     </Display>
@@ -43,16 +56,14 @@
 <script>
 import Photo from '@/Components/AgGrid/Photo.vue';
 import avatar from '~/img/avatar.png';
-import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
-import "ag-grid-community/styles/ag-theme-balham.css"; // Optional Theme applied to the grid
 export default {
-    name:"SuperEnseignantIndex",
+    name:"SuperEtudiantIndex",
     components:{
         Photo,
     },
     computed:{
         rowData(){
-            return this.enseignants.map(function(item){
+            return this.etudiants.map(function(item){
                 return {
                     id:item.id,
                     nom:item.last_name,
@@ -62,8 +73,10 @@ export default {
                     photo:item.photo,
                     adresse:item.address,
                     telephone:item.phone,
-                    diplome:item.diplome,
+                    classe:item.classe,
+                    matricule:item.matricule,
                     email:item.email,
+                    tuteur:item.tuteur?item.tuteur.name:'-',
                     token:item.token,
                 }
             })
@@ -72,11 +85,11 @@ export default {
     data(){
         return {
             user:this.$store.state.user,
-            description:'BASE DE TOUS LES ENSEIGNANTS',
-            enseignants:[],
+            description:'CATALOGUE DE TOUS LES ETUDIANTS',
+            etudiants:[],
             filtered:[],
+            avatar: avatar,
             gridApi: null,
-
             defaultColDef: {
                 flex: 3,
                 filter:true,
@@ -93,14 +106,14 @@ export default {
                     cellClass: "logoCell",
                     minWidth: 100,
                 },
+                {field:'matricule',flex:2},
                 {field:'nom',},
                 {field:'prenom'},
                 {field:'telephone'},
-                {field:'email',flex:5},
-                {field:'adresse'},
+                {field:'tuteur'},
                 {field:'age',flex:2},
                 {field:'nationalite',flex:2},
-                {field:'diplome',headerName:'Niveau'}
+                {field:'classe',headerName:'Classe'}
 
             ],
             paginationPageSize:20,
@@ -114,23 +127,44 @@ export default {
             this.emitter.emit('ready', {'gridApi':ga});
         },
         onRowSelected(event) {
-            console.log(event);
+            //console.log(event);
             const rows = this.gridApi.getSelectedRows();
             let  token = rows[0].token;
-            //this.$router.push(`/enseignants/show/${token}`)
+            this.$router.push(`/etudiants/show/${token}`)
+        },
+        search(event){
+            {
+                setTimeout(() => {
+                    if (!event.target.value.trim().length) {
+                        this.filtered = [...this.etudiants];
+                    } else {
+                        this.filtered = this.etudiants.filter((item) => {
+                            return item.last_name.toLowerCase().startsWith(event.target.value.toLowerCase())
+                            || item.first_name.toLowerCase().startsWith(event.target.value.toLowerCase())
+                            || item.matricule.toLowerCase().startsWith(event.target.value.toLowerCase())
+
+                        });
+                    }
+                }, 250);
+            }
         },
       async load(){
             //await this.$store.dispatch('ecoleCreate')
-            await this.api.get('/api/enseignants')
+            let loader = this.$loading.show({
+                    container: this.fullPage ? null : this.$refs.formContainer,
+                    canCancel: false,
+                });
+            await this.api.get('/api/etudiants')
             .then((res)=>{
                 console.log(res.data);
-                this.enseignants = res.data;
+                this.etudiants = res.data;
                 this.filtered = res.data;
             })
             .catch((err)=>{
                 console.log(err);
             })
             .finally(()=>{
+                loader.hide();
                 //this.$router.push({path:'/login'});
             })
 
@@ -147,7 +181,7 @@ export default {
     td{
         vertical-align:middle
     }
-    .enseignant{
+    .etudiant{
         min-width: 200px;
     }
 </style>

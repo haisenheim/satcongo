@@ -22,6 +22,7 @@ import AutoComplete from 'primevue/autocomplete';
 import Dialog from 'primevue/dialog';
 import { Bar,Pie } from 'vue-chartjs';
 import { AgGridVue } from "ag-grid-vue3";
+import Image from 'primevue/image';
 
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
@@ -94,6 +95,7 @@ store.dispatch("attempt").then(() => {
         .component('Pie',Pie)
         .component('AutoComplete',AutoComplete)
         .component('Dialog',Dialog)
+        .component('Image',Image)
         .component('AgGridVue',AgGridVue)
      app.config.globalProperties.editorConfig = editorConfig
      app.config.globalProperties.api = apiClient;

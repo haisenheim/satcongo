@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\ExtendedController;
-use App\Http\Resources\EcolageResource;
 use App\Http\Resources\EmploiResource;
 use App\Http\Resources\EnseignantResource;
 use App\Http\Resources\InscriptionResource;

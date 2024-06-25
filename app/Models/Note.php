@@ -27,6 +27,10 @@ class Note extends Model
         return $this->belongsTo('App\Models\Examen','examen_id');
     }
 
+    public function cours(){
+        return $this->belongsTo('App\Models\Cours','cours_id');
+    }
+
     public function mois(){
         return $this->belongsTo('App\Models\Mois','mois_id');
     }

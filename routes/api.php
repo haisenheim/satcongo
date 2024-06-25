@@ -46,7 +46,7 @@ Route::get('test',function(){
         ->select('etudiants.first_name','etudiants.last_name','etudiants.matricule','inscriptions.niveau_id','filieres.code')
         ->get();
 
-    return response()->json($users);    
+    return response()->json($users);
 
 });
 
@@ -68,8 +68,33 @@ Route::get('/normal',function(){
 });
 
 Route::group([
+    'namespace'=>'App\Http\Controllers\Api\Student',
+    'prefix'=>'student'
+],function(){
+    Route::get('home','MainController@index');
+});
+
+Route::group([
     'middleware'=>'auth:api',
-    'namespace'=>'App\Http\Controllers\Api'
+    'namespace'=>'App\Http\Controllers\Api\Teacher',
+    'prefix'=>'prof'
+],function(){
+    Route::get('dashboard','DashboardController@index');
+    Route::resource('emplois','EmploiController');
+    Route::post('emploi/pointage','EmploiController@setPointage');
+    Route::get('honoraires','EmploiController@getHonoraires');
+    Route::get('honoraires/{mois_id}','EmploiController@getHistorique');
+    Route::resource('evaluations','EvaluationController');
+    Route::get('examens','EvaluationController@getExams');
+    Route::post('examen/notes','EvaluationController@storeNotes');
+    Route::get('examen/{token}','EvaluationController@getExam');
+    Route::post('examens','EvaluationController@storeExams');
+    Route::get('notes','EvaluationController@getNotes');
+});
+
+Route::group([
+    'middleware'=>'auth:api',
+    'namespace'=>'App\Http\Controllers\Api\Admin'
 ],function(){
     Route::resource('matieres','MatiereController');
     Route::resource('filieres','FiliereController');

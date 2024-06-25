@@ -22,11 +22,44 @@ import examens from './routes/examens';
 import Login from '@/Components/Central/Auth/Login.vue';
 
 import SuperDashboard from '@/Components/Central/Super/Dashboard.vue'
+import TeacherDashboard from '@/Components/Teacher/Dashboard.vue'
 import Report from '@/Components/Exports/Report.vue';
 import ReportStudent from '@/Components/Pages/Reports/Student.vue';
 import ReportMonth from '@/Components/Pages/Reports/Month.vue';
 import ReportFiliere from '@/Components/Pages/Reports/Student.vue';
 import ReportTeacher from '@/Components/Pages/Reports/Teacher.vue';
+
+const dashboards = [
+    {
+        'role_id':1,
+        'component':SuperDashboard
+    },
+    {
+        'role_id':2,
+        'component':TeacherDashboard
+    },
+];
+
+function getDashboard(role_id){
+    console.log(role_id);
+    let item = dashboards.filter((i)=>{
+        return i.role_id == role_id;
+    })[0];
+    console.log(item);
+    console.log(store.state.authenticated);
+    return item!=undefined?item.component:null;
+}
+
+function getDash(){
+    let role_id = store.state.user.role_id;
+    if(role_id == 1){
+        return SuperDashboard;
+    }
+    if(role_id == 2){
+        return TeacherDashboard;
+    }
+}
+
 const routes = [
     {
         name: "login",
@@ -70,10 +103,21 @@ const routes = [
     {
         name: "dashboard",
         path: '/dashboard',
-        component: SuperDashboard,
+        component:SuperDashboard,
         meta: {
             title: `Admin Dashboard`,
-            middleware: "auth"
+            middleware: "auth",
+            guard:'admin'
+        }
+    },
+    {
+        name: "prof_dashboard",
+        path: '/prof/dashboard',
+        component:TeacherDashboard,
+        meta: {
+            title: `Teableau de bord`,
+            middleware: "auth",
+            guard:'prof'
         }
     },
 
@@ -144,7 +188,7 @@ router.beforeEach(async(to, from, next) =>{
         if(store.state.user==null){
             next();
         }else{
-            next({name:"super_dashboard"})
+            next({name:"dashboard"})
         }
     }
     if(to.meta.middleware == "auth"){

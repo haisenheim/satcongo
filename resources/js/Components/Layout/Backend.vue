@@ -2,7 +2,7 @@
     <div>
     <!-- PAGE CONTAINER -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-     <div @click="hideSb()" id="root" :class="!max?'mn--max':'mn--min'" class="root hd--expanded">
+     <div @click="hideSb()" id="root" class="root mn--min hd--expanded">
         <!-- CONTENTS -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <section id="content" class="content">
@@ -55,7 +55,7 @@
                     <div class="header__content-start">
 
                         <!-- Navigation Toggler -->
-                        <button @click="toggle()" type="button" class="nav-toggler header__btn btn btn-icon btn-sm" aria-label="Nav Toggler">
+                        <button type="button" class="nav-toggler header__btn btn btn-icon btn-sm" aria-label="Nav Toggler">
                             <i class="demo-psi-view-list"></i>
                         </button>
 
@@ -288,7 +288,8 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <nav id="mainnav-container" class="mainnav">
             <div class="mainnav__inner">
-                <SuperNavbar ></SuperNavbar>
+                <SuperNavbar v-if="roleId==1"></SuperNavbar>
+                <TeacherNavbar v-if="roleId==2"></TeacherNavbar>
                 <!-- Bottom navigation menu -->
                 <div class="mainnav__bottom-content border-top pb-2">
                     <ul id="mainnav" class="mainnav__menu nav flex-column">
@@ -323,11 +324,13 @@
 </template>
 <script>
     import SuperNavbar from '@/Components/Navbar/Super.vue';
+    import TeacherNavbar from '@/Components/Navbar/Teacher.vue';
     import logo from '~/img/logo.jpg';
     export default{
         name:'BackendLayoutVue',
         components:{
             SuperNavbar,
+            TeacherNavbar,
         },
         computed:{
             isAuthenticated(){
@@ -335,13 +338,15 @@
             },
             username(){
                 return this.$store.state.user.name;
+            },
+            roleId(){
+                return this.$store.state.user.role_id;
             }
         },
         data: function(){
             return {
                 authenticated:false,
                 logo:logo,
-                max:true,
                 sb:false,
                 search:false,
                 gridApi:null,
@@ -379,6 +384,11 @@
                 this.max=!this.max;
                 this.$store.commit('SET_NAVBAR_MIN',!this.max);
             },
+
+            showSb(){
+                document.getElementById('root').classList.add('sb--show')
+            },
+
             hideSb(){
                 document.getElementById('root').classList.remove('sb--show')
             },
