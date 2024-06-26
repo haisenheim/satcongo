@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Models\Absence;
 use App\Models\Pointage;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('home',function(){
+    $users = User::all();
+    dd($users);
     return response()->json('ok oooooh');
 });
 
