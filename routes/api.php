@@ -51,7 +51,6 @@ Route::get('test',function(){
 });
 
 Route::get('/normal',function(){
-    //return "Hello";
     $absences = Absence::all();
     foreach($absences as $absence){
         $absence->matiere_id = $absence->pointage->matiere_id;
