@@ -22,6 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('home',function(){
+    return response()->json('ok oooooh');
+});
+
 
 Route::group([
     'middleware' => 'api',
