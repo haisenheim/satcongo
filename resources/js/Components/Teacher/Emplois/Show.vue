@@ -133,7 +133,7 @@ export default {
     },
     data(){
         return {
-            ,
+
             avatar: avatar,
             dt:null,
             pv:null,

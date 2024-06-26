@@ -151,7 +151,7 @@ export default {
     },
     data(){
         return {
-            ,
+
             toaster: createToaster({ position:'top-right'}),
             visible:false,
             avatar: avatar,

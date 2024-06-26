@@ -29,7 +29,7 @@ export default {
     },
     data(){
         return {
-            ,
+
             inscription:{},
             toaster: createToaster({ position:'top-right'}),
             componentKey: 0,

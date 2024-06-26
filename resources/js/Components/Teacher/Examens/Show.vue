@@ -103,7 +103,7 @@ export default {
     },
     data(){
         return {
-            ,
+
             description:'Lites des notes de l\'evaluation',
             examen:null,
             notes:[],
