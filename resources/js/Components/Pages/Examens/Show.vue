@@ -103,7 +103,7 @@ export default {
     },
     data(){
         return {
-            user:this.$store.state.auth.user,
+            //,
             description:'Lites des notes de l\'evaluation',
             examen:null,
             notes:[],

@@ -151,7 +151,7 @@ export default {
     },
     data(){
         return {
-            user:this.$store.state.auth.user,
+            ,
             toaster: createToaster({ position:'top-right'}),
             visible:false,
             avatar: avatar,

@@ -37,7 +37,7 @@ export default {
     },
     data(){
         return {
-            user:this.$store.state.auth.user,
+            ,
             dossier:{
                 type:{},
             },
@@ -50,7 +50,7 @@ export default {
             this.reload();
             document.getElementById('closepb').click();
         },
-        
+
         async load(){
             let loader = this.$loading.show({
                     container: this.fullPage ? null : this.$refs.formContainer,
@@ -74,7 +74,7 @@ export default {
     },
     mounted(){
         this.load().then(()=>console.log(this.dossier))
-        
+
     }
 
 }
@@ -95,7 +95,7 @@ export default {
     }
     a {
         color: #3d9970;
-        
+
     }
     .infos p{
         margin-bottom: 2px;

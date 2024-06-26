@@ -133,7 +133,7 @@ export default {
     },
     data(){
         return {
-            user:this.$store.state.auth.user,
+            ,
             avatar: avatar,
             dt:null,
             pv:null,
