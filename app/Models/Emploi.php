@@ -24,6 +24,10 @@ class Emploi extends Model
         return $this->belongsTo('App\Models\Enseignant');
     }
 
+    public function fiches(){
+        return $this->hasMany('App\Models\Fiche');
+    }
+
     public function cours(){
         return $this->belongsTo('App\Models\Cours','cours_id');
     }

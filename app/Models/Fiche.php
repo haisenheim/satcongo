@@ -19,7 +19,7 @@ class Fiche extends Model
     }
 
     public function inscription(){
-        return $this->belongsTo('App\Models\inscription');
+        return $this->belongsTo('App\Models\Inscription');
     }
 
     public function items(){

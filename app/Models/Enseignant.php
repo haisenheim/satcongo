@@ -32,6 +32,10 @@ class Enseignant extends Model
 		return $this->last_name." ".$this->first_name;
 	}
 
+    public function fiches(){
+        return $this->hasMany('App\Models\Fiche');
+    }
+
     public function getPhotoAttribute(){
 		if($this->image_uri){
 			return request()->getSchemeAndHttpHost().'/img/'.$this->image_uri;

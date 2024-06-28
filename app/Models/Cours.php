@@ -19,4 +19,8 @@ class Cours extends Model
     public function filiere(){
         return $this->belongsTo('App\Models\Filiere', 'filiere_id');
     }
+
+    public function fiches(){
+        return $this->hasMany('App\Models\Fiche','cours_id');
+    }
 }

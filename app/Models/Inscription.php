@@ -30,6 +30,10 @@ class Inscription extends Model
         return $this->hasMany('App\Models\Ecolage');
     }
 
+    public function fiches(){
+        return $this->hasMany('App\Models\Fiche');
+    }
+
     public function absences(){
         return $this->hasMany('App\Models\Absence');
     }
