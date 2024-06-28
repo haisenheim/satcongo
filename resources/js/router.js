@@ -17,6 +17,7 @@ import tarifs from './routes/tarifs';
 import ecolages from './routes/ecolages';
 import evaluations from './routes/evaluations';
 import examens from './routes/examens';
+import criteres from './routes/criteres'
 
 /* Guest Component */
 import Login from '@/Components/Central/Auth/Login.vue';
@@ -40,25 +41,8 @@ const dashboards = [
     },
 ];
 
-function getDashboard(role_id){
-    console.log(role_id);
-    let item = dashboards.filter((i)=>{
-        return i.role_id == role_id;
-    })[0];
-    console.log(item);
-    console.log(store.state.authenticated);
-    return item!=undefined?item.component:null;
-}
 
-function getDash(){
-    let role_id = store.state.user.role_id;
-    if(role_id == 1){
-        return SuperDashboard;
-    }
-    if(role_id == 2){
-        return TeacherDashboard;
-    }
-}
+
 
 const routes = [
     {
@@ -98,6 +82,7 @@ const routes = [
     ...ecolages,
     ...evaluations,
     ...examens,
+    ...criteres,
 
     //Routes du super Administrateur
     {

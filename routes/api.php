@@ -78,6 +78,8 @@ Route::group([
     'prefix'=>'student'
 ],function(){
     Route::get('home','MainController@index');
+    Route::get('fiche','MainController@getFiche');
+    Route::post('fiche','MainController@saveFiche');
 });
 
 Route::group([
@@ -104,6 +106,7 @@ Route::group([
 ],function(){
     Route::resource('matieres','MatiereController');
     Route::resource('filieres','FiliereController');
+    Route::resource('criteres','CritereController');
     Route::resource('salles','SalleController');
     Route::resource('laboratoires','LaboratoireController');
     Route::resource('inscriptions','InscriptionController');

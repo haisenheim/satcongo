@@ -223,6 +223,10 @@
                                 path:'/evaluations'
                             },
                             {
+                                label:'Criteres d\'evaluation',
+                                path:'/criteres'
+                            },
+                            {
                                 label:'Annees academiques',
                                 path:'/annees'
                             },

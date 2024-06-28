@@ -7,14 +7,18 @@ use App\Http\Resources\AbsenceResource;
 use App\Http\Resources\CoursResource;
 use App\Http\Resources\EcolageResource;
 use App\Http\Resources\EmploiResource;
+use App\Http\Resources\FicheResource;
 use App\Http\Resources\InscriptionResource;
 use App\Http\Resources\LivreResource;
 use App\Http\Resources\NoteResource;
 use App\Models\Absence;
 use App\Models\Cours;
+use App\Models\Critere;
 use App\Models\Ecolage;
 use App\Models\Emploi;
 use App\Models\Etudiant;
+use App\Models\Fiche;
+use App\Models\FicheItem;
 use App\Models\Inscription;
 use App\Models\Livre;
 use App\Models\Note;
@@ -64,6 +68,49 @@ class MainController extends ExtendedController
             ]);
         }else{
             return response()->json('Access non autorise!',401);
+        }
+    }
+
+    public function getFiche(){
+        $inscription_id = request()->inscription_id;
+        $emploi_id = request()->emploi_id;
+        $fiche = Fiche::where('inscription_id',$inscription_id)->where('emploi_id',$emploi_id)->first();
+        if(!$fiche){
+            $inscription = Inscription::find($inscription_id);
+            $emploi = Emploi::find($emploi_id);
+            $criteres = Critere::where('active',1)->get();
+            $fiche = new Fiche();
+            $fiche->inscription_id = $inscription_id;
+            $fiche->emploi_id = $emploi_id;
+            $fiche->cours_id = $emploi->cours_id;
+            $fiche->filiere_id = $emploi->filiere_id;
+            $fiche->etudiant_id = $inscription->etudiant_id;
+            $fiche->matiere_id = $emploi->matiere_id;
+            $fiche->enseignant_id = $emploi->enseignant_id;
+            $fiche->semestre = $emploi->semestre;
+            $fiche->niveau_id = $inscription->niveau_id;
+            $fiche->annee_id = $inscription->annee_id;
+            $fiche->token = sha1(time().rand(1,9999));
+            $fiche->name = $emploi_id.$inscription->etudiant->matricule.$inscription_id;
+            //dd($fiche);
+            $fiche->save();
+            foreach($criteres as $critere){
+                FicheItem::create([
+                    'fiche_id'=>$fiche->id,
+                    'critere_id'=>$critere->id,
+                    'coef'=>$critere->coef,
+                ]);
+            }
+        }
+
+        return response()->json(new FicheResource($fiche));
+
+    }
+
+    public function saveFiche(){
+        $items = request()->all();
+        foreach($items as $item){
+            $fi = FicheItem::find($item['id']);
         }
     }
 }
