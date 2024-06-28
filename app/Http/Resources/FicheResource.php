@@ -17,6 +17,7 @@ class FicheResource extends JsonResource
     {
         return [
             'id'=>$this->id,
+            'name'=>$this->name,
             'items'=>FicheItemResource::collection($this->items),
             'emploi'=>new EmploiResource($this->emploi),
             'inscription'=>new InscriptionResource($this->inscription),
