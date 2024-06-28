@@ -18,10 +18,10 @@ class FicheItemResource extends JsonResource
         return [
             'id'=>$this->id,
             'critere'=>$this->critere,
-            'vdiscontented'=>$this->discontented,
-            'discontented'=>$this->discontented,
-            'happy'=>$this->happy,
-            'vhappy'=>$this->vhappy,
+            'vdiscontented'=>$this->discontented?true:false,
+            'discontented'=>$this->discontented?true:false,
+            'happy'=>$this->happy?true:false,
+            'vhappy'=>$this->vhappy?true:false,
             'active'=>$this->active,
         ];
     }
