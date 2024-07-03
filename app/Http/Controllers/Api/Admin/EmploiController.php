@@ -6,6 +6,7 @@ use App\Http\Controllers\ExtendedController;
 use App\Http\Resources\CoursResource;
 use App\Http\Resources\EmploiResource;
 use App\Http\Resources\EnseignantResource;
+use App\Http\Resources\FicheInscriptionResource;
 use App\Http\Resources\InscriptionResource;
 use App\Http\Resources\PointageResource;
 use App\Models\Absence;
@@ -126,10 +127,13 @@ class EmploiController extends ExtendedController
         $emploi = new EmploiResource($emploi);
         $inscriptions = Inscription::where('filiere_id',$emploi->filiere_id)->where('niveau_id',$emploi->niveau_id)->get();
         $pointages = Pointage::where('emploi_id',$emploi->id)->get();
+        $fiches = FicheInscriptionResource::collection($emploi->fiches);
+
         return response()->json([
             'emploi'=>$emploi,
             'pointages'=>PointageResource::collection($pointages),
             'inscriptions'=>InscriptionResource::collection($inscriptions),
+            'fiches'=>$fiches,
         ]);
     }
 }

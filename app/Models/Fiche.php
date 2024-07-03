@@ -50,4 +50,21 @@ class Fiche extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function getAnswerCodeAttribute(){
+        $items = $this->items;
+        $codes =[
+            '-2'=>['count'=>0,'avg'=>0,'label'=>'vdiscontented'],
+            '-1'=>['count'=>0,'avg'=>0,'label'=>'discontented'],
+            '0'=>['count'=>0,'avg'=>0,'label'=>'undefined'],
+            '1'=>['count'=>0,'avg'=>0,'label'=>'happy'],
+            '2'=>['count'=>0,'avg'=>0,'label'=>'vhappy']
+        ];
+        $count = $items->count();
+        foreach($items as $item){
+            $codes[$item->answer_code]['count'] +=1;
+            $codes[$item->answer_code]['avg'] =$count?$codes[$item->answer_code]['count']/$count:0;
+        }
+        return $codes;
+    }
+
 }

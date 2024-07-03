@@ -23,6 +23,8 @@ class FicheResource extends JsonResource
             'inscription'=>new InscriptionResource($this->inscription),
             'token'=>$this->token,
             'active'=>$this->active,
+            'status'=>$this->status,
+            'report'=>$this->answer_code,
 
         ];
     }

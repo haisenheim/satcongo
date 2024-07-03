@@ -48,78 +48,93 @@
 
                     </div>
                 </div>
-                <div style="min-width: 500px;" class="card">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="card-title mb-0">Historique des seances</h4>
-                            <button @click="toggle" class="btn btn-primary btn-sm"><i class="pli-check-2"></i> Effectuer un pointage</button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <ag-grid-vue
-                        :rowData="rowData"
-                        :columnDefs="cols"
-                        style="height: 300px"
-                        class="ag-theme-balham"
-                        :rowSelection="'single'"
-                        :defaultColDef="defaultColDef"
-                        @selection-changed="onRowSelected"
-                        @grid-ready="onGridReady"
-                        :pagination="pagination"
-                        :paginationPageSize="paginationPageSize"
-                        :paginationPageSizeSelector="paginationPageSizeSelector"
-                        >
-                        </ag-grid-vue>
-                    </div>
+                <div style="min-width: 500px;">
+
                 </div>
                 <div>
-                    <Dialog v-model:visible="visible" position="topright" modal header="Edit Profile" :style="{ width: '600px' }">
-                        <template #header>
-                            <div class="">
-                               <h4 class="mb-0">Nouveau de pointage</h4>
-                            </div>
-                        </template>
-                        <div>
-                            <table class="table table-sm table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>NOM</th>
-                                        <th>AGE</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in inscriptions" :key="item.id">
-                                        <td>
-                                            <div>
-                                                <Image pt:image:class="img-circle rounded-circle" :src="src(item.etudiant)" alt="Image" width="50" preview />
-                                            </div>
-                                        </td>
-                                        <td><span>{{ item.etudiant.name }}</span></td>
-                                        <td>{{ item.etudiant.age }}ans</td>
-                                        <td><input type="checkbox" v-model="item.present" @change="mark"  id=""></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="d-flex justify-content-between gap-2">
-                                <div>
-                                    <label style="font-size: 13px;" for="">Date de seance</label>
-                                    <input type="date" v-model="dt" class="form-control w-100 p-2" id="">
-                               </div>
-                                <div>
-                                    <textarea class="form-control w-100" id="" v-model="pv" cols="30" placeholder="Quelques notes sur le contenu de la seance ..." rows="5"></textarea>
+                    <div id="modal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="bg-primary p-2 rounded-2">
+                                    <p class="text-center">Veuillez effectuer l'appel des etudiants et cocher tous ceux qui sont presents!</p>
                                 </div>
                             </div>
+                            <div class="modal-body">
+                                <div>
+                                    <table class="table table-sm table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>NOM</th>
+                                                <th>AGE</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="item in inscriptions" :key="item.id">
+                                                <td>
+                                                    <div>
+                                                        <Image pt:image:class="img-circle rounded-circle" :src="src(item.etudiant)" alt="Image" width="50" preview />
+                                                    </div>
+                                                </td>
+                                                <td><span>{{ item.etudiant.name }}</span></td>
+                                                <td>{{ item.etudiant.age }}ans</td>
+                                                <td><input type="checkbox" v-model="item.present" @change="mark"  id=""></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="d-flex justify-content-between gap-2">
+                                        <div>
+                                            <label style="font-size: 13px;" for="">Date de seance</label>
+                                            <input type="date" v-model="dt" class="form-control w-100 p-2" id="">
+                                    </div>
+                                        <div>
+                                            <textarea class="form-control w-100" id="" v-model="pv" cols="30" placeholder="Quelques notes sur le contenu de la seance ..." rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button  text class="btn btn-primary btn-sm" @click="submit"><i class="pli-data-yes"></i> Enregsitrer</button>
+                                <button  class="btn btn-danger btn" @click="visible = false">Annuler</button>
+                            </div>
                         </div>
-                        <template #footer>
-                            <button  text class="btn btn-primary btn-sm" @click="submit"><i class="pli-data-yes"></i> Enregsitrer</button>
-                            <button  class="btn btn-danger btn" @click="visible = false">Annuler</button>
-                        </template>
-                    </Dialog>
+                    </div>
+                </div>
                 </div>
             </div>
-
+        </template>
+        <template v-slot:sidebar>
+            <div>
+                <div class="">
+                    <h6 class="text-bg-primary fs-4 text-center">TimeLine des activites</h6>
+                    <hr>
+                </div>
+                <div class="timeline">
+                    <div v-for="p in pointages" :key="p.id" class="tl-entry">
+                        <div class="tl-time">
+                            <div class="tl-date">{{ p.created }}</div>
+                            <div class="tl-time">{{ p.start }}-{{ p.end }}</div>
+                        </div>
+                        <div class="tl-point"></div>
+                        <div class="tl-content card">
+                            <div class="card-body p-2">
+                                <h6 style="font-weight: 900;" class="text-primary fs-5">{{ p.matiere.code }}</h6>
+                                <span class="badge bg-primary">{{ p.filiere.code }}{{ p.niveau_id }}</span>
+                                <span class="badge bg-danger">{{ p.nb}} absent(s)</span>
+                                <hr>
+                                <figure class="m-0">
+                                    <p class="quote fs-6">{{ p.pv }}</p>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template v-slot:actions>
+            <li><a data-bs-toggle="modal" data-bs-target="#modal" class="dropdown-item" href="#"><i class="pli-add"></i> Effectuer un pointage</a></li>
         </template>
     </Display>
 
@@ -151,7 +166,6 @@ export default {
     },
     data(){
         return {
-
             toaster: createToaster({ position:'top-right'}),
             visible:false,
             avatar: avatar,
@@ -170,6 +184,7 @@ export default {
                 floatingFilter:true,
             },
             pointages:[],
+            fiches:[],
             inscriptions:[],
             cols:[
                 { field: "id",filter:false,hide:true },
@@ -185,7 +200,7 @@ export default {
     },
     computed:{
         rowData(){
-            return this.pointages.map(function(item){
+            return this.fiches.map(function(item){
                 return {
                     id:item.id,
                     nb:item.nb,
@@ -265,6 +280,7 @@ export default {
                             this.pointages = res.data.pointages;
                             this.inscriptions = res.data.inscriptions;
                             this.emploi = res.data.emploi;
+                            this.fiches = res.data.fiches;
 
                         })
                         .catch((err)=>console.error(err))
@@ -272,17 +288,15 @@ export default {
         },
     },
     mounted(){
+        this.emitter.emit('sidebar');
         this.load().then(()=>{
             this.inscriptions.map((inscription)=>{
                 inscription.present=false;
                 return inscription;
             })
-
             console.log(this.inscriptions);
         });
-
     }
-
 }
 </script>
 

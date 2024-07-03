@@ -19,4 +19,30 @@ class FicheItem extends Model
     public function fiche(){
         return $this->belongsTo('App\Models\Fiche','fiche_id');
     }
+
+    public function getAnswerCodeAttribute(){
+        $res = 0;
+
+        if($this->vdiscontented){
+            $res = -2;
+        }
+        if($this->discontented){
+            $res = -1;
+        }
+
+        if($this->happy){
+            $res = 1;
+        }
+        if($this->vhappy){
+            $res = 2;
+        }
+        return $res;
+    }
+
+    public function getFilledAttribute(){
+        if($this->answer_code !=0){
+            return true;
+        }
+        return false;
+    }
 }

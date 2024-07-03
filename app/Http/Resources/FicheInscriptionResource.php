@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FicheItemResource extends JsonResource
+class FicheInscriptionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,14 +17,13 @@ class FicheItemResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'critere'=>$this->critere,
-            'vdiscontented'=>$this->discontented?true:false,
-            'discontented'=>$this->discontented?true:false,
-            'happy'=>$this->happy?true:false,
-            'vhappy'=>$this->vhappy?true:false,
-            'code'=>$this->answer_code,
-            'filled'=>$this->filled,
+            'name'=>$this->name,
+            'items'=>FicheItemResource::collection($this->items),
+            'inscription'=>new InscriptionResource($this->inscription),
+            'token'=>$this->token,
             'active'=>$this->active,
+            'status'=>$this->status,
+
         ];
     }
 }
