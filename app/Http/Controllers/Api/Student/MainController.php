@@ -108,9 +108,28 @@ class MainController extends ExtendedController
     }
 
     public function saveFiche(){
-        $items = request()->all();
-        foreach($items as $item){
-            $fi = FicheItem::find($item['id']);
+        $id = request()->id;
+        $answer = request()->answer;
+        $item = FicheItem::find($id);
+        $item->vdiscontented = 0;
+        $item->discontented = 0;
+        $item->happy = 0;
+        $item->vhappy = 0;
+        if($answer == -2){
+            $item->vdiscontented = 1;
         }
+        if($answer == -1){
+            $item->discontented = 1;
+        }
+        if($answer == 1){
+            $item->happy = 1;
+        }
+        if($answer == 2){
+            $item->vhappy = 1;
+        }
+        $item->save();
+        $fiche = Fiche::find($item->fiche_id);
+        return response(new FicheResource($fiche));
+
     }
 }
