@@ -33,7 +33,7 @@
 <script>
     import axios from 'axios';
     import bg from '~/img/cover.jpg';
-    import logo from '~/img/logo.jpg';
+    import logo from '~/img/logo.svg';
     export default{
         name:'LoginVue',
         components:{

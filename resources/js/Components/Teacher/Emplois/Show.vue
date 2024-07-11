@@ -10,47 +10,80 @@
             <PageHeader :p="description" :h1="title" ></PageHeader>
         </template>
         <template v-slot:content>
-            <div class="d-flex gap-3">
-                <div class="card">
-                    <div class="card-body">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex gap-3 justify-content-between">
                         <div>
-                            <div class="bar">
-                                <div class="d-flex justify-content-center gap-3 mb-3 flex-wrap">
-                                    <div class="form-group">
-                                        <label for="">FILIERE</label>
-                                        <input type="text" class="form-control form-control-lg" disabled v-model="emploi.filiere.name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">SEMESTRE</label>
-                                        <input type="text" class="form-control" disabled v-model="emploi.semestre">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">MATIERE</label>
-                                        <input type="text" class="form-control form-control-lg" disabled v-model="emploi.matiere.name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">ENSEIGNANT</label>
-                                        <input type="text" class="form-control form-control-lg" disabled v-model="emploi.enseignant.name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">TAUX HORAIRE</label>
-                                        <input type="text" disabled class="form-control" placeholder="Cout horaire de la prestation" v-model="emploi.pu" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">SALLE</label>
-                                        <input type="text" class="form-control form-control-lg" disabled v-model="emploi.salle.name">
-                                    </div>
-                                </div>
-                                <div class="d-flex gap-3">
-                                    <div class="badge bg-primary p-2">{{ emploi.day }}</div>
-                                    <div class="badge bg-primary p-2">{{ emploi.start }}</div>
-                                    <div  class="badge bg-primary p-2">{{ emploi.end }}</div>
-                                </div>
-                            </div>
+                            <fieldset class="p-1">
+                                <legend class="m-0">Filiere</legend>
+                                <span class="fw-bold">{{ emploi.filiere.name }}</span>
+                            </fieldset>
                         </div>
-
+                        <div>
+                            <fieldset class="p-1">
+                                <legend class="m-0 text-sm">Semestre</legend>
+                                <span class="fw-bold">Smestre {{ emploi.semestre }}</span>
+                            </fieldset>
+                        </div>
+                        <div>
+                            <fieldset class="p-1">
+                                <legend class="m-0 text-sm">Matiere</legend>
+                                <span class="fw-bold">{{ emploi.matiere.name }}</span>
+                            </fieldset>
+                        </div>
+                        <div>
+                            <fieldset class="p-1">
+                                <legend class="m-0 text-sm">Taux horaire</legend>
+                                <span class="fw-bold">{{ emploi.pu }}</span>
+                            </fieldset>
+                        </div>
+                        <div>
+                            <fieldset class="p-1">
+                                <legend class="m-0 text-sm">Salle</legend>
+                                <span class="fw-bold">{{ emploi.salle.name }}</span>
+                            </fieldset>
+                        </div>
+                        <div>
+                            <fieldset class="p-1">
+                                <legend class="m-0 text-sm">Jour</legend>
+                                <span class="fw-bold">{{ emploi.day }}</span>
+                            </fieldset>
+                        </div>
+                        <div>
+                            <fieldset class="p-1">
+                                <legend class="m-0 text-sm">Tranche horaire</legend>
+                                <span class="fw-bold">{{ emploi.start }} - {{ emploi.end }}</span>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <ul class="nav nav-callout mt-2" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#_dm-coTabsBaseHome" type="button" role="tab" aria-controls="home" aria-selected="true">Plan du cours</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#_dm-coTabsBaseProfile" type="button" role="tab" aria-controls="profile" aria-selected="false">Exercices</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#_dm-coTabsBaseContact" type="button" role="tab" aria-controls="contact" aria-selected="false">Supports de cours</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="_dm-coTabsBaseHome" class="tab-pane fade active show" role="tabpanel" aria-labelledby="home-tab">
+                            <h5 class="card-title">Home tab</h5>
+                            <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections.</p>
+                        </div>
+                        <div id="_dm-coTabsBaseProfile" class="tab-pane fade" role="tabpanel" aria-labelledby="profile-tab">
+                            <h5 class="card-title">Profile tab</h5>
+                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                        </div>
+                        <div id="_dm-coTabsBaseContact" class="tab-pane fade" role="tabpanel" aria-labelledby="contact-tab">
+                            <h5 class="card-title">Contact tab</h5>
+                            <p>The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex! Fox nymphs grab quick-jived waltz. Brick quiz whangs jumpy veldt fox.</p>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="">
                 <div id="modal" class="modal fade">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -256,6 +289,13 @@ export default {
 </script>
 
 <style scoped>
+    legend{
+        font-size: 11px;
+    }
+    fieldset{
+        font-size: smaller;
+        color:#25476a;
+    }
     .form-control{
         padding: .2rem 1rem;
         width: 80px;

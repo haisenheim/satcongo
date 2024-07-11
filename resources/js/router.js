@@ -18,10 +18,10 @@ import ecolages from './routes/ecolages';
 import evaluations from './routes/evaluations';
 import examens from './routes/examens';
 import criteres from './routes/criteres'
+import posts from './routes/posts'
 
 /* Guest Component */
 import Login from '@/Components/Central/Auth/Login.vue';
-
 import SuperDashboard from '@/Components/Central/Super/Dashboard.vue'
 import TeacherDashboard from '@/Components/Teacher/Dashboard.vue'
 import Report from '@/Components/Exports/Report.vue';
@@ -83,6 +83,7 @@ const routes = [
     ...evaluations,
     ...examens,
     ...criteres,
+    ...posts,
 
     //Routes du super Administrateur
     {

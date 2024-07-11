@@ -81,9 +81,15 @@
                     path:'/dashboard'
                 },
                 {
+                    title:'PUBLICATIONS',
+                    icon:'pli-megaphone',
+                    sequence:2,
+                    path:'/posts'
+                },
+                {
                     title:'SCOLARITE',
                     icon:'pli-student-hat',
-                    sequence:2,
+                    sequence:3,
                     links:[
                         {
                             label:'Incriptions',
@@ -106,7 +112,7 @@
                 {
                     title:'SUIVI',
                     icon:'pli-spell-check',
-                    sequence:3,
+                    sequence:4,
                     links:[
                         {
                             label:'Emplois de temps',
@@ -129,7 +135,7 @@
                 {
                     title:'EXAMENS',
                     icon:'pli-pen-2',
-                    sequence:4,
+                    sequence:5,
                     links:[
                         {
                             label:'Evaluations',
@@ -144,13 +150,13 @@
                 {
                     title:'Bibliotheque',
                     icon:'pli-books',
-                    sequence:5,
+                    sequence:6,
                     path:'/bibliotheque'
                 },
                 {
                     title:'FINANCES',
                     icon:'pli-coins',
-                    sequence:6,
+                    sequence:7,
                     links:[
                         {
                             label:'PAIEMENTS',
@@ -169,7 +175,7 @@
                 {
                     title:'RAPPORTS',
                     icon:'pli-files',
-                    sequence:7,
+                    sequence:8,
                     links:[
                         {
                             label:'ETUDIANT',
@@ -189,7 +195,7 @@
                     {
                         title:'ECOLE',
                         icon:'pli-university',
-                        sequence:8,
+                        sequence:9,
                         links:[
                             {
                                 label:'Salles de cours',
@@ -212,7 +218,7 @@
                     {
                         title:'PARAMETRES',
                         icon:'pli-gears',
-                        sequence:9,
+                        sequence:10,
                         links:[
                             {
                                 label:'Tarifs',
@@ -232,7 +238,6 @@
                             },
                         ]
                     },
-
                 ],
             }
         },

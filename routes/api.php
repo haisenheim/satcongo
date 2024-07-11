@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Models\Absence;
 use App\Models\Pointage;
 use App\Models\User;
+use App\Services\OneSignalNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
@@ -42,6 +43,25 @@ Route::group([
     Route::post('/ecoles/create',function()use($router){
         return response()->json('ok');
     })->middleware('auth:api')->name('me');
+});
+
+Route::get('/devices',function(){
+   $data = OneSignal::getDevices();
+   return response()->json($data);
+});
+
+Route::get('/onesignal',function(){
+    $data['content'] = [
+        'nom'=>'Essomba',
+        'prenom'=>'Clement'
+    ];
+    $fields['include_external_user_ids'] = ['90239328327837'];
+    $fields['channel_for_external_user_ids'] = "push";
+    //$fields['isAndroid'] = true;
+    $fields['data'] = $data;
+    $message = 'Hello, Hello!';
+    $response = OneSignalNotification::send($fields,$message);
+    return response()->json($response);
 });
 
 Route::get('test',function(){
@@ -115,6 +135,7 @@ Route::group([
     Route::resource('etudiants','EtudiantController');
     Route::resource('livres','LivreController');
     Route::resource('cours','CoursController');
+    Route::resource('posts','PostController');
     Route::resource('enseignants','EnseignantController');
     Route::resource('paiements','PaiementController');
     Route::resource('tranches','TrancheController');

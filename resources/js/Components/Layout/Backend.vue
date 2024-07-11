@@ -37,11 +37,11 @@
 
                         <!-- Brand logo -->
                         <a href="#" class="brand-img stretched-link">
-                            <img :src="logo" alt="Nifty Logo" class="Nifty logo rounded-circle" width="50" height="40">
+                            <img :src="logo" alt="Nifty Logo" style="background-color: #fff;" class="Nifty logo rounded-circle" width="100" height="100">
                         </a>
 
                         <!-- Brand title -->
-                        <div class="brand-title">DGC SCHOOL</div>
+                        <div class="brand-title">SKULSUP</div>
 
                         <!-- You can also use IMG or SVG instead of a text element. -->
 
@@ -325,7 +325,7 @@
 <script>
     import SuperNavbar from '@/Components/Navbar/Super.vue';
     import TeacherNavbar from '@/Components/Navbar/Teacher.vue';
-    import logo from '~/img/logo.jpg';
+    import logo from '~/img/logo.svg';
     export default{
         name:'BackendLayoutVue',
         components:{

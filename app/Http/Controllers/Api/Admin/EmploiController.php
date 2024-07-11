@@ -16,6 +16,8 @@ use App\Models\Enseignant;
 use App\Models\Filiere;
 use App\Models\Inscription;
 use App\Models\Matiere;
+use App\Models\Plan;
+use App\Models\PlanItem;
 use App\Models\Pointage;
 use App\Models\Salle;
 use Carbon\Carbon;
@@ -102,6 +104,30 @@ class EmploiController extends ExtendedController
             $absence = Absence::create($data);
         }
         return response()->json($pointage);
+    }
+
+
+    public function setPlan(){
+        $data = request()->all();
+        $data['token'] = sha1(time());
+        $emploi = Emploi::find($data['emploi_id']);
+        if(!$emploi){
+            return response()->json('Donnees invalides',403);
+        }
+        $data['enseignant_id'] = $emploi->enseignant_id;
+        $data['semestre'] = $emploi->semestre;
+        $data['annee_id'] = $emploi->annee_id;
+        $data['niveau_id'] = $emploi->niveau_id;
+        $data['filiere_id'] = $emploi->filiere_id;
+        $data['cours_id'] = $emploi->cours_id;
+        $data['matiere_id'] = $emploi->matiere_id;
+        $plan = Plan::create($data);
+        return response()->json($plan);
+    }
+
+    public function addPlanItem(){
+        PlanItem::create(request()->all());
+        return response()->json('ok');
     }
 
     public function create(){
