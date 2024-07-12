@@ -11,6 +11,7 @@ use App\Http\Resources\FicheResource;
 use App\Http\Resources\InscriptionResource;
 use App\Http\Resources\LivreResource;
 use App\Http\Resources\NoteResource;
+use App\Http\Resources\PostResource;
 use App\Models\Absence;
 use App\Models\Cours;
 use App\Models\Critere;
@@ -22,6 +23,7 @@ use App\Models\FicheItem;
 use App\Models\Inscription;
 use App\Models\Livre;
 use App\Models\Note;
+use App\Models\Post;
 
 class MainController extends ExtendedController
 {
@@ -29,6 +31,7 @@ class MainController extends ExtendedController
         $matricule = request()->matricule;
         $etudiant = Etudiant::where('matricule',$matricule)->first();
         $inscription = Inscription::where('etudiant_id',$etudiant->id)->where('annee_id',$this->getAnneeId())->first();
+        $posts = Post::orderBy('created_at','DESC')->where('active',1)->get();
         if($inscription){
             $cours = Cours::where('filiere_id',$inscription->filiere_id)
                         ->where('niveau_id',$inscription->niveau_id)
@@ -64,7 +67,8 @@ class MainController extends ExtendedController
                 'emplois'=>EmploiResource::collection($emplois),
                 'cours'=>CoursResource::collection($cours),
                 'livres'=>LivreResource::collection($livres),
-                'ecolages'=>EcolageResource::collection($ecolages)
+                'ecolages'=>EcolageResource::collection($ecolages),
+                'posts'=>PostResource::collection($posts),
             ]);
         }else{
             return response()->json('Access non autorise!',401);
