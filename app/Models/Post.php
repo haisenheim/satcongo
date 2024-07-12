@@ -17,7 +17,7 @@ class Post extends Model
 
     public function getPhotoAttribute(){
 		if($this->image_uri){
-			return request()->getSchemeAndHttpHost().'/'.$this->image_uri;
+			return request()->getSchemeAndHttpHost().'/img/'.$this->image_uri;
 		}else{
 			return null;
 		}
