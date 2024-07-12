@@ -19,7 +19,7 @@ class Post extends Model
 		if($this->image_uri){
 			return request()->getSchemeAndHttpHost().'/img/'.$this->image_uri;
 		}else{
-			return null;
+			return request()->getSchemeAndHttpHost().'/img/placeholder.png';
 		}
 	}
 
