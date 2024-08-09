@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/{vue_capture?}', function () {
     return view('welcome');
-})->middleware('web')->where('vue_capture','(?!api/)([\/\w\.-]*)');
+})->middleware('web')->where('vue_capture','(?!api/)(?!files/)([\/\w\.-]*)');

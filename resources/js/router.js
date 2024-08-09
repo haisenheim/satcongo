@@ -22,6 +22,7 @@ import posts from './routes/posts'
 
 /* Guest Component */
 import Login from '@/Components/Central/Auth/Login.vue';
+import Profile from '@/Components/Central/Auth/Profile.vue';
 import SuperDashboard from '@/Components/Central/Super/Dashboard.vue'
 import TeacherDashboard from '@/Components/Teacher/Dashboard.vue'
 import Report from '@/Components/Exports/Report.vue';
@@ -51,7 +52,17 @@ const routes = [
         component: Login,
         meta: {
             middleware: "guest",
-            title: `Login`
+            title: `Connexion`
+        }
+    },
+
+    {
+        name: "profile",
+        path: "/me",
+        component: Profile,
+        meta: {
+            middleware: "auth",
+            title: `Profil`
         }
     },
 

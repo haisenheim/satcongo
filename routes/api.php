@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Models\Absence;
 use App\Models\Pointage;
 use App\Models\User;
+use App\Models\Tuteur;
 use App\Services\OneSignalNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,39 @@ Route::get('home',function(){
     dd($users);
     return response()->json('ok oooooh');
 });
+
+Route::get('/tuteur/phone/{number}',function($number){
+
+    $number = str_replace(' ','',$number);
+    $tuteur = Tuteur::where('phone',$number)->first();
+    if(!$tuteur){
+        $tuteur = Tuteur::create([
+            'phone'=>$number,
+            'token'=>sha1(time())
+        ]);
+    }
+    return response()->json($tuteur);
+});
+
+Route::post('/tuteur',function(){
+    $phone = request()->phone;
+    $phone = str_replace(' ','',$phone);
+    $tuteur = Tuteur::where('phone',$phone)->first();
+    $tuteur->first_name = request()->first_name;
+    $tuteur->last_name = request()->last_name;
+    $tuteur->email = request()->email;
+    $tuteur->address = request()->address;
+    $tuteur->save();
+    return response()->json($tuteur);
+});
+
+Route::namespace('App\Http\Controllers\Api')
+    ->middleware('api')
+    ->group(function () {
+        Route::post('link','SyncController@setLink');
+        Route::post('notify','SyncControll@notify');
+});
+
 
 
 Route::group([
@@ -110,6 +144,10 @@ Route::group([
     Route::get('dashboard','DashboardController@index');
     Route::resource('emplois','EmploiController');
     Route::post('emploi/pointage','EmploiController@setPointage');
+    Route::post('emploi/chapter','EmploiController@setChapter');
+    Route::get('chapter/inprogress/{id}','EmploiController@setInProgress');
+    Route::get('chapter/complete/{id}','EmploiController@setCompleted');
+    Route::post('emploi/exercice','EmploiController@setExercice');
     Route::get('honoraires','EmploiController@getHonoraires');
     Route::get('honoraires/{mois_id}','EmploiController@getHistorique');
     Route::resource('evaluations','EvaluationController');

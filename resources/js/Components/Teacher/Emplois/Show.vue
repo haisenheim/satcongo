@@ -5,6 +5,8 @@
         </template>
         <template v-slot:actions>
             <li><a data-bs-toggle="modal" data-bs-target="#modal" class="dropdown-item" href="#"><i class="pli-add"></i> Effectuer un pointage</a></li>
+            <li><a data-bs-toggle="modal" data-bs-target="#chapterModal" class="dropdown-item" href="#"><i class="pli-add"></i> Ajouter un chapitre</a></li>
+            <li><a data-bs-toggle="modal" data-bs-target="#exerciceModal" class="dropdown-item" href="#"><i class="pli-add"></i> Ajouter un exercice</a></li>
         </template>
         <template v-slot:page-header>
             <PageHeader :p="description" :h1="title" ></PageHeader>
@@ -12,7 +14,7 @@
         <template v-slot:content>
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex gap-3 justify-content-between">
+                    <div class="d-flex gap-3 justify-content-between mb-3">
                         <div>
                             <fieldset class="p-1">
                                 <legend class="m-0">Filiere</legend>
@@ -56,31 +58,115 @@
                             </fieldset>
                         </div>
                     </div>
-                    <ul class="nav nav-callout mt-2" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#_dm-coTabsBaseHome" type="button" role="tab" aria-controls="home" aria-selected="true">Plan du cours</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#_dm-coTabsBaseProfile" type="button" role="tab" aria-controls="profile" aria-selected="false">Exercices</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#_dm-coTabsBaseContact" type="button" role="tab" aria-controls="contact" aria-selected="false">Supports de cours</button>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div id="_dm-coTabsBaseHome" class="tab-pane fade active show" role="tabpanel" aria-labelledby="home-tab">
-                            <h5 class="card-title">Home tab</h5>
-                            <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections.</p>
-                        </div>
-                        <div id="_dm-coTabsBaseProfile" class="tab-pane fade" role="tabpanel" aria-labelledby="profile-tab">
-                            <h5 class="card-title">Profile tab</h5>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                        </div>
-                        <div id="_dm-coTabsBaseContact" class="tab-pane fade" role="tabpanel" aria-labelledby="contact-tab">
-                            <h5 class="card-title">Contact tab</h5>
-                            <p>The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex! Fox nymphs grab quick-jived waltz. Brick quiz whangs jumpy veldt fox.</p>
-                        </div>
-                    </div>
+
+
+                        <v-tabs
+                        v-model="tab"
+                        bg-color="primary"
+                        >
+                        <v-tab value="one">Plan de cours</v-tab>
+                        <v-tab value="two">Exercices</v-tab>
+                        <v-tab value="three">Supports de cours</v-tab>
+                        </v-tabs>
+
+                        <v-tabs-window v-model="tab">
+                            <v-tabs-window-item value="one">
+                                <div>
+                                    <div class="row g-1 mt-1">
+                                        <div style="border-right: 1px solid #ccc" class="col mb-3 border-right mr-3 pr-3">
+                                            <h4 class="d-flex align-items-center gap-2"><span class="d-inline-block bg-info rounded-circle p-1"></span> A voir</h4>
+                                            <p class="text-info mb-3">Cette colonne specifie l'ensemble des chapitre qui seront abordes dans le cadre de ce cours</p>
+                                            <div class="p-2 bg-light rounded">
+                                                <!-- Upcoming Tasklist -->
+                                                <div v-for="task in upcoming_chapters" :key="task.id" class="card mb-2">
+                                                    <div class="card-body">
+
+                                                        <h5 class="card-title">{{ task.sequence }} - {{ task.name }}</h5>
+
+                                                        <p>{{ task.description }}</p>
+                                                        <div class="mt-4 pt-3 border-top d-flex align-items-center">
+                                                            <div>
+                                                                <button @click="set_inprogress(task.id)" class="btn btn-xs btn-warning">suivant <i class="pli-right-2"></i></button>
+                                                            </div>
+                                                            <small class="text-muted ms-auto">9:25AM</small>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <!-- END : Upcoming Tasklist -->
+
+
+
+                                            </div>
+                                        </div>
+
+                                        <div style="border-right: 1px solid #ccc" class="col mb-3 mr-3 pr-3">
+                                            <h4 class="d-flex align-items-center gap-2"><span class="d-inline-block bg-warning rounded-circle p-1"></span> En cours</h4>
+                                            <p class="text-warning mb-3">Cette colonne indique le ou les chapitre(s) en cours</p>
+                                            <div class="p-2 bg-light rounded">
+                                                <!-- In Progress Tasklist -->
+                                                <div v-for="task in in_progress_chapters" :key="task.id" class="card mb-2">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ task.sequence }} - {{ task.name }}</h5>
+                                                    <p>{{ task.description }}</p>
+                                                    <div class="mt-4 pt-3 border-top d-flex justify-content-between">
+                                                            <div>
+                                                                <button @click="set_completed(task.id)" class="btn btn-xs btn-success">Terminer <i class="pli-like fw-bold"></i></button>
+                                                            </div>
+                                                            <small class="text-muted ms-auto">depuis le {{ task.status.date }}</small>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <!-- END : In Progress Tasklist -->
+                                            </div>
+                                        </div>
+
+                                        <div class="col mb-3">
+                                            <h4 class="d-flex align-items-center gap-2"><span class="d-inline-block bg-success rounded-circle p-1"></span>Terminés</h4>
+                                            <p class="text-success mb-3">Cette colonne liste tous les chapitres sont cloturés</p>
+                                            <div class="p-2 bg-light rounded">
+                                                <!-- Completed Tasklist -->
+                                                <div v-for="task in completed_chapters" :key="task.id" class="card mb-2">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ task.sequence }} - {{ task.name }}</h5>
+                                                        <p>{{ task.description }}</p>
+                                                        <div class="mt-4 pt-3 border-top d-flex align-items-center">
+                                                            <a href="#" class="btn btn-icon btn-sm btn-link text-head">
+                                                                <i class="text-muted demo-pli-heart-2 fs-5 me-2"></i>37k
+                                                            </a>
+                                                            <small class="text-muted ms-auto">depuis le {{ task.status.date }}</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- END : Completed Tasklist -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </v-tabs-window-item>
+
+                            <v-tabs-window-item value="two">
+                                <div class="container">
+                                    <div v-for="exo in exercices" :key="exo.id" class="p-4 border rounded-4 mb-2">
+                                        <div class="">
+                                            <h6 class="card-title">{{ exo.name }}</h6>
+                                            <div class="p-4 rounded bg-light">
+                                                <p>{{ exo.description }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <div style="width:600px; height:300px; overflow:scroll;">
+                                                <PDF  :src="exo.pdf" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </v-tabs-window-item>
+
+                            <v-tabs-window-item value="three">
+                                Supports de cours ici ...
+                            </v-tabs-window-item>
+                        </v-tabs-window>
                 </div>
             </div>
             <div class="">
@@ -126,6 +212,51 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="chapterModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="mt-2">
+                                    <input type="text" placeholder="Titre du chapitre" v-model="chapter.name" class="form-control">
+                                </div>
+                                <div class="mt-5">
+                                    <input type="number" placeholder="Numero de sequence" v-model="chapter.sequence" class="form-control">
+                                </div>
+                                <div class="mt-5">
+                                    <textarea class="form-control w-100" id="" v-model="chapter.description" cols="30" placeholder="Quelques notes sur le contenu du chapitre" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button data-bs-dismiss="modal" text class="btn btn-primary btn-sm" @click="submit_chapter"><i class="pli-data-yes"></i> Enregsitrer</button>
+                                <button data-bs-dismiss="modal"  class="btn btn-danger btn">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="exerciceModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="mt-2">
+                                    <input type="text" placeholder="Titre de l'exercice" v-model="exercice.name" class="form-control">
+                                </div>
+                                <div class="mt-5">
+                                    <textarea class="form-control w-100" id="" v-model="exercice.description" cols="30" placeholder="Quelques notes sur le contenu de l'exerice" rows="5"></textarea>
+                                </div>
+                                <div class="mt-2">
+                                    <label for="">Fichier pdf de l'exercice</label>
+                                    <input type="file" placeholder="Titre de l'exercice" @change="changePdf" class="form-control">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button data-bs-dismiss="modal" text class="btn btn-primary btn-sm" @click="saveExercice"><i class="pli-data-yes"></i> Enregsitrer</button>
+                                <button data-bs-dismiss="modal"  class="btn btn-danger btn">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </template>
@@ -159,55 +290,38 @@
 </template>
 <script>
 import avatar from '~/img/avatar.png';
+  import VuePdfEmbed,{ useVuePdfEmbed } from 'vue-pdf-embed'
+  import PDF from "pdf-vue3";
 export default {
     name:"EmploisShow",
     props: ['tkn'],
     components:{
+        VuePdfEmbed,
+        PDF,
     },
     data(){
         return {
-
             avatar: avatar,
             dt:null,
             pv:null,
+            tab:null,
+            pdfViewer:null,
+            chapter:{},
+            chapters:[],
+            exercice:{},
+            exercices:[],
+            pdf:null,
             emploi:{
                 filiere:{},
                 enseignant:{},
                 matiere:{},
                 salle:{},
             },
-            gridApi: null,
-            defaultColDef: {
-                flex: 1,
-                filter:true,
-                floatingFilter:true,
-            },
             pointages:[],
             inscriptions:[],
-            cols:[
-                { field: "id",filter:false,hide:true },
-                { ield: "token",filter:false,hide:true },
-                {field:'created',headerName:'Date '},
-                {field:'nb',headerName:'Absents'},
-
-            ],
-            pagination:true,
-            paginationPageSize:20,
-            paginationPageSizeSelector:[20, 50, 100],
         }
     },
     computed:{
-        rowData(){
-            return this.pointages.map(function(item){
-                return {
-                    id:item.id,
-                    nb:item.nb,
-                    created:item.created,
-                    token:item.token,
-                }
-            })
-        },
-
         seance(){
             return {
                 dt:this.dt,
@@ -227,6 +341,15 @@ export default {
                 return ""
             }
         },
+        upcoming_chapters(){
+            return this.chapters.filter((item)=>item.status.code==-1);
+        },
+        in_progress_chapters(){
+            return this.chapters.filter((item)=>item.status.code==0);
+        },
+        completed_chapters(){
+            return this.chapters.filter((item)=>item.status.code==1);
+        }
     },
     methods:{
         src(item){
@@ -235,9 +358,62 @@ export default {
             }
             return this.avatar;
         },
-        mark(event){
-            console.log(event.target.checked);
-            console.log(this.inscriptions)
+        changePdf(event){
+            this.pdf = event.target.files[0];
+        },
+
+        async saveExercice(){
+            let loader = this.$loading.show({
+                    container: this.fullPage ? null : this.$refs.formContainer,
+                    canCancel: false,
+                });
+            let form = new FormData();
+            if(this.pdf!=null){
+                form.append('pdf',this.pdf);
+                this.exercice.emploi_id = this.emploi.id;
+                form.append('exercice',JSON.stringify(this.exercice))
+                await this.api.post('/api/prof/emploi/exercice',form,this.multipart)
+                        .then((res)=>{
+                            this.post = res.data;
+                            this.toaster.success("Creation de l'exercice effectuée avec succes !!!");
+                            this.load();
+                        })
+                        .catch((err)=>{
+                          console.error(err);
+                          this.toaster.error("Echec de creation de l'exercice");
+                        })
+                        .finally(()=>loader.hide());
+            }else{
+                this.toaster.error("Le champ de la photo ne peut etre vide !")
+            }
+
+        },
+        async set_inprogress(id){
+            console.log(id);
+            let loader = this.$loading.show({
+                    container: this.fullPage ? null : this.$refs.formContainer,
+                    canCancel: false,
+                });
+                await axios.get('/api/prof/chapter/inprogress/'+id)
+                    .then((res)=>{
+                        console.log(res);
+                        this.load();
+                    })
+                    .catch((err)=>console.error(err))
+                    .finally(()=>loader.hide());
+        },
+        async set_completed(id){
+            let loader = this.$loading.show({
+                    container: this.fullPage ? null : this.$refs.formContainer,
+                    canCancel: false,
+                });
+                await axios.get('/api/prof/chapter/complete/'+id)
+                    .then((res)=>{
+                        console.log(res);
+                        this.load();
+                    })
+                    .catch((err)=>console.error(err))
+                    .finally(()=>loader.hide());
         },
         async submit(){
             let loader = this.$loading.show({
@@ -253,8 +429,20 @@ export default {
                         .finally(()=>loader.hide());
 
         },
-        onGridReady(params) {
-            this.gridApi = params.api;
+        async submit_chapter(){
+            let loader = this.$loading.show({
+                    container: this.fullPage ? null : this.$refs.formContainer,
+                    canCancel: false,
+                });
+            this.chapter.emploi_id = this.emploi.id;
+            await axios.post('/api/prof/emploi/chapter',this.chapter)
+                        .then((res)=>{
+                            console.log(res.data);
+                            this.load();
+                        })
+                        .catch((err)=>console.error(err))
+                        .finally(()=>loader.hide());
+
         },
         async load(){
             let loader = this.$loading.show({
@@ -266,6 +454,14 @@ export default {
                             this.pointages = res.data.pointages;
                             this.inscriptions = res.data.inscriptions;
                             this.emploi = res.data.emploi;
+                            this.chapters = res.data.chapters;
+                            this.exercices = res.data.exercices.map((item)=>{
+                                item.doc = useVuePdfEmbed({source: item.pdf})
+                                return item;
+                            });
+
+                            console.log(this.exercices)
+
 
                         })
                         .catch((err)=>console.error(err))
@@ -295,11 +491,6 @@ export default {
     fieldset{
         font-size: smaller;
         color:#25476a;
-    }
-    .form-control{
-        padding: .2rem 1rem;
-        width: 80px;
-        font-size: 0.75rem;
     }
     .form-control-lg{
         width: 200px;

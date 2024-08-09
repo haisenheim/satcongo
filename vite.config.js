@@ -22,7 +22,8 @@ export default defineConfig({
         alias: {
             vue: "vue/dist/vue.esm-bundler.js",
             '@': fileURLToPath(new URL('./resources/js/', import.meta.url)),
-            '~': fileURLToPath(new URL('./public', import.meta.url))
+            '~': fileURLToPath(new URL('./public', import.meta.url)),
+            '*': fileURLToPath(new URL('./node_modules', import.meta.url))
         },
     },
 });

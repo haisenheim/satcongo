@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Exercice;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -31,6 +32,7 @@ class EmploiResource extends JsonResource
             'ts'=>$this->ts,
             'thr'=>$this->thr,
             'thn'=>$this->thn,
+            'support'=>$this->support,
         ];
     }
 }

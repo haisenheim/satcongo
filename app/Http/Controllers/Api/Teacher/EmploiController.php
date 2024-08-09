@@ -3,21 +3,22 @@
 namespace App\Http\Controllers\Api\Teacher;
 
 use App\Http\Controllers\ExtendedController;
+use App\Http\Resources\ChapterResource;
 use App\Http\Resources\CoursResource;
 use App\Http\Resources\EmploiResource;
-use App\Http\Resources\EnseignantResource;
+use App\Http\Resources\ExerciceResource;
 use App\Http\Resources\InscriptionResource;
 use App\Http\Resources\PointageResource;
 use App\Models\Absence;
 use App\Models\Cours;
 use App\Models\Emploi;
 use App\Models\Enseignant;
-use App\Models\Filiere;
+use App\Models\Exercice;
 use App\Models\Inscription;
-use App\Models\Matiere;
 use App\Models\Mois;
+use App\Models\Plan;
+use App\Models\PlanItem;
 use App\Models\Pointage;
-use App\Models\Salle;
 use Carbon\Carbon;
 use DateTime;
 
@@ -39,6 +40,54 @@ class EmploiController extends ExtendedController
         $items = CoursResource::collection($cours);
         return response()->json($items);
     }
+
+
+    public function setChapter(){
+        $item = request()->all();
+
+        $data['token'] = sha1(time());
+        $emploi = Emploi::find($item['emploi_id']);
+        if(!$emploi){
+            return response()->json('Donnees invalides',403);
+        }
+        $data['enseignant_id'] = $emploi->enseignant_id;
+        $data['semestre'] = $emploi->semestre;
+        $data['annee_id'] = $emploi->annee_id;
+        $data['niveau_id'] = $emploi->niveau_id;
+        $data['filiere_id'] = $emploi->filiere_id;
+        $data['cours_id'] = $emploi->cours_id;
+        $data['matiere_id'] = $emploi->matiere_id;
+        $data['emploi_id'] = $item['emploi_id'];
+        $plan = $emploi->plan;
+        if(!$plan){
+           $plan = Plan::create($data);
+        }
+        $item['plan_id'] = $plan->id;
+        $item['cours_id'] = $plan->cours_id;
+        $item['matiere_id'] = $plan->matiere_id;
+        $chapter = PlanItem::create($item);
+        return response()->json($chapter);
+    }
+
+    public function setExercice(){
+        $data = json_decode(request()->exercice,true);
+        $token = sha1(time());
+
+        if(request()->pdf){
+            $data['pdf_uri'] = $this->entityDocumentCreate(request()->pdf,'exercices',$token);
+        }
+        $emploi = Emploi::find($data['emploi_id']);
+        if(!$emploi){
+            return response()->json('Donnees invalides',403);
+        }
+        $data['niveau_id'] = $emploi->niveau_id;
+        $data['filiere_id'] = $emploi->filiere_id;
+        $data['cours_id'] = $emploi->cours_id;
+        $data['matiere_id'] = $emploi->matiere_id;
+        $item = Exercice::create($data);
+        return response()->json('ok');
+    }
+
 
     public function setPointage(){
         $data = request()->all();
@@ -252,15 +301,33 @@ class EmploiController extends ExtendedController
 
     }
 
+    public function setInProgress($id){
+        $chapter = PlanItem::find($id);
+        $chapter->in_progress_at = new \DateTime();
+        $chapter->save();
+        return response()->json('ok');
+    }
+
+    public function setCompleted($id){
+        $chapter = PlanItem::find($id);
+        $chapter->completed_at = new \DateTime();
+        $chapter->save();
+        return response()->json('ok');
+    }
+
     public function show($token){
         $emploi = Emploi::where('token',$token)->first();
         $emploi = new EmploiResource($emploi);
         $inscriptions = Inscription::where('filiere_id',$emploi->filiere_id)->where('niveau_id',$emploi->niveau_id)->get();
         $pointages = Pointage::where('emploi_id',$emploi->id)->get();
+        $chapters = PlanItem::where('emploi_id',$emploi->id)->get();
+        $exercices = Exercice::where('emploi_id',$emploi->id)->get();
         return response()->json([
             'emploi'=>$emploi,
             'pointages'=>PointageResource::collection($pointages),
             'inscriptions'=>InscriptionResource::collection($inscriptions),
+            'chapters'=>ChapterResource::collection($chapters),
+            'exercices'=>ExerciceResource::collection($exercices),
         ]);
     }
 }

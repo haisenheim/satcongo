@@ -28,6 +28,10 @@ class Emploi extends Model
         return $this->hasMany('App\Models\Fiche');
     }
 
+    public function exercices(){
+        return $this->hasMany('App\Models\Exercices','emploi_id');
+    }
+
     public function cours(){
         return $this->belongsTo('App\Models\Cours','cours_id');
     }

@@ -10,13 +10,17 @@ class Tuteur extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $appends = ['quantity'];
+    protected $appends = ['name'];
 
-    public function etudiants(){
-        return $this->hasMany('App\Models\Etudiant');
+    public function liens(){
+        return $this->hasMany('App\Models\Lien');
     }
 
     public function getQuantityAttribute(){
-        return $this->etudiants->count();
+        return $this->liens->count();
+    }
+
+    public function getNameAttribute(){
+        return $this->last_name ." ".$this->first_name;
     }
 }

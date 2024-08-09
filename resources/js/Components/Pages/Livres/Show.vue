@@ -9,7 +9,7 @@
       <template v-slot:content>
         <div class="container">
             <div style="width: 700px;">
-                <VuePdfEmbed annotation-layer text-layer :source="livre.path" />
+                <VuePdfEmbed :source="livre.path" />
             </div>
         </div>
      </template>
