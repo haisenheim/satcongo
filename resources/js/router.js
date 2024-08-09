@@ -1,24 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router'
 import store from '@/store'
-import inscriptions from './routes/inscriptions';
-import filieres from './routes/filieres';
-import matieres from './routes/matieres';
-import salles from './routes/salles';
-import laboratoires from './routes/laboratoires';
-import etudiants from './routes/etudiants';
-import tuteurs from './routes/tuteurs';
-import livres from './routes/livres';
-import enseignants from './routes/enseignants';
-import programmes from './routes/programmes';
-import tranches from './routes/tranches';
-import emplois from './routes/emplois';
-import annees from './routes/annees';
-import tarifs from './routes/tarifs';
-import ecolages from './routes/ecolages';
-import evaluations from './routes/evaluations';
-import examens from './routes/examens';
-import criteres from './routes/criteres'
-import posts from './routes/posts'
+
 
 /* Guest Component */
 import Login from '@/Components/Central/Auth/Login.vue';
@@ -76,25 +58,6 @@ const routes = [
         }
     },
 
-    ...inscriptions,
-    ...filieres,
-    ...salles,
-    ...matieres,
-    ...laboratoires,
-    ...etudiants,
-    ...tuteurs,
-    ...livres,
-    ...enseignants,
-    ...programmes,
-    ...tranches,
-    ...emplois,
-    ...annees,
-    ...tarifs,
-    ...ecolages,
-    ...evaluations,
-    ...examens,
-    ...criteres,
-    ...posts,
 
     //Routes du super Administrateur
     {
