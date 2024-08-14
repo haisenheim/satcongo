@@ -56,7 +56,7 @@ class HomeController extends ExtendedController
         if($lien->app_id == 3){
             $tenant_id = $lien->tenant_id;
             $eleve_id = $lien->etudiant_id;
-            $res = Http::dd()->get($app->host.'/api/skulagent/eleve?id='.$eleve_id.'&tenant_id='.$tenant_id);
+            $res = Http::get($app->host.'/api/skulagent/eleve?id='.$eleve_id.'&tenant_id='.$tenant_id);
             return response()->json($res->json());
         }
     }
