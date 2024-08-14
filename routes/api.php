@@ -63,6 +63,14 @@ Route::namespace('App\Http\Controllers\Api')
         Route::post('notify','SyncControll@notify');
 });
 
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'tuteur',
+    'namespace'=>'App\Http\Controllers\Api\Tuteur'
+], function ($router) {
+    Route::get('/home/{phone}','HomeController@index');
+});
+
 
 
 Route::group([
