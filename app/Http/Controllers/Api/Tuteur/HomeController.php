@@ -32,9 +32,9 @@ class HomeController extends ExtendedController
         });
         $app_3 = App::find(3);
         if(count($ids_3)){
-            $zanzi = 'http://medium.zanzi-apps.com';
-            dd($app_3);
-            $res = Http::dd()->post($app_3->domain.'/api/skulagent/eleves',$ids_3);
+            //$zanzi = 'http://medium.zanzi-apps.com';
+            //dd($app_3);
+            $res = Http::post($app_3->host.'/api/skulagent/eleves',$ids_3);
             $eleves = array_merge($eleves,$res->json());
         }
         return response()->json([
