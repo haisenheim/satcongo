@@ -49,4 +49,15 @@ class HomeController extends ExtendedController
 
     public function notify(){
     }
+
+    public function getEleveByLinkId($id){
+        $lien = Lien::find($id);
+        $app = App::find($lien->app_id);
+        if($lien->app_id == 3){
+            $tenant_id = $lien->tenant_id;
+            $eleve_id = $lien->etudiant_id;
+            $res = Http::get($app->host.`/api/skulagent/eleve?id=$eleve_id&tenant_id=$tenant_id`);
+            return response()->json($res->json());
+        }
+    }
 }

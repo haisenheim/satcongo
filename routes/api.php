@@ -69,6 +69,7 @@ Route::group([
     'namespace'=>'App\Http\Controllers\Api\Tuteur'
 ], function ($router) {
     Route::get('/home/{phone}','HomeController@index');
+    Route::get('/eleve/{id}','HomeController@getEleveByLinkId');
 });
 
 
