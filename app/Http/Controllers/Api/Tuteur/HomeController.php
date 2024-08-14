@@ -37,10 +37,8 @@ class HomeController extends ExtendedController
             $res = Http::post($app_3->host.'/api/skulagent/eleves',$ids_3);
             $eleves = array_merge($eleves,$res->json());
         }
-        return response()->json([
-            'eleves'=>$eleves,
-            'tuteur'=>$tuteur
-        ]);
+        $tuteur->eleves = $eleves;
+        return response()->json($tuteur);
     }
 
 
