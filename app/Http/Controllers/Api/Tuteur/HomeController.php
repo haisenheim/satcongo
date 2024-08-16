@@ -60,7 +60,7 @@ class HomeController extends ExtendedController
 
     public function createSegment($name){
         $fields = [
-            'name' => 'Premier Segement',
+            'name' => $name,
             //"filters" => array("field" => "device_type", "relation" => "=", "value" => "Android"),
         ];
         $response = OneSignalNotification::createSegment($fields);
