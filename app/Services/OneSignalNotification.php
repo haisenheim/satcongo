@@ -12,6 +12,11 @@ class OneSignalNotification extends Notification
         return $notif;
     }
 
+    public static function createSegment($fields){
+        $notif = OneSignal::createSegment($fields);
+        return $notif;
+    }
+
     public static function _send($data,){
         //$data['type'] = 1;
         //$data['content'] = new BonAchatResource($bon);

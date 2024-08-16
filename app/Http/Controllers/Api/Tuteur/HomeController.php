@@ -58,6 +58,15 @@ class HomeController extends ExtendedController
         return response()->json($response);
     }
 
+    public function createSegment($name){
+        $fields = [
+            'name' => 'Premier Segement',
+            //"filters" => array("field" => "device_type", "relation" => "=", "value" => "Android"),
+        ];
+        $response = OneSignalNotification::createSegment($fields);
+        return response()->json($response);
+    }
+
     public function getEleveByLinkId($id){
         $lien = Lien::find($id);
         $app = App::find($lien->app_id);
