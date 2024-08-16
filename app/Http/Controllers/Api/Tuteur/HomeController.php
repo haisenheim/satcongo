@@ -58,10 +58,10 @@ class HomeController extends ExtendedController
         return response()->json($response);
     }
 
-    public function createSegment($name){
+    public function createSegment(){
         $fields = [
-            'name' => $name,
-            //"filters" => array("field" => "device_type", "relation" => "=", "value" => "Android"),
+            'name' => "Sainte Madeleine",
+            "filters" => array("field" => "device_type", "relation" => "=", "value" => "Android"),
         ];
         $response = OneSignalNotification::createSegment($fields);
         return response()->json($response);

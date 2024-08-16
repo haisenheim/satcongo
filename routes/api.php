@@ -71,7 +71,7 @@ Route::group([
     Route::get('/home/{phone}','HomeController@index');
     Route::get('/eleve/{id}','HomeController@getEleveByLinkId');
     Route::get('/notify','HomeController@notify');
-    Route::get('/segment/add/{name}','HomeController@createSegment');
+    Route::get('/segment','HomeController@createSegment');
 });
 
 
