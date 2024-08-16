@@ -49,10 +49,10 @@ class HomeController extends ExtendedController
     }
 
     public function notify(){
-        $data['contents'] = ["Ceci est le contenu du message"];
+        $fields['contents'] = ["Ceci est le contenu du message"];
         $fields['include_external_user_ids'] = ['90239328327837'];
         $fields['channel_for_external_user_ids'] = "push";
-        $fields['data'] = $data;
+       // $fields['data'] = $data;
         $message = 'message de l\'API';
         $response = OneSignalNotification::send($fields,$message);
         return response()->json($response);
