@@ -70,6 +70,7 @@ Route::group([
 ], function ($router) {
     Route::get('/home/{phone}','HomeController@index');
     Route::get('/eleve/{id}','HomeController@getEleveByLinkId');
+    Route::get('/notify','HomeController@notify');
 });
 
 
@@ -120,87 +121,8 @@ Route::get('test',function(){
 
 });
 
-Route::get('/normal',function(){
-    $absences = Absence::all();
-    foreach($absences as $absence){
-        $absence->matiere_id = $absence->pointage->matiere_id;
-        $absence->save();
-    }
-    return "Ok";
-    $pointages = Pointage::all();
-    foreach($pointages as $pointage){
-        $pointage->matiere_id = $pointage->emploi->matiere_id;
-        //$pointage->mois_id = \Carbon\Carbon::parse($pointage->dt)->month;
-        $pointage->save();
-    }
 
-});
 
-Route::group([
-    'namespace'=>'App\Http\Controllers\Api\Student',
-    'prefix'=>'student'
-],function(){
-    Route::get('home','MainController@index');
-    Route::get('fiche','MainController@getFiche');
-    Route::post('fiche','MainController@saveFiche');
-});
 
-Route::group([
-    'middleware'=>'auth:api',
-    'namespace'=>'App\Http\Controllers\Api\Teacher',
-    'prefix'=>'prof'
-],function(){
-    Route::get('dashboard','DashboardController@index');
-    Route::resource('emplois','EmploiController');
-    Route::post('emploi/pointage','EmploiController@setPointage');
-    Route::post('emploi/chapter','EmploiController@setChapter');
-    Route::get('chapter/inprogress/{id}','EmploiController@setInProgress');
-    Route::get('chapter/complete/{id}','EmploiController@setCompleted');
-    Route::post('emploi/exercice','EmploiController@setExercice');
-    Route::get('honoraires','EmploiController@getHonoraires');
-    Route::get('honoraires/{mois_id}','EmploiController@getHistorique');
-    Route::resource('evaluations','EvaluationController');
-    Route::get('examens','EvaluationController@getExams');
-    Route::post('examen/notes','EvaluationController@storeNotes');
-    Route::get('examen/{token}','EvaluationController@getExam');
-    Route::post('examens','EvaluationController@storeExams');
-    Route::get('notes','EvaluationController@getNotes');
-});
 
-Route::group([
-    'middleware'=>'auth:api',
-    'namespace'=>'App\Http\Controllers\Api\Admin'
-],function(){
-    Route::resource('matieres','MatiereController');
-    Route::resource('filieres','FiliereController');
-    Route::resource('criteres','CritereController');
-    Route::resource('salles','SalleController');
-    Route::resource('laboratoires','LaboratoireController');
-    Route::resource('inscriptions','InscriptionController');
-    Route::get('inscription/ecolages/{id}','InscriptionController@getEcolages');
-    Route::resource('tuteurs','TuteurController');
-    Route::resource('etudiants','EtudiantController');
-    Route::resource('livres','LivreController');
-    Route::resource('cours','CoursController');
-    Route::resource('posts','PostController');
-    Route::resource('enseignants','EnseignantController');
-    Route::resource('paiements','PaiementController');
-    Route::resource('tranches','TrancheController');
-    Route::resource('emplois','EmploiController');
-    Route::post('emploi/cours','EmploiController@getCours');
-    Route::post('emploi/pointage','EmploiController@setPointage');
-    Route::resource('annees','AnneeController');
-    Route::resource('evaluations','EvaluationController');
-    Route::get('examens','EvaluationController@getExams');
-    Route::post('examen/notes','EvaluationController@storeNotes');
-    Route::get('examen/{token}','EvaluationController@getExam');
-    Route::post('examens','EvaluationController@storeExams');
-    Route::get('notes','EvaluationController@getNotes');
-    Route::resource('tarifs','TarifController');
-    Route::resource('ecolages','EcolageController');
-    Route::get('/reports/inscription/{id}','ReportController@getReportByInscriptionId');
-    Route::get('/reports/enseignant/{id}','ReportController@getReportByEnseignantId');
-    Route::get('/reports/month/{id}','ReportController@getReportByMonth');
-    Route::get('/reports/create','ReportController@create');
-    Route::get('/reports/init','ReportController@init');
-});
+

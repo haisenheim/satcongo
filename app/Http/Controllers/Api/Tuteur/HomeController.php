@@ -8,6 +8,7 @@ use App\Models\App;
 use App\Models\Lien;
 use App\Models\Tuteur;
 use Illuminate\Support\Facades\Http;
+use App\Services\OneSignalNotification;
 
 class HomeController extends ExtendedController
 {
@@ -48,6 +49,12 @@ class HomeController extends ExtendedController
     }
 
     public function notify(){
+        $data['content'] = ["Ceci est le contenu du message"];
+        $fields['include_external_user_ids'] = ['90239328327837'];
+        $fields['channel_for_external_user_ids'] = "push";
+        $fields['data'] = $data;
+        $message = 'message de l\'API';
+        $response = OneSignalNotification::send($fields,$message);
     }
 
     public function getEleveByLinkId($id){
