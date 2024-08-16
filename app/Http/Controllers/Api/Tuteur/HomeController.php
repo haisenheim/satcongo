@@ -51,7 +51,8 @@ class HomeController extends ExtendedController
 
 
     public function notify(){
-        $fields['contents'] = ['any'=>"Ceci est le contenu du message"];
+        $fields['contents'] = ['en'=>"Ceci est le contenu du message"];
+        $fields['headings'] = ['en'=>"Titre du message"];
         $fields['include_external_user_ids'] = ['90239328327837'];
         $fields['channel_for_external_user_ids'] = "push";
        // $fields['data'] = $data;
