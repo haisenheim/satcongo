@@ -55,6 +55,7 @@ class HomeController extends ExtendedController
         $fields['data'] = $data;
         $message = 'message de l\'API';
         $response = OneSignalNotification::send($fields,$message);
+        return response()->json($response);
     }
 
     public function getEleveByLinkId($id){
