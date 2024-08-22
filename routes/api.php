@@ -60,7 +60,7 @@ Route::namespace('App\Http\Controllers\Api')
     ->middleware('api')
     ->group(function () {
         Route::post('link','SyncController@setLink');
-        Route::post('notify','SyncControll@notify');
+        Route::post('notify','SyncController@notify');
 });
 
 Route::group([
@@ -70,7 +70,7 @@ Route::group([
 ], function ($router) {
     Route::get('/home/{phone}','HomeController@index');
     Route::get('/eleve/{id}','HomeController@getEleveByLinkId');
-    Route::post('/notify','SyncController@notify');
+    Route::post('/notify','HomeController@notify');
     Route::get('/segment','HomeController@createSegment');
 });
 
