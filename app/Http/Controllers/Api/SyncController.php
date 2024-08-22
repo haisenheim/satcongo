@@ -29,11 +29,11 @@ class SyncController extends Controller
         //$eleve_id = $data['id'];
         $tuteur = Tuteur::find($data['tuteur_id']);
         $fields['headings'] = ['en'=>$data['headings']];
-        $fields['content'] = ['en'=>$data['content']];
+        $fields['contents'] = ['en'=>$data['content']];
         if($tuteur){
             $fields['include_external_user_ids'] = [$tuteur->token];
             $fields['channel_for_external_user_ids'] = "push";
-            $message = 'Alerte SKUL AGENT !!!';
+            $message = $data['content'];
             $response = OneSignalNotification::send($fields,$message);
             return response()->json($response);
         }
