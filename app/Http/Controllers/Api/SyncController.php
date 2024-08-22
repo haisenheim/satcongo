@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lien;
+use App\Models\Tuteur;
+use App\Services\OneSignalNotification;
 use Illuminate\Http\Request;
 
 class SyncController extends Controller
@@ -20,9 +22,32 @@ class SyncController extends Controller
         return response()->json($lien);
     }
 
+
     public function notify(){
         $data = request()->all();
+        $fields = $data['fields'];
+        //$eleve_id = $data['id'];
+        $link = Lien::where('app_id',$data['app_id'])->where('tenant_id',$data['tenant_id'])->where('etudiant_id',$data['id'])->first();
+        if($link){
+            $tuteur = Tuteur::find($link->tuteur_id);
+            $fields['include_external_user_ids'] = [$tuteur->token];
+            $fields['channel_for_external_user_ids'] = "push";
+            $message = 'Alerte SKUL AGENT !!!';
+            $response = OneSignalNotification::send($fields,$message);
+            return response()->json($response);
+        }
+        return response()->json("-1");
+    }
 
-        return response()->json('ok');
+
+
+    public function _notify(){
+        $fields['contents'] = ['en'=>"Ceci est le contenu du message"];
+        $fields['headings'] = ['en'=>"Titre du message"];
+        $fields['include_external_user_ids'] = ['90239328327837'];
+        $fields['channel_for_external_user_ids'] = "push";
+        $message = 'message de l\'API';
+        $response = OneSignalNotification::send($fields,$message);
+        return response()->json($response);
     }
 }

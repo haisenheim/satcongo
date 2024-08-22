@@ -49,6 +49,7 @@ class HomeController extends ExtendedController
     }
 
 
+    
 
     public function notify(){
         $fields['contents'] = ['en'=>"Ceci est le contenu du message"];

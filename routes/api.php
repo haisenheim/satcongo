@@ -70,7 +70,7 @@ Route::group([
 ], function ($router) {
     Route::get('/home/{phone}','HomeController@index');
     Route::get('/eleve/{id}','HomeController@getEleveByLinkId');
-    Route::get('/notify','HomeController@notify');
+    Route::post('/notify','SyncController@notify');
     Route::get('/segment','HomeController@createSegment');
 });
 
