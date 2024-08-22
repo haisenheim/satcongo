@@ -25,11 +25,12 @@ class SyncController extends Controller
 
     public function notify(){
         $data = request()->all();
-        $fields = $data['fields'];
+        //$fields = $data['fields'];
         //$eleve_id = $data['id'];
-        $link = Lien::where('app_id',$data['app_id'])->where('tenant_id',$data['tenant_id'])->where('etudiant_id',$data['id'])->first();
-        if($link){
-            $tuteur = Tuteur::find($link->tuteur_id);
+        $tuteur = Tuteur::find($data['tuteur_id']);
+        $fields['headings'] = $data['headings'];
+        $fields['content'] = $data['content'];
+        if($tuteur){
             $fields['include_external_user_ids'] = [$tuteur->token];
             $fields['channel_for_external_user_ids'] = "push";
             $message = 'Alerte SKUL AGENT !!!';
