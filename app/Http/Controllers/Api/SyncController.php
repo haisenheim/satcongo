@@ -28,8 +28,8 @@ class SyncController extends Controller
         //$fields = $data['fields'];
         //$eleve_id = $data['id'];
         $tuteur = Tuteur::find($data['tuteur_id']);
-        $fields['headings'] = $data['headings'];
-        $fields['content'] = $data['content'];
+        $fields['headings'] = ['en'=>$data['headings']];
+        $fields['content'] = ['en'=>$data['content']];
         if($tuteur){
             $fields['include_external_user_ids'] = [$tuteur->token];
             $fields['channel_for_external_user_ids'] = "push";
