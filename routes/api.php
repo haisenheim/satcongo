@@ -61,6 +61,7 @@ Route::namespace('App\Http\Controllers\Api')
     ->group(function () {
         Route::post('link','SyncController@setLink');
         Route::post('notify','SyncController@notify');
+        Route::post('notify/all','SyncController@notifyAll');
 });
 
 Route::group([

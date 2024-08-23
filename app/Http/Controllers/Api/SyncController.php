@@ -25,8 +25,6 @@ class SyncController extends Controller
 
     public function notify(){
         $data = request()->all();
-        //$fields = $data['fields'];
-        //$eleve_id = $data['id'];
         $tuteur = Tuteur::find($data['tuteur_id']);
         $fields['headings'] = ['en'=>$data['headings']];
         $fields['contents'] = ['en'=>$data['content']];
@@ -38,6 +36,22 @@ class SyncController extends Controller
             return response()->json($response);
         }
         return response()->json("-1");
+    }
+
+    public function notifyAll(){
+        $data = request()->all();
+        $liens = Lien::where('app_id',$data['app_id'])->where('tenant_id',$data['tenant_id'])->all();
+        $tokens = [];
+        foreach($liens as $lien){
+            $tokens[] = $lien->tuteur->token;
+        }
+        $fields['headings'] = ['en'=>$data['headings']];
+        $fields['contents'] = ['en'=>$data['content']];
+        $fields['include_external_user_ids'] = $tokens;
+        $fields['channel_for_external_user_ids'] = "push";
+        $message = $data['content'];
+        $response = OneSignalNotification::send($fields,$message);
+        return response()->json($response);
     }
 
 
