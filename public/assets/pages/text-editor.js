@@ -1,76 +1,65 @@
 document.addEventListener( "DOMContentLoaded", () => {
 
 
-    // Blank editor
-    // ----------------------------------------------
-    KothingEditor.create("_dm-blankEditor", {
-        display: "block",
-        width: "local",
-        height: "162",
-        popupDisplay: "full",
-        buttonList: [
-            ["font", "fontSize", "formatBlock"],
-            ["bold", "underline", "italic", "strike", "subscript", "superscript"],
-        ],
-    });
+   // Default toolbar
+   // ---------------------------------------------------------------------------------
+   let defaultQuill = new Quill("#_dm-quillDefault", {
+      theme: "snow"   // Specify theme in configuration
+   });
 
 
 
-    // Classic editor
-    // ----------------------------------------------
-    KothingEditor.create("_dm-classicEditor", {
-        display: "block",
-        width: "100%",
-        height: "auto",
-        popupDisplay: "full",
-        katex: katex,
-        toolbarItem: [
-            ["undo", "redo"],
-            ["fontSize", "formatBlock"],
-            [
-                "bold",
-                "underline",
-                "italic",
-                "strike",
-                "subscript",
-                "superscript",
-                "fontColor",
-                "hiliteColor",
-            ],
-            ["outdent", "indent", "align", "list", "horizontalRule"],
-            ["link", "table", "image", "audio", "video"],
-            ["lineHeight", "paragraphStyle", "textStyle"],
-            ["showBlocks", "codeView"],
-            ["math"],
-            ["preview", "print", "fullScreen"],
-            ["save", "template"],
-            ["removeFormat"],
-        ],
-        templates: [{
-                name: "Template-1",
-                html: "<p>HTML source1</p>",
-            },
-            {
-                name: "Template-2",
-                html: "<p>HTML source2</p>",
-            },
-        ],
-        charCounter: true,
-    });
+   // Simple Toolbar
+   // ---------------------------------------------------------------------------------
+   const quillToolbarOptions = [
+
+      [{ "font": [] }],
+      [{ "header": [1, 2, 3, 4, 5, 6, false] }],
+
+      ["bold", "italic", "underline", "strike"],              // toggled buttons
+      [{ "color": [] }, { "background": [] }],                // dropdown with defaults from theme
+
+      [{ "list": "ordered" }, { "list": "bullet" }],
+      [{ "align": [] }],
+
+      // More options
+      // ---------------------------------------------------------------------------------
+      // [{ "size": ["small", false, "large", "huge"] }],     // custom dropdown
+      // [{ "header": 1 }, { "header": 2 }],                  // custom button values
+      // [{ "script": "sub" }, { "script": "super" }],        // superscript/subscript
+      // [{ "indent": "-1" }, { "indent": "+1" }],            // outdent/indent
+      // [{ "direction": "rtl" }],                            // text direction
+      // ["blockquote", "code-block"],
+      // ["clean"]                                            // remove formatting button
+   ];
 
 
-    // Popup bar
-    // ----------------------------------------------
-    KothingEditor.create("_dm-balloonEditor", {
-        mode: "balloon",
-        display: "block",
-        width: "100%",
-        height: "auto",
-        popupDisplay: "full",
-        buttonList: [
-            ["fontSize", "fontColor", "bold", "align", "horizontalRule", "table"],
-        ],
-    });
+   const customToolbarQuill = new Quill("#_dm-quillCustomToolbar", {
+      modules: {
+         toolbar: quillToolbarOptions
+      },
+      theme: "snow"
+   });
+
+
+
+   // Advanced toolbar
+   // All toolbar components are described in HTML.
+   // ---------------------------------------------------------------------------------
+   const advancedToolbarQuill = new Quill("#_dm-quillAdvancedEditor", {
+      modules: {
+         toolbar: { container: "#_dm-quillAdvancedToolbar" }
+      },
+      theme: "snow"
+   });
+
+
+
+   // Popup bar / Bubble
+   // ---------------------------------------------------------------------------------
+   const bubbleQuill = new Quill("#_dm-quillBubble", {
+      theme: "bubble"
+   });
 
 
 });

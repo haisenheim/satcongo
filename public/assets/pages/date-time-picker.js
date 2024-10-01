@@ -6,8 +6,8 @@
 // MCDatepicker default
 // ----------------------------------------------
 const datePickerModal = MCDatepicker.create({
-    el: "#_dm-mcDatepicker-modal",
-    dateFormat: "dddd, dd-mmmm-yyyy"
+   el: "#_dm-mcDatepicker-modal",
+   dateFormat: "dddd, dd-mmmm-yyyy"
 });
 
 
@@ -15,9 +15,9 @@ const datePickerModal = MCDatepicker.create({
 // MCDatepicker with inline bodyType
 // ----------------------------------------------
 const datePickerInline = MCDatepicker.create({
-    el: "#_dm-mcDatepicker-inline",
-    bodyType: "inline",
-    dateFormat: "mmmm dd, yyyy"
+   el: "#_dm-mcDatepicker-inline",
+   bodyType: "inline",
+   dateFormat: "mmmm dd, yyyy"
 });
 
 
@@ -25,13 +25,13 @@ const datePickerInline = MCDatepicker.create({
 // Open the MCDatepicker while the button is being clicked
 // ----------------------------------------------
 const datePickerMethod = MCDatepicker.create({
-    el: "#_dm-mcDatepicker-method",
-    bodyType: "modal",
-    dateFormat: "mm/dd/yyyy"
+   el: "#_dm-mcDatepicker-method",
+   bodyType: "modal",
+   dateFormat: "mm/dd/yyyy"
 });
 
 document.querySelector( "#_dm-mcDatepicker-btn" ).addEventListener( "click", () => {
-    datePickerMethod.open();
+   datePickerMethod.open();
 });
 
 /* ---------------------------------------------- */
@@ -47,24 +47,24 @@ document.querySelector( "#_dm-mcDatepicker-btn" ).addEventListener( "click", () 
 
 // Single date picker
 new Litepicker({
-    element: document.getElementById( "_dm-litePicker-single" ),
-    singleMode: true
+   element: document.getElementById( "_dm-litePicker-single" ),
+   singleMode: true
 })
 
 
 // Date range with tooltip
 new Litepicker({
-    element: document.getElementById( "_dm-litePicker-dateRange" ),
-    singleMode: false,
-    numberOfMonths: 2,
-    numberOfColumns: 2,
-    tooltipText: {
-        one: "day",
-        other: "days"
-    },
-    tooltipNumber: (totalDays) => {
-        return totalDays - 1;
-    }
+   element: document.getElementById( "_dm-litePicker-dateRange" ),
+   singleMode: false,
+   numberOfMonths: 2,
+   numberOfColumns: 2,
+   tooltipText: {
+      one: "day",
+      other: "days"
+   },
+   tooltipNumber: (totalDays) => {
+      return totalDays - 1;
+   }
 })
 
 
@@ -72,21 +72,21 @@ const currentTime = new Date();
 const currentMonth = (currentTime.getMonth() + 1).toString().padStart(2, "0");
 const currentYear = currentTime.getFullYear();
 const allowedDates = [
-    `${ currentYear }-${ currentMonth }-01`, `${ currentYear }-${ currentMonth }-04`, `${ currentYear }-${ currentMonth }-07`,
-    `${ currentYear }-${ currentMonth }-12`, `${ currentYear }-${ currentMonth }-15`, `${ currentYear }-${ currentMonth }-19`,
-    `${ currentYear }-${ currentMonth }-24`, `${ currentYear }-${ currentMonth }-28`,
+   `${ currentYear }-${ currentMonth }-01`, `${ currentYear }-${ currentMonth }-04`, `${ currentYear }-${ currentMonth }-07`,
+   `${ currentYear }-${ currentMonth }-12`, `${ currentYear }-${ currentMonth }-15`, `${ currentYear }-${ currentMonth }-19`,
+   `${ currentYear }-${ currentMonth }-24`, `${ currentYear }-${ currentMonth }-28`,
 ];
 
 
 new Litepicker({
-    element: document.getElementById( "_dm-litePicker-allowedDates" ),
-    singleMode: false,
-    numberOfMonths: 2,
-    numberOfColumns: 2,
-    startDate: allowedDates[0],
-    lockDaysFilter: (date1, date2, pickedDates) => {
-        return !allowedDates.includes(date1.format("YYYY-MM-DD"));
-    }
+   element: document.getElementById( "_dm-litePicker-allowedDates" ),
+   singleMode: false,
+   numberOfMonths: 2,
+   numberOfColumns: 2,
+   startDate: allowedDates[0],
+   lockDaysFilter: (date1, date2, pickedDates) => {
+      return !allowedDates.includes(date1.format("YYYY-MM-DD"));
+   }
 })
 
 /* ---------------------------------------------- */
@@ -180,8 +180,8 @@ mdPicker_DatePickerInput.addEventListener( "onOk", () => mdPicker_DatePickerInpu
 
 // Initialize the date dialog
 const mdPicker_DatePortrait = new mdDateTimePicker.default({
-    type: "date",
-    orientation: "PORTRAIT"
+   type: "date",
+   orientation: "PORTRAIT"
 });
 const mdPicker_DatePortraitInput = document.querySelector( "#_dm-mdDateTimePicker-showDate-portrait" );
 
@@ -204,8 +204,8 @@ mdPicker_DatePortraitInput.addEventListener( "onOk", () => mdPicker_DatePortrait
 
 // Initialize the time dialog
 const mdPicker_TimePortrait = new mdDateTimePicker.default({
-    type: "time",
-    orientation: "PORTRAIT"
+   type: "time",
+   orientation: "PORTRAIT"
 });
 const mdPicker_TimePortraitInput = document.querySelector( "#_dm-mdDateTimePicker-showTime-portrait" );
 
@@ -228,8 +228,8 @@ mdPicker_TimePortraitInput.addEventListener( "onOk", () => mdPicker_TimePortrait
 
 // Initialize the date dialog
 const mdPicker_DatePickerPortrait = new mdDateTimePicker.default({
-    type: "date",
-    orientation: "PORTRAIT"
+   type: "date",
+   orientation: "PORTRAIT"
 });
 const mdPicker_DatePickerPortraitInput = document.querySelector( "#_dm-mdDateTimePicker-portraitInput" );
 const mdPicker_DatePickerPortraitBtn = document.querySelector( "#_dm-mdDateTimePicker-portraitBtn" );

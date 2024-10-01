@@ -6,11 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+//use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Spatie\Permission\Traits\HasRoles;
 
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
 
@@ -38,51 +38,47 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo('App\Models\Role','role_id');
     }
 
-    public function getProfilAttribute(){
-        $profil = null;
-        if($this->role_id==2){
-            $profil = Enseignant::find($this->enseignant_id);
+    public function caisse(){
+        return $this->belongsTo('App\Models\Caisse','caisse_id');
+    }
+
+    public function departement(){
+        return $this->belongsTo('App\Models\Departement');
+    }
+
+    public function region(){
+        return $this->belongsTo('App\Models\Region');
+    }
+
+    public function producteurs(){
+        return $this->belongsToMany('App\Models\Cooperative','operateurs_producteurs','operateur_id','producteur_id');
+    }
+
+    public function getStatusAttribute(){
+        $data = [
+            'name'=>'verrouillé',
+            'color'=>'danger'
+        ];
+        if($this->active){
+            $data = [
+                'name'=>'actif',
+                'color'=>'success'
+            ];
         }
-        return $profil;
+
+        return $data;
+    }
+
+    public function getPhotoAttribute(){
+        $host = request()->getSchemeAndHttpHost();
+        if($this->photo_uri){
+            $path = $host.'/img/'.$this->photo_uri;
+        }else{
+            $path = $host.'/img/avatar.png';
+        }
+        return $path;  
+        
     }
 
 
-
-    //protected function getDefaultGuardName(): string { return 'api'; }
-
-    public function getRolesAttribute(){
-        return $this->getRoleNames();
-    }
-
-    public function getPermissionsAttribute(){
-        return $this->getAllPermissions();
-    }
-
-    public function getDirectPermissionsAttribute(){
-        return $this->getDirectPermissions();
-    }
-
-    public function getPermissionsViaRolesAttribute(){
-        return $this->getPermissionsViaRoles();
-    }
-
-      /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
 }

@@ -1,46 +1,32 @@
 document.addEventListener( "DOMContentLoaded", () => {
 
-    // Classic editor
-    // ----------------------------------------------
-    KothingEditor.create("_dm-classicEditor", {
-        display: "block",
-        width: "100%",
-        height: "350",
-        popupDisplay: "full",
-        katex: katex,
-        toolbarItem: [
-            ["undo", "redo"],
-            ["fontSize", "formatBlock"],
-            [
-                "bold",
-                "underline",
-                "italic",
-                "strike",
-                "subscript",
-                "superscript",
-                "fontColor",
-                "hiliteColor",
-            ],
-            ["outdent", "indent", "align", "list", "horizontalRule"],
-            ["link", "table", "image", "audio", "video"],
-            ["lineHeight", "paragraphStyle", "textStyle"],
-            ["showBlocks", "codeView"],
-            ["math"],
-            ["preview", "print", "fullScreen"],
-            ["save", "template"],
-            ["removeFormat"],
-        ],
-        templates: [{
-                name: "Template-1",
-                html: "<p>HTML source1</p>",
-            },
-            {
-                name: "Template-2",
-                html: "<p>HTML source2</p>",
-            },
-        ],
-        charCounter: true,
-    });
+   // Quill Texteditor
+   // ---------------------------------------------------------------------------------
+   new Quill("#_dm-textEditor", {
+      modules: {
+         toolbar: [
 
+            [{ "font": [] }],
+            [{ "header": [1, 2, 3, 4, 5, 6, false] }],
+
+            ["bold", "italic", "underline", "strike"],              // toggled buttons
+            [{ "color": [] }, { "background": [] }],                // dropdown with defaults from theme
+
+            [{ "list": "ordered" }, { "list": "bullet" }],
+            [{ "align": [] }],
+
+            // More options
+            // ---------------------------------------------------------------------------------
+            // [{ "size": ["small", false, "large", "huge"] }],     // custom dropdown
+            // [{ "header": 1 }, { "header": 2 }],                  // custom button values
+            // [{ "script": "sub" }, { "script": "super" }],        // superscript/subscript
+            // [{ "indent": "-1" }, { "indent": "+1" }],            // outdent/indent
+            // [{ "direction": "rtl" }],                            // text direction
+            // ["blockquote", "code-block"],
+            // ["clean"]                                            // remove formatting button
+         ]
+      },
+      theme: "snow"
+   });
 
 })

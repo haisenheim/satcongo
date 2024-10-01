@@ -31,7 +31,6 @@
     transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
   }
 }
-
 /*  Chase
 
       <div class="sk-chase">
@@ -56,17 +55,17 @@
   position: absolute;
   left: 0;
   top: 0;
-  animation: sk-chase-dot 2.0s infinite ease-in-out both;
+  animation: sk-chase-dot 2s infinite ease-in-out both;
 }
 
 .sk-chase-dot:before {
-  content: '';
+  content: "";
   display: block;
   width: 25%;
   height: 25%;
   background-color: var(--sk-color);
   border-radius: 100%;
-  animation: sk-chase-dot-before 2.0s infinite ease-in-out both;
+  animation: sk-chase-dot-before 2s infinite ease-in-out both;
 }
 
 .sk-chase-dot:nth-child(1) {
@@ -74,7 +73,7 @@
 }
 
 .sk-chase-dot:nth-child(2) {
-  animation-delay: -1.0s;
+  animation-delay: -1s;
 }
 
 .sk-chase-dot:nth-child(3) {
@@ -98,7 +97,7 @@
 }
 
 .sk-chase-dot:nth-child(2):before {
-  animation-delay: -1.0s;
+  animation-delay: -1s;
 }
 
 .sk-chase-dot:nth-child(3):before {
@@ -122,13 +121,11 @@
     transform: rotate(360deg);
   }
 }
-
 @keyframes sk-chase-dot {
   80%, 100% {
     transform: rotate(360deg);
   }
 }
-
 @keyframes sk-chase-dot-before {
   50% {
     transform: scale(0.4);
@@ -137,7 +134,6 @@
     transform: scale(1);
   }
 }
-
 /*  Bounce
 
       <div class="sk-bounce">
@@ -164,7 +160,7 @@
 }
 
 .sk-bounce-dot:nth-child(2) {
-  animation-delay: -1.0s;
+  animation-delay: -1s;
 }
 
 @keyframes sk-bounce {
@@ -175,7 +171,6 @@
     transform: scale(1);
   }
 }
-
 /*  Wave
 
       <div class="sk-wave">
@@ -209,7 +204,7 @@
 }
 
 .sk-wave-rect:nth-child(3) {
-  animation-delay: -1.0s;
+  animation-delay: -1s;
 }
 
 .sk-wave-rect:nth-child(4) {
@@ -228,7 +223,6 @@
     transform: scaleY(1);
   }
 }
-
 /*  Pulse
 
       <div class="sk-pulse"></div>
@@ -250,7 +244,6 @@
     opacity: 0;
   }
 }
-
 /*  Flow
 
       <div class="sk-flow">
@@ -275,7 +268,7 @@
 }
 
 .sk-flow-dot:nth-child(1) {
-  animation-delay: -0.30s;
+  animation-delay: -0.3s;
 }
 
 .sk-flow-dot:nth-child(2) {
@@ -290,7 +283,6 @@
     transform: scale(1);
   }
 }
-
 /*  Swing
 
       <div class="sk-swing">
@@ -329,7 +321,6 @@
     transform: rotate(360deg);
   }
 }
-
 @keyframes sk-swing-dot {
   0%, 100% {
     transform: scale(0.2);
@@ -338,7 +329,6 @@
     transform: scale(1);
   }
 }
-
 /*  Circle
 
       <div class="sk-circle">
@@ -371,7 +361,7 @@
 }
 
 .sk-circle-dot:before {
-  content: '';
+  content: "";
   display: block;
   width: 15%;
   height: 15%;
@@ -476,7 +466,6 @@
     transform: scale(1);
   }
 }
-
 /*  Circle Fade
 
       <div class="sk-circle-fade">
@@ -509,7 +498,7 @@
 }
 
 .sk-circle-fade-dot:before {
-  content: '';
+  content: "";
   display: block;
   width: 15%;
   height: 15%;
@@ -567,7 +556,7 @@
 }
 
 .sk-circle-fade-dot:nth-child(2):before {
-  animation-delay: -1.0s;
+  animation-delay: -1s;
 }
 
 .sk-circle-fade-dot:nth-child(3):before {
@@ -616,7 +605,6 @@
     transform: scale(1);
   }
 }
-
 /*  Grid
 
     <div class="sk-grid">
@@ -674,7 +662,7 @@
 }
 
 .sk-grid-cube:nth-child(7) {
-  animation-delay: 0.0s;
+  animation-delay: 0s;
 }
 
 .sk-grid-cube:nth-child(8) {
@@ -693,7 +681,6 @@
     transform: scale3D(0, 0, 1);
   }
 }
-
 /*  Fold
 
       <div class="sk-fold">
@@ -719,7 +706,7 @@
 }
 
 .sk-fold-cube:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -768,7 +755,6 @@
     opacity: 0;
   }
 }
-
 /*  Wander
 
       <div class="sk-wander">
@@ -792,7 +778,7 @@
   top: 0;
   left: 0;
   --sk-wander-distance: calc(var(--sk-size) * 0.75);
-  animation: sk-wander 2.0s ease-in-out -2.0s infinite both;
+  animation: sk-wander 2s ease-in-out -2s infinite both;
 }
 
 .sk-wander-cube:nth-child(2) {
@@ -800,7 +786,7 @@
 }
 
 .sk-wander-cube:nth-child(3) {
-  animation-delay: -1.0s;
+  animation-delay: -1s;
 }
 
 @keyframes sk-wander {
@@ -810,8 +796,7 @@
   25% {
     transform: translateX(var(--sk-wander-distance)) rotate(-90deg) scale(0.6);
   }
-  50% {
-    /* Make FF rotate in the right direction */
+  50% { /* Make FF rotate in the right direction */
     transform: translateX(var(--sk-wander-distance)) translateY(var(--sk-wander-distance)) rotate(-179deg);
   }
   50.1% {
@@ -824,10 +809,8 @@
     transform: rotate(-360deg);
   }
 }
-
 :root {
   --sk-size: 40px;
   --sk-color: var( --bs-primary );
 }
-
 /*# sourceMappingURL=spinkit.css.map */

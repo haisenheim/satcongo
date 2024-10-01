@@ -78,13 +78,14 @@ Route::group([
 
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'auth'
+    'prefix' => 'auth',
+    'name'=>'api.'
 ], function ($router) {
-    Route::post('/register', [AuthController::class, 'register'])->name('register');
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
-    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api')->name('logout');
-    Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api')->name('refresh');
-    Route::post('/me', [AuthController::class, 'me'])->middleware('auth:api')->name('me');
+    Route::post('/register', [AuthController::class, 'register'])->name('api.register');
+    Route::post('/login', [AuthController::class, 'login'])->name('api.login');
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api')->name('api.logout');
+    Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api')->name('api.refresh');
+    Route::post('/me', [AuthController::class, 'me'])->middleware('auth:api')->name('api.me');
     Route::post('/ecoles/create',function()use($router){
         return response()->json('ok');
     })->middleware('auth:api')->name('me');

@@ -12,4 +12,9 @@ class Pay extends Model
     protected $guarded = [];
     public $timestamps = false;
 
+    public function continent()
+    {
+        return $this->belongsTo('App\Models\Continent');
+    }
+
 }
