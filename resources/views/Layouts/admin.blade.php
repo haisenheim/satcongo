@@ -42,15 +42,20 @@
                 </a>
                 <!-- Settings submenu list -->
                 <ul class="mininav-content nav collapse">
-
+                    <li class="nav-item">
+                        <a href="{{ route('admin.libelles.index') }}" class="nav-link {{ $active==701?'active':'' }}">Libellés d'ecriture</a>
+                    </li>
                    <li class="nav-item">
-                       <a href="{{ route('admin.caisses.index') }}" class="nav-link {{ $active==701?'active':'' }}">Caisses</a>
+                       <a href="{{ route('admin.caisses.index') }}" class="nav-link {{ $active==702?'active':'' }}">Caisses</a>
                    </li>
                    <li class="nav-item">
-                       <a href="{{ route('admin.agences.index') }}" class="nav-link {{ $active==702?'active':'' }}">Agences</a>
+                       <a href="{{ route('admin.agences.index') }}" class="nav-link {{ $active==703?'active':'' }}">Agences</a>
                    </li>
                    <li class="nav-item">
-                       <a href="{{ route('admin.comptes.index') }}" class="nav-link {{ $active==703?'active':'' }}">Comptes</a>
+                    <a href="{{ route('admin.tiers.index') }}" class="nav-link {{ $active==704?'active':'' }}">Tiers</a>
+                </li>
+                   <li class="nav-item">
+                       <a href="{{ route('admin.comptes.index') }}" class="nav-link {{ $active==705?'active':'' }}">Comptes</a>
                    </li>
                 </ul>
                 <!-- END : Dashboard submenu list -->

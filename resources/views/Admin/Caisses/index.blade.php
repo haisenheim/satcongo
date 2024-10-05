@@ -82,6 +82,10 @@
                             <input type="text" required name="name" placeholder="Saisir le nom de l'agence" class="form-control">
                         </div>
                         <div class="mt-3">
+                            <label for="">SOLDE INITIAL</label>
+                            <input type="number" required name="solde" placeholder="Saisir le solde initial" class="form-control">
+                        </div>
+                        <div class="mt-3">
                             <label for="">Ville</label>
                             <select required name="ville_id" id="ville_id" class="form-control">
                                 <option value="">Selectionner une ville</option>

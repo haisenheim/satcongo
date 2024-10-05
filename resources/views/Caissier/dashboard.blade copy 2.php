@@ -12,24 +12,18 @@
 @endsection
 
 @section('actions')
-    <a href="{{ route('caissier.create') }}"  class="btn btn-primary btn-sm"><i class="demo-pli-add me-2 fs-5"></i> Nouvelle operation</a>
+    <a href="{{ route('caissier.operation.create') }}"  class="btn btn-primary btn-sm"><i class="demo-pli-add me-2 fs-5"></i> Nouvelle operation</a>
 @endsection
 
 @section('page-header')
-    <div class="d-flex justify-content-between mt-1">
+    <div>
         <h5 class="page-title mb-0 mt-1 fs-3">Hello <span class="text-muted">{{ auth()->user()->name }}</span>, vous etes sur <span class="text-danger">Cogelo Reporting</span></h5>
-        <div class="d-flex gap-1">
-            @foreach($caisses as $caisse)
-                <div>
-                    <span style="font-size: 0.65rem;" class="badge bg-blue"><span class="text-white">{{ $caisse->name }}</span> : <span class="">{{ number_format($caisse->solde,0,',','.') }}</span></span>
-                </div>
-            @endforeach
-        </div>
+        
     </div>
 @endsection
 
 @section('content')
-
+    
     <div style="height: 50vh; overflow:scroll;" class="card mt-1">
         <div class="card-body">
             <table class="table table-sm table-bordered table-striped table-hover">
@@ -39,9 +33,7 @@
                         <th>CAISSE</th>
                         <th>REFERENCE</th>
                         <th>&numero; COMPTE</th>
-                        <th>COMPTE TIERS</th>
                         <th>LIBELLE DE L'ECRITURE</th>
-                        <th>&numero; FACTURE</th>
                         <th>MONTANT DEBIT</th>
                         <th>MONTANT CREDIT</th>
                         <th></th>
@@ -49,19 +41,17 @@
                 </thead>
                 <tbody>
                     @foreach($transactions as $item)
-
+                        
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($item->day)->format('d/m/Y')  }}</td>
                             <td>{{ $item->caisse->name }}</td>
                             <td>{{ $item->ref }}</td>
-                            <td>{{ $item->compte }}</td>
-                            <td title="{{ $item->tier?$item->tier->name:''  }}">{{ $item->tier?$item->tier->code:'-' }}</td>
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->facture }}</td>
+                            <td>{{ $item->compte->code }}</td>
+                            <td>{{ $item->compte->name }}</td>
                             <td>{{ $item->credit?'':$item->montant }}</td>
                             <td style="text-align: right">{{ $item->credit?$item->montant:'' }}</td>
                             <td>
-                                <a data-bs-target="#editModal" data-bs-toggle="modal" data-caisse_id="{{ $item->caisse_id }}" data-id="{{ $item->id }}" data-text="{{ $item->compte }} {{ $item->name }}" data-montant="{{ $item->montant }}" class="btn btn-xs btn-light btn-edit" href=""><i class="pli-pencil fs-6"></i> Modifier</a>
+                                <a data-bs-target="#editModal" data-bs-toggle="modal" data-caisse_id="{{ $item->caisse_id }}" data-id="{{ $item->id }}" data-text="{{ $item->compte->code }} {{ $item->compte->name }}" data-montant="{{ $item->montant }}" class="btn btn-xs btn-light btn-edit" href=""><i class="pli-pencil fs-6"></i> Modifier</a>
                             </td>
                         </tr>
                     @endforeach
@@ -117,7 +107,7 @@
                             <div class="mt-2">
                                 <button id="btn-add" class="btn btn-primary btn-sm"><i class="fs-5 pli-add"></i> Ajouter</button>
                             </div>
-
+    
                         </div>
                     </form>
                 </div>

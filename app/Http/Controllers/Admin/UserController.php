@@ -27,6 +27,18 @@ class UserController extends Controller
     }
 
     public function setCaisse(){
+        $item = CaisseUser::where('user_id',request()->user_id)->where('caisse_id',request()->caisse_id)->first();
+        if(!$item){
+            $item = new CaisseUser();
+            $item->user_id = request()->user_id;
+            $item->caisse_id = request()->caisse_id;
+            $item->save();
+            Session::flash('success','Enregistrement effectué avec succès!');
+        }
+        return back();
+     }
+
+    public function _setCaisse(){
        $item = User::find(request()->user_id);
        $item->caisse_id = request()->caisse_id;
        $item->save();

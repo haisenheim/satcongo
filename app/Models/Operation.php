@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class Operation extends Model
 {
     //
     protected $guarded = [];
@@ -15,22 +15,14 @@ class Transaction extends Model
         return $this->belongsTo('App\Models\Mois');
     }
 
-    public function operation()
-    {
-        return $this->belongsTo('App\Models\Operation');
-    }
-
-    public function tier()
-    {
-        return $this->belongsTo('App\Models\Tier');
-    }
-
     public function validateur()
     {
         return $this->belongsTo('App\Models\User','validated_by');
     }
 
-   
+    public function transactions(){
+        return $this->hasMany('App\Models\Transaction','operation_id');
+    }
 
     public function user()
     {
@@ -47,15 +39,42 @@ class Transaction extends Model
         return $this->belongsTo('App\Models\Agence');
     }
 
-    public function libelle()
-    {
-        return $this->belongsTo('App\Models\Libelle');
-    }
-
     public function ville()
     {
         return $this->belongsTo('App\Models\Ville');
     }
+
+ 
+
+    public function getSommeAttribute(){
+        $trs = $this->transactions;
+        $somme = 0;
+        foreach($trs as $tr){
+            if($tr->credit){
+                $somme = $somme + $tr->montant;
+            }else{
+                $somme = $somme - $tr->montant;
+            }
+        }
+        if($somme==0){
+            $data = [
+                'name'=>'valide',
+                'somme'=>0,
+                'color'=>'success',
+                'status'=>true
+            ];
+            return $data;
+        }else{
+            $data = [
+                'name'=>'invalide',
+                'somme'=>$somme,
+                'color'=>'success',
+                'status'=>false,
+            ];
+            return $data;
+        }
+    }
+
 
     public function getStatusAttribute(){
         $data = [
@@ -74,8 +93,5 @@ class Transaction extends Model
         return $data;
     }
 
-    public function getTotalAttribute(){
-        return $this->price * $this->quantity*1000;
-    }
 
 }

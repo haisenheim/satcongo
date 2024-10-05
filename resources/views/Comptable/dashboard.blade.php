@@ -78,6 +78,7 @@
     </div>
     <div style="height: 50vh; overflow:scroll;" class="card mt-1">
         <div class="card-body">
+           
             <table class="table table-sm table-bordered table-striped table-hover">
                 <thead>
                     <tr>
@@ -88,17 +89,18 @@
                         <th>LIBELLE DE L'ECRITURE</th>
                         <th>MONTANT DEBIT</th>
                         <th>MONTANT CREDIT</th>
-                        <th>STATUT</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($transactions as $item)
+                        
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($item->day)->format('d/m/Y')  }}</td>
                             <td>{{ $item->caisse->name }}</td>
                             <td>{{ $item->ref }}</td>
-                            <td>{{ $item->compte->code }}</td>
-                            <td>{{ $item->compte->name }}</td>
+                            <td>{{ $item->compte }}</td>
+                            <td>{{ $item->name }}</td>
                             <td>{{ $item->credit?'':$item->montant }}</td>
                             <td style="text-align: right">{{ $item->credit?$item->montant:'' }}</td>
                             <td><span class="badge bg-{{ $item->status['color'] }}">{{ $item->status['name'] }}</span></td>

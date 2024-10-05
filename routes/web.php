@@ -40,12 +40,17 @@ Route::namespace('App\Http\Controllers\Admin')
         Route::resource('caisses','CaisseController');
         Route::post('user/caisse','UserController@setCaisse')->name('user.caisse');
         Route::post('caisse/compte','CaisseController@addCompte')->name('caisse.compte');
+        Route::post('caisse/set/compte','CaisseController@setCompte')->name('caisse.set.compte');
         Route::get('caisse/enable/{token}','CaisseController@enable')->name('caisse.enable');
         Route::get('caisse/disable/{token}','CaisseController@disable')->name('caisse.disable');
+        Route::resource('libelles','LibelleController');
         Route::resource('comptes','CompteController');
         Route::resource('agences','AgenceController');
         Route::get('agence/enable/{token}','AgenceController@enable')->name('agence.enable');
         Route::get('agence/disable/{token}','AgenceController@disable')->name('agence.disable');
+        Route::resource('tiers','TierController');
+        Route::get('tier/enable/{token}','TierController@enable')->name('tier.enable');
+        Route::get('tier/disable/{token}','TierController@disable')->name('tier.disable');
         Route::resource('transactions','TransactionController');
         
     });
@@ -56,8 +61,14 @@ Route::namespace('App\Http\Controllers\Caissier')
     ->name('caissier.')
     ->group(function(){
         Route::get('dashboard','DashboardController@index')->name('dashboard');
+        Route::get('operation/create','DashboardController@createOperation')->name('operation.create');
         Route::get('caisse/comptes','DashboardController@getComptes')->name('caisse.comptes');
-        Route::post('transactions','DashboardController@saveOperation')->name('operation.store');
+       # Route::post('transactions','DashboardController@saveOperation')->name('operation.store');
+        Route::post('operations','DashboardController@saveOperation')->name('operation.save');
+        Route::post('operation/update','DashboardController@updateOperation')->name('operation.update');
+
+        Route::get('create','DashboardController@create')->name('create');
+        Route::post('store','DashboardController@store')->name('store');
     });
 
 Route::namespace('App\Http\Controllers\Comptable')

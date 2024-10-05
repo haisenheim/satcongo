@@ -6,7 +6,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
     <meta name="description" content="Plateforme Cogelo de gestion de la collecte de la feve au Cameroun.">
-    <title>@yield('title') | Cogelo</title>
+    <title>@yield('title') | Alliages Technologies - Adjuvant</title>
 
     <!-- STYLESHEETS -->
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~--- -->
@@ -38,11 +38,11 @@
 </head>
 
 <body class="out-quart" style="">
-    
+
     <!-- PAGE CONTAINER -->
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <div id="root" class="root mn--min tm--fair-hd">
-        
+
         <!-- CONTENTS -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <section id="content" class="content">
@@ -54,7 +54,7 @@
                         @yield('breadcrumb')
                         @yield('actions')
                    </div>
-                   
+
                    <!-- END : Breadcrumb -->
                     @yield('page-header')
                 </div>
@@ -64,11 +64,11 @@
                     @yield('content')
                 </div>
              </div>
-            
+
             <!-- FOOTER -->
             <footer class="content__boxed mt-auto">
                 <div class="content__wrap py-3 py-md-1 d-flex flex-column flex-md-row align-items-md-center">
-                    <div class="text-nowrap mb-4 mb-md-0">Copyright &copy; {{ date('Y') }} <a href="#" class="ms-1 btn-link fw-bold">Cogelo</a></div>
+                    <div class="text-nowrap mb-4 mb-md-0">Copyright &copy; {{ date('Y') }} <a href="#" class="ms-1 btn-link fw-bold">Alliages Technologies - Adjuvant</a></div>
                     <nav class="nav flex-column gap-1 flex-md-row gap-md-3 ms-md-auto" style="row-gap: 0 !important;">
                         <a class="nav-link px-0" href="#">Contactez nous</a>
                     </nav>
@@ -85,45 +85,45 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <header class="header">
             <div class="header__inner">
-   
+
                <!-- Brand -->
                <div class="header__brand">
                   <div class="brand-wrap">
-   
+
                      <!-- Brand logo -->
                      <a href="index.html" class="brand-img stretched-link">
                         <img style="width: 40px; height:40px; color:white" src="{{ asset('img/logo.png') }}" alt="Nifty Logo" class="Nifty logo mt-1" width="16" height="16">
                      </a>
-   
-   
+
+
                      <!-- Brand title -->
-                     <div class="brand-title">Cogelo</div>                   
+                     <div class="brand-title">Cogelo</div>
                   </div>
                </div>
                <!-- End - Brand -->
-   
-   
+
+
                <div class="header__content">
-   
+
                   <!-- Content Header - Left Side: -->
                   <div class="header__content-start">
-   
-   
+
+
                      <!-- Navigation Toggler -->
                      <button type="button" class="nav-toggler header__btn btn btn-icon btn-sm" aria-label="Nav Toggler">
                         <i class="demo-psi-list-view"></i>
                      </button>
-   
+
                      <div class="vr mx-1 d-none d-md-block"></div>
-   
+
                      <!-- Searchbox -->
                      <div class="header-searchbox">
-   
+
                         <!-- Searchbox toggler for small devices -->
                         <label for="header-search-input" class="header__btn d-md-none btn btn-icon rounded-pill shadow-none border-0 btn-sm" type="button">
                            <i class="demo-psi-magnifi-glass"></i>
                         </label>
-   
+
                         <!-- Searchbox input -->
                         <form class="searchbox searchbox--auto-expand searchbox--hide-btn input-group">
                            <input id="header-search-input" class="searchbox__input form-control bg-transparent" type="search" placeholder="Rechercher ..." aria-label="Search">
@@ -136,8 +136,8 @@
                      </div>
                   </div>
                   <!-- End - Content Header - Left Side -->
-   
-   
+
+
                   <!-- Content Header - Right Side: -->
                   <div class="header__content-end">
                         @yield('top')
@@ -187,7 +187,7 @@
                                     <form id="logout-form" method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <a role="button" class="nav-link" onclick="this.parentNode.submit();"><i class="demo-pli-unlock fs-5 me-2"></i><span class="ms-1">Se déconnecter</span></a>
-                                    </form> 
+                                    </form>
                                 </div>
 
                             </div>

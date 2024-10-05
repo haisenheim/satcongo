@@ -38,8 +38,8 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Role','role_id');
     }
 
-    public function caisse(){
-        return $this->belongsTo('App\Models\Caisse','caisse_id');
+    public function caisses(){
+        return $this->belongsToMany('App\Models\Caisse','caisses_users');
     }
 
     public function departement(){

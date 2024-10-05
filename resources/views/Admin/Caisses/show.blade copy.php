@@ -27,14 +27,32 @@
         <div class="card w-25">
             <div class="card-body">
                 <h5>CAISSE : {{ $item->name }}</h5>
-                <h5>COMPTE : {{ $item->compte }}</h5>
                 <h6>AGENCE : {{ $item->agence->name }} / {{ $item->ville->name }}</h6>
                 <h6>OPERATEUR : {{ $item->user?$item->user->name:'-' }}</h6>
             </div>
         </div>
         <div class="card w-75">
             <div class="card-body">
-                
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Compte</th>
+                            <th>Libelle</th>
+                            <th>CREDIT/DEBIT</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($item->comptes as $cpt)
+                        <tr>
+                            <td>{{ $cpt->code }}</td>
+                            <td>{{ $cpt->name }}</td>
+                            <td>{{ $cpt->credit?'CREDIT':'DEBIT' }}</td>
+                            <td></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -49,12 +67,17 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <form enctype="multipart/form-data" action="{{ route('admin.caisse.set.compte') }}" method="post">
+                    <form enctype="multipart/form-data" action="{{ route('admin.caisse.compte') }}" method="post">
                         @csrf
                         <input type="hidden" name="caisse_id" value="{{ $item->id }}">
                         <div class="mt-3">
                             <label for="">Compte</label>
-                            <input type="texte" name="compte" placeholder="Saisir le numro de compte ici ..." class="form-control">
+                            <select required name="compte_id" id="compte_id" class="form-control">
+                                <option value="">Selectionner un compte</option>
+                                @foreach($comptes as $cpt)
+                                    <option value="{{ $cpt->id }}">{{ $cpt->code }} - {{ $cpt->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mt-5">
                             <button type="submit" class="btn-primary btn">ENREGISTRER</button>
