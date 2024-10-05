@@ -61,7 +61,9 @@
                             <td>{{ $item->credit?'':$item->montant }}</td>
                             <td style="text-align: right">{{ $item->credit?$item->montant:'' }}</td>
                             <td>
-                                <a data-bs-target="#editModal" data-bs-toggle="modal" data-caisse_id="{{ $item->caisse_id }}" data-id="{{ $item->id }}" data-text="{{ $item->compte }} {{ $item->name }}" data-montant="{{ $item->montant }}" class="btn btn-xs btn-light btn-edit" href=""><i class="pli-pencil fs-6"></i> Modifier</a>
+                                @if($item->compte != $item->caisse->compte)
+                                 <a data-bs-target="#editModal" data-bs-toggle="modal" data-ref="{{$item->ref}}" data-facture="{{$item->facture}}" data-operation_id="{{$item->operation_id}}" data-caisse_id="{{ $item->caisse_id }}" data-id="{{ $item->id }}" data-compte="{{ $item->compte }}" data-montant="{{ $item->montant }}" class="btn btn-xs btn-light btn-edit" href=""><i class="pli-pencil fs-6"></i> Modifier</a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -71,7 +73,7 @@
     </div>
 
     <div class="modal fade" id="editModal">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header justify-content-between">
                     <h5 class="modal-title">Edition de l'ecriture</h5>
@@ -85,37 +87,60 @@
                         <div class="">
                             <input type="hidden" name="id" id="id">
                             <input type="hidden" id="cc_id">
-                            <fieldset>
-                                <legend>ECRITURE</legend>
-                                <div>
+                            <input type="hidden" id="operation_id" name="operation_id">
+                            <div class="d-flex gap-1">
+                                <div class="mt-3">
+                                    <label for="">CAISSE</label>
+                                    <select required class="form-control" name="caisse_id" id="caisse_id">
+                                        <option value="">Caisse ...</option>
+                                        @foreach($caisses as $caisse)
+                                            <option value="{{ $caisse->id }}">{{ $caisse->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mt-3">
+                                    <label for="">DATE</label>
+                                    <input name="day" type="date"  required  class="form-control">
+                                </div>
+                                <div class="mt-3">
+                                    <label for="">SENS DE L'OPERATION</label>
+                                    <select required class="form-control" id="type_id">
+                                        <option value=1>ENTREE</option>
+                                        <option value=2>SORTIE</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-1">
+                                <div class="mt-3 w-50">
+                                    <label for="">LIBELLE</label>
+                                    <select required class="form-control" name="libelle_id" id="libelle_id">
+                                        <option value="">Libelle ...</option>
+                                        @foreach($libelles as $libelle)
+                                            <option value="{{ $libelle->id }}">{{ $libelle->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mt-3">
                                     <label for="">COMPTE</label>
-                                    <input id="ecrit" readonly class="form-control" type="text">
+                                    <input name="compte" id="compte" type="text"  required placeholder="Saisir le compte de l'operation" class="form-control">
                                 </div>
-                                <div>
+                                <div class="mt-3">
                                     <label for="">MONTANT</label>
-                                    <input id="mt" readonly class="form-control" type="text">
+                                    <input name="montant" id="mt" type="number"  required placeholder="Saisir le montant de l'operation" class="form-control">
                                 </div>
-                            </fieldset>
-                            <div class="mt-3">
-                                <label for="">CREDIT/DEBIT</label>
-                                <select class="form-control" id="type_id">
-                                    <option value="">SELECTIONNER LE TYPE D'OPERATION ...</option>
-                                    <option value=0>DEBIT</option>
-                                    <option value=1>CREDIT</option>
-                                </select>
                             </div>
-                            <div class="mt-3">
-                                <label for="">COMPTE</label>
-                                <select name="compte_id" required class="form-control" id="compte_id">
-                                    <option value="">SELECTIONNER LE COMPTE ...</option>
-                                </select>
-                            </div>
-                            <div class="mt-3">
-                                <label for="">MONTANT</label>
-                                <input name="montant" type="number"  required placeholder="Saisir le montant de l'operation" class="form-control">
+                            <div class="d-flex gap-1">
+                                <div class="mt-3 w-50">
+                                    <label for="">REFERENCE</label>
+                                    <input name="ref" id="ref" type="text"  required placeholder="Saisir la reference" class="form-control">
+                                </div>
+                                <div class="mt-3 w-50">
+                                    <label for="">&numero; FACTURE</label>
+                                    <input name="facture" id="facture" type="text"  required placeholder="Saisir le numero de facture" class="form-control">
+                                </div>
                             </div>
                             <div class="mt-2">
-                                <button id="btn-add" class="btn btn-primary btn-sm"><i class="fs-5 pli-add"></i> Ajouter</button>
+                                <button id="btn-add" class="btn btn-primary btn-sm"><i class="fs-5 pli-add"></i> Modifier</button>
                             </div>
 
                         </div>
@@ -128,9 +153,12 @@
     <script>
         $('.btn-edit').click(function(){
             $('#mt').val($(this).data('montant'));
-            $('#ecrit').val($(this).data('text'))
+            $('#compte').val($(this).data('compte'))
+            $('#operation_id').val($(this).data('operation_id'))
             $('#id').val($(this).data('id'))
             $('#cc_id').val($(this).data('caisse_id'))
+            $('#ref').val($(this).data('ref'))
+            $('#facture').val($(this).data('facture'))
         })
 
         $('#type_id').change(function(){
