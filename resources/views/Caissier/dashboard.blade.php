@@ -30,7 +30,7 @@
 
 @section('content')
 
-    <div style="height: 50vh; overflow:scroll;" class="card mt-1">
+    <div style="height: 75vh; overflow:scroll;" class="card mt-1">
         <div class="card-body">
             <table class="table table-sm table-bordered table-striped table-hover">
                 <thead>
