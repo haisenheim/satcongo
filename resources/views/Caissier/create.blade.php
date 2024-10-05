@@ -42,16 +42,16 @@
                 </div>
                 <div class="mb-3">
                     <label class="text-blue fs-6 fw-bolder" for="">TIERS</label>
-                    <select required class="form-control" name="tier_id" id="tier_id">
+                    <select class="form-control" name="tier_id" id="tier_id">
                         <option value="">SELECTIONNER UN TIERS ...</option>
                         @foreach($tiers as $tier)
-                          <option value="{{ $tier->id }}">{{ $tier->name }}</option>
+                          <option data-compte="{{ $tier->compte }}" value="{{ $tier->id }}">{{ $tier->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="mb-2">
                     <label class="text-blue fs-6 fw-bolder" for="">COMPTE</label>
-                    <input required type="text" name="compte" class="form-control">
+                    <input required id="compte" type="text" name="compte" class="form-control">
                 </div>
                 <div class="mb-2">
                     <label class="text-blue fs-6 fw-bolder" for="">&numero; FCATURE</label>
@@ -134,4 +134,18 @@
             margin-bottom: 0;
         }
     </style>
+
+    <script>
+        $('#tier_id').change(function(){
+            var _compte = $('#tier_id option:selected').data('compte');
+            console.log(_compte);
+            if(_compte!=undefined){
+                $('#compte').val(_compte);
+                $('#compte').prop('readonly',true);
+            }else{
+                $('#compte').val("");
+                $('#compte').prop('readonly',false);
+            }
+        })
+    </script>
 @endsection
