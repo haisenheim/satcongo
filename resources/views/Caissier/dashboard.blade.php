@@ -36,7 +36,7 @@
                 <thead>
                     <tr>
                         <th>DATE</th>
-                        <th>CAISSE</th>
+                        <th>JOURNAL</th>
                         <th>REFERENCE</th>
                         <th>&numero; COMPTE</th>
                         <th>COMPTE TIERS</th>
@@ -168,9 +168,9 @@
                         @csrf
                         <div class="mb-3 d-flex gap-1">
                             <div class="w-25">
-                                <label class="text-blue fs-6 fw-bolder" for="">CAISSE</label>
+                                <label class="text-blue fs-6 fw-bolder" for="">JOURNAL</label>
                                 <select class="form-control" name="caisse_id" id="caisse_id">
-                                    <option value=0>SELECTIONNER UNE CAISSE ...</option>
+                                    <option value=0>SELECTIONNER UN JOURNAL ...</option>
                                     @foreach($caisses as $caisse)
                                     <option value="{{ $caisse->id }}">{{ $caisse->name }}</option>
                                     @endforeach
@@ -182,7 +182,7 @@
                             </div>
                             <div class="w-50">
                                 <label class="text-blue fs-6 fw-bolder" for="">REFERENCE</label>
-                                <input required type="text" id="ref" name="ref" placeholder="Saisir la reference de l'operation ici ..." class="form-control">
+                                <input  type="text" id="ref" name="ref" placeholder="Saisir la reference de l'operation ici ..." class="form-control">
                             </div>
                         </div>
 
@@ -202,7 +202,7 @@
                             </div>
                             <div class="">
                                 <label class="text-blue fs-6 fw-bolder" for="">&numero; FACTURE</label>
-                                <input required placeholder="Saisir le numero de facture ici ..." type="text" name="facture" class="form-control">
+                                <input placeholder="Saisir le numero de facture ici ..." type="text" name="facture" class="form-control">
                             </div>
                         </div>
                         

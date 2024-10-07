@@ -48,7 +48,7 @@ class DashboardController extends Controller
         $op->ville_id = $caisse->ville_id;
         $op->ref = request()->ref;
         $op->facture = request()->facture;
-        $op->tier_id = request()->tier_id;
+        $op->tier_id = request()->tier_id??0;
         $op->day = request()->day;
         $dt = Carbon::parse(request()->day);
         $op->moi_id = $dt->month;

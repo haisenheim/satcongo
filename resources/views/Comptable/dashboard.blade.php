@@ -83,7 +83,7 @@
                 <thead>
                     <tr>
                         <th>DATE</th>
-                        <th>CAISSE</th>
+                        <th>JOURNAL</th>
                         <th>REFERENCE</th>
                         <th>&numero; COMPTE</th>
                         <th>COMPTE TIERS</th>
