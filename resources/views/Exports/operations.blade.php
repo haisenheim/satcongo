@@ -8,7 +8,7 @@
                 <tbody>
                     <tr>
                         <td colspan="1">
-                            <img src="{{public_path('img/logo.png')}}" height="180" alt="">
+                            <img src="{{public_path('img/logo_cogelo.png')}}" height="180" alt="">
                         </td>
                         <td colspan="4">
                             <h4 style="font-size: 24px; text-align: center;">Journal des operations</h4>
@@ -22,8 +22,10 @@
                     <thead>
                         <tr>
                             <th style="color: white;">DATE</th>
+                            <th style="color: white;">FACTURE</th>
                             <th style="color: white;">REFERENCE</th>
                             <th style="color: white;">Numero de Compte</th>
+                            <th style="color: white;">COMPTE TIERS</th>
                             <th style="color: white;">Libellé Ecriture</th>
                             <th style="color: white;">Mt Débit</th>
                             <th style="color: white;">Mt Crédit</th>
@@ -33,8 +35,14 @@
                         @foreach($transactions as $item)
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($item->day)->format('d/m/Y')  }}</td>
+                            <td>{{ $item->facture }}</td>
                             <td>{{ $item->ref }}</td>
                             <td>{{ $item->compte }}</td>
+                            @if($item->compte != $item->caisse->compte)
+                             <td title="{{ $item->tier?$item->tier->name:''  }}">{{ $item->tier?$item->tier->code:'-' }}</td>
+                            @else
+                             <td></td>
+                            @endif
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->credit?'':$item->montant }}</td>
                             <td>{{ $item->credit?$item->montant:'' }}</td>

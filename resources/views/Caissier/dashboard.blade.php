@@ -12,7 +12,7 @@
 @endsection
 
 @section('actions')
-    <a href="{{ route('caissier.create') }}"  class="btn btn-primary btn-sm"><i class="demo-pli-add me-2 fs-5"></i> Nouvelle operation</a>
+    <a href="#" data-bs-target="#addModal" data-bs-toggle="modal"  class="btn btn-primary btn-sm"><i class="demo-pli-add me-2 fs-5"></i> Nouvelle operation</a>
 @endsection
 
 @section('page-header')
@@ -55,7 +55,11 @@
                             <td>{{ $item->caisse->name }}</td>
                             <td>{{ $item->ref }}</td>
                             <td>{{ $item->compte }}</td>
-                            <td title="{{ $item->tier?$item->tier->name:''  }}">{{ $item->tier?$item->tier->code:'-' }}</td>
+                            @if($item->compte != $item->caisse->compte)
+                             <td title="{{ $item->tier?$item->tier->name:''  }}">{{ $item->tier?$item->tier->code:'-' }}</td>
+                            @else
+                             <td></td>
+                            @endif
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->facture }}</td>
                             <td>{{ $item->credit?'':$item->montant }}</td>
@@ -150,7 +154,104 @@
         </div>
     </div>
 
+    <div class="modal fade" id="addModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header justify-content-between">
+                    <h5 class="modal-title">Nouvelle operation</h5>
+                    <div style="float: right">
+                        <button data-bs-dismiss="modal" id="btn-close" class="btn btn-sm" >x</button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('caissier.store') }}">
+                        @csrf
+                        <div class="mb-3 d-flex gap-1">
+                            <div class="w-25">
+                                <label class="text-blue fs-6 fw-bolder" for="">CAISSE</label>
+                                <select class="form-control" name="caisse_id" id="caisse_id">
+                                    <option value=0>SELECTIONNER UNE CAISSE ...</option>
+                                    @foreach($caisses as $caisse)
+                                    <option value="{{ $caisse->id }}">{{ $caisse->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="w-25">
+                                <label class="text-blue fs-6 fw-bolder" for="">DATE</label>
+                                <input required type="date" name="day" id="day" class="form-control">
+                            </div>
+                            <div class="w-50">
+                                <label class="text-blue fs-6 fw-bolder" for="">REFERENCE</label>
+                                <input required type="text" id="ref" name="ref" placeholder="Saisir la reference de l'operation ici ..." class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="mb-3 d-flex gap-1">
+                            <div class="w-50">
+                                <label class="text-blue fs-6 fw-bolder" for="">TIERS</label>
+                                <select class="form-control" name="tier_id" id="tier_id">
+                                    <option value="">SELECTIONNER UN TIERS ...</option>
+                                    @foreach($tiers as $tier)
+                                    <option data-compte="{{ $tier->compte }}" value="{{ $tier->id }}">{{ $tier->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="">
+                                <label class="text-blue fs-6 fw-bolder" for="">COMPTE</label>
+                                <input required id="compte_" type="text" name="compte" class="form-control">
+                            </div>
+                            <div class="">
+                                <label class="text-blue fs-6 fw-bolder" for="">&numero; FACTURE</label>
+                                <input required placeholder="Saisir le numero de facture ici ..." type="text" name="facture" class="form-control">
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="mb-3 d-flex gap-1">
+                            <div class="w-40">
+                                <label class="text-blue fs-6 fw-bolder" for="">LIBELLE DE L'ECRITURE</label>
+                                <select required class="form-control" name="libelle_id" id="lib_id">
+                                    <option value="">SELECTIONNER UNE ECRITURE ...</option>
+                                    @foreach($libelles as $libelle)
+                                    <option value="{{ $libelle->id }}">{{ $libelle->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-blue fs-6 fw-bolder" for="">SENS DE L'OPERATION</label>
+                                <select required class="form-control" name="sens" id="sens">
+                                        <option value="">SELECTIONNER LE TYPE D'OPERATION ...</option>
+                                        <option value="1">ENTREE</option>
+                                        <option value="2">SORTIE</option>
+                                </select>
+                            </div>
+                            <div class="w-50">
+                                <label class="text-blue fs-6 fw-bolder" for="">MONTANT</label>
+                                <input required type="number" placeholder="Saisir le montant de l'operation ici ..." name="montant" id="montant" class="form-control">
+                            </div>
+                        </div>
+                        <div class="">
+                            <button type="submit" id="btn-save" class="btn btn-primary"><i class="fs-5 pli-save"></i> ENREGISTRER</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        $('#tier_id').change(function(){
+            var _compte = $('#tier_id option:selected').data('compte');
+            console.log(_compte);
+            if(_compte!=undefined){
+                $('#compte_').val(_compte);
+                $('#compte_').prop('readonly',true);
+            }else{
+                $('#compte_').val("");
+                $('#compte_').prop('readonly',false);
+            }
+        })
+
         $('.btn-edit').click(function(){
             $('#mt').val($(this).data('montant'));
             $('#compte').val($(this).data('compte'))

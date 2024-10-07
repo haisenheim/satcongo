@@ -23,7 +23,8 @@ class DashboardController extends Controller
         $user = User::find(auth()->user()->id);
         $caisses = $user->caisses;
         $libelles = Libelle::where('active',1)->get();
-		return view('Caissier/dashboard',compact('transactions','caisses','libelles'));
+        $tiers = Tier::where('active',1)->get();
+		return view('Caissier/dashboard',compact('transactions','caisses','libelles','tiers'));
 	}
 
     public function create(){

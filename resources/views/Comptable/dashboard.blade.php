@@ -86,6 +86,7 @@
                         <th>CAISSE</th>
                         <th>REFERENCE</th>
                         <th>&numero; COMPTE</th>
+                        <th>COMPTE TIERS</th>
                         <th>LIBELLE DE L'ECRITURE</th>
                         <th>MONTANT DEBIT</th>
                         <th>MONTANT CREDIT</th>
@@ -100,6 +101,11 @@
                             <td>{{ $item->caisse->name }}</td>
                             <td>{{ $item->ref }}</td>
                             <td>{{ $item->compte }}</td>
+                            @if($item->compte != $item->caisse->compte)
+                             <td title="{{ $item->tier?$item->tier->name:''  }}">{{ $item->tier?$item->tier->code:'-' }}</td>
+                            @else
+                             <td></td>
+                            @endif
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->credit?'':$item->montant }}</td>
                             <td style="text-align: right">{{ $item->credit?$item->montant:'' }}</td>
@@ -109,6 +115,8 @@
                 </tbody>
             </table>
         </div>
+
+       
     </div>
 
     <script>
