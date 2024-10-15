@@ -45,7 +45,7 @@ class OperationExport implements FromView, ShouldAutoSize, WithStyles, WithTitle
         $sheet->getStyle('B1')
          ->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         
-         $sheet->getStyle('A3:H3')
+         $sheet->getStyle('A3:I3')
          ->getFill()
          ->applyFromArray(
              [

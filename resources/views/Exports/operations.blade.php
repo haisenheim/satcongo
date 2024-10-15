@@ -22,6 +22,7 @@
                     <thead>
                         <tr>
                             <th style="color: white;">DATE</th>
+                            <th style="color: white;">NUMERO D'OPERATION</th>
                             <th style="color: white;">FACTURE</th>
                             <th style="color: white;">REFERENCE</th>
                             <th style="color: white;">Numero de Compte</th>
@@ -35,6 +36,7 @@
                         @foreach($transactions as $item)
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($item->day)->format('d/m/Y')  }}</td>
+                            <td>{{ $item->caisse->name }}-{{ $item->id }}</td>
                             <td>{{ $item->facture }}</td>
                             <td>{{ $item->ref }}</td>
                             <td>{{ $item->compte }}</td>
