@@ -15,6 +15,11 @@ class Caisse extends Model
         return $this->belongsTo('App\Models\Ville');
     }
 
+    public function departement()
+    {
+        return $this->belongsTo('App\Models\Departement');
+    }
+
     public function comptes()
     {
         return $this->belongsToMany('App\Models\Compte','caisses_comptes');

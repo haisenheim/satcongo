@@ -36,6 +36,7 @@
                 <thead>
                     <tr>
                         <th>DATE</th>
+                        <th>&numero; OPERATION</th>
                         <th>JOURNAL</th>
                         <th>REFERENCE</th>
                         <th>&numero; COMPTE</th>
@@ -52,6 +53,7 @@
 
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($item->day)->format('d/m/Y')  }}</td>
+                            <td>{{ $item->caisse->name }}-{{ $item->id }}</td>
                             <td>{{ $item->caisse->name }}</td>
                             <td>{{ $item->ref }}</td>
                             <td>{{ $item->compte }}</td>
@@ -169,7 +171,7 @@
                         <div class="mb-3 d-flex gap-1">
                             <div class="w-25">
                                 <label class="text-blue fs-6 fw-bolder" for="">JOURNAL</label>
-                                <select class="form-control" name="caisse_id" id="caisse_id">
+                                <select class="form-control" name="caisse_id" id="journal_id">
                                     <option value=0>SELECTIONNER UN JOURNAL ...</option>
                                     @foreach($caisses as $caisse)
                                     <option value="{{ $caisse->id }}">{{ $caisse->name }}</option>
@@ -197,8 +199,17 @@
                                 </select>
                             </div>
                             <div class="">
-                                <label class="text-blue fs-6 fw-bolder" for="">COMPTE</label>
-                                <input required id="compte_" type="text" name="compte" class="form-control">
+                                <label class="text-blue fs-6 fw-bolder" for="">OU UN COMPTE</label>
+                                <select name="compte_id" id="_compte" class="form-control">
+                                    <option value="">SELECTIONNER UN COMPTE</option>
+                                    @foreach($comptes as $compte)
+                                        <option data-compte="{{ $compte->code }}" value="{{ $compte->id }}">{{ $compte->code }}-{{ $compte->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="">
+                                <label class="text-blue fs-6 fw-bolder" for="">&numero; DU COMPTE</label>
+                                <input required readonly id="compte_" type="text" name="compte" class="form-control">
                             </div>
                             <div class="">
                                 <label class="text-blue fs-6 fw-bolder" for="">&numero; FACTURE</label>
@@ -245,10 +256,22 @@
             console.log(_compte);
             if(_compte!=undefined){
                 $('#compte_').val(_compte);
-                $('#compte_').prop('readonly',true);
+                $('#_compte').prop('disabled',true);
             }else{
                 $('#compte_').val("");
-                $('#compte_').prop('readonly',false);
+                $('#_compte').prop('disabled',false);
+            }
+        })
+
+        $('#_compte').change(function(){
+            var _compte = $('#_compte option:selected').data('compte');
+            console.log(_compte);
+            if(_compte!=undefined){
+                $('#compte_').val(_compte);
+                $('#tier_id').prop('disabled',true);
+            }else{
+                $('#compte_').val("");
+                $('#tier_id').prop('disabled',false);
             }
         })
 
@@ -261,6 +284,26 @@
             $('#ref').val($(this).data('ref'))
             $('#facture').val($(this).data('facture'))
         })
+
+        $('#journal_id').change(function(){
+                 var _id = $('#journal_id').val();
+                 console.log(_id);
+                $.ajax({
+                    url: "{{ route('caissier.agence.libelles') }}",
+                    type:'get',
+                    dataType:'json',
+                    data:{id:_id},
+                    success:function(data){
+                        $('#lib_id').html("<option value=0>Choisir un libelle ...</option>");
+                        data.forEach(element => {
+                            $('#lib_id').append(`<option value=${element.id}>${element.name}</option>`);
+                        });
+                    },
+                    error:function(err){
+                        console.log(err)
+                    }
+                });
+            })
 
         $('#type_id').change(function(){
                  var _id = $('#type_id').val();

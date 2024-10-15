@@ -52,10 +52,10 @@
                        <a href="{{ route('admin.agences.index') }}" class="nav-link {{ $active==703?'active':'' }}">Agences</a>
                    </li>
                    <li class="nav-item">
-                    <a href="{{ route('admin.tiers.index') }}" class="nav-link {{ $active==704?'active':'' }}">Tiers</a>
+                    <a href="{{ route('admin.tiers.index') }}" class="nav-link {{ $active==705?'active':'' }}">Tiers</a>
                 </li>
                    <li class="nav-item">
-                       <a href="{{ route('admin.comptes.index') }}" class="nav-link {{ $active==705?'active':'' }}">Comptes</a>
+                       <a href="{{ route('admin.comptes.index') }}" class="nav-link {{ $active==706?'active':'' }}">Comptes</a>
                    </li>
                 </ul>
                 <!-- END : Dashboard submenu list -->

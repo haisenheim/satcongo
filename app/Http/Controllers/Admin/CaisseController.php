@@ -50,6 +50,8 @@ class CaisseController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $ag = Agence::find($data['agence_id']);
+        $data['departement_id'] = $ag->departement_id;
         Caisse::create($data);
         return back();
     }
@@ -79,12 +81,19 @@ class CaisseController extends Controller
 
     public function addCompte(){
         $item = new CaisseCompte();
-       $item->caisse_id = request()->caisse_id;
-       $item->compte_id = request()->compte_id;
-       $item->save();
+        CaisseCompte::updateOrCreate([
+            'caisse_id'=>request()->caisse_id,
+            'compte_id'=>request()->compte_id,],
+            [
+                'caisse_id'=>request()->caisse_id,
+                'compte_id'=>request()->compte_id,
+            ]
+        );
        Session::flash('success','Enregistrement effectué avec succès!');
         return back();
     }
+
+    
 
     /**
      * Display the specified resource.

@@ -30,6 +30,7 @@
                         <th>Caisse</th>
                         <th>Agence</th>
                         <th>Ville</th>
+                        <th>Departement</th>
                         <th>Operateur</th>
                         <th>Statut</th>
                         <th></th>
@@ -41,6 +42,7 @@
                             <td><a href="{{ route('admin.caisses.show',$item->id) }}">{{ $item->name }}</a></td>
                             <td>{{ $item->agence?$item->agence->name:'-' }}</td>
                             <td>{{ $item->ville?$item->ville->name:'-' }}</td>
+                            <td>{{ $item->departement?$item->departement->name:'-' }}</td>
                             <td>{{ $item->user?$item->user->name:'-' }}</td>
                             <td><span class="badge bg-{{ $item->status['color'] }}">{{ $item->status['name'] }}</span></td>
                             <td>

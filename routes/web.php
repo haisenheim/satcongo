@@ -38,14 +38,23 @@ Route::namespace('App\Http\Controllers\Admin')
         Route::get('user/enable/{token}','UserController@enable')->name('user.enable');
         Route::get('user/disable/{token}','UserController@disable')->name('user.disable');
         Route::resource('caisses','CaisseController');
+        Route::resource('departements','DepartementController');
+        Route::get('departement/enable/{token}','DepartementController@enable')->name('departement.enable');
+        Route::get('departement/disable/{token}','DepartementController@disable')->name('departement.disable');
         Route::post('user/caisse','UserController@setCaisse')->name('user.caisse');
+        Route::post('user/departement','UserController@setDepartement')->name('user.departement');
         Route::post('caisse/compte','CaisseController@addCompte')->name('caisse.compte');
         Route::post('caisse/set/compte','CaisseController@setCompte')->name('caisse.set.compte');
+        Route::post('caisse/add/compte','CaisseController@addCompte')->name('caisse.add.compte');
         Route::get('caisse/enable/{token}','CaisseController@enable')->name('caisse.enable');
+        
+        
+        
         Route::get('caisse/disable/{token}','CaisseController@disable')->name('caisse.disable');
         Route::resource('libelles','LibelleController');
         Route::resource('comptes','CompteController');
         Route::resource('agences','AgenceController');
+        Route::post('agence/set/libelle','AgenceController@setLibelle')->name('agence.set.libelle');
         Route::get('agence/enable/{token}','AgenceController@enable')->name('agence.enable');
         Route::get('agence/disable/{token}','AgenceController@disable')->name('agence.disable');
         Route::resource('tiers','TierController');
@@ -66,7 +75,7 @@ Route::namespace('App\Http\Controllers\Caissier')
        # Route::post('transactions','DashboardController@saveOperation')->name('operation.store');
         Route::post('operations','DashboardController@saveOperation')->name('operation.save');
         Route::post('operation/update','DashboardController@updateOperation')->name('operation.update');
-
+        Route::get('caisse/libelles','DashboardController@getLibelles')->name('agence.libelles');
         Route::get('create','DashboardController@create')->name('create');
         Route::post('store','DashboardController@store')->name('store');
     });
@@ -80,6 +89,18 @@ Route::namespace('App\Http\Controllers\Comptable')
         Route::get('bluk/validate/{caisse_id}/{start}/{end}','DashboardController@blukValidate')->name('bluk.validate');
         Route::get('bluk/export/{caisse_id}/{start}/{end}','DashboardController@blukExport')->name('bluk.export');
     });
+
+Route::namespace('App\Http\Controllers\Dcomptable')
+    ->prefix('dcomptable')
+    ->middleware(['auth','dcomptable'])
+    ->name('dcomptable.')
+    ->group(function(){
+        Route::get('dashboard','DashboardController@index')->name('dashboard');
+        Route::get('bluk/validate/{caisse_id}/{start}/{end}','DashboardController@blukValidate')->name('bluk.validate');
+        Route::get('single/validate/{token}','DashboardController@singleValidate')->name('single.validate');
+        Route::get('bluk/export/{caisse_id}/{start}/{end}','DashboardController@blukExport')->name('bluk.export');
+    });
+
 
 
 Route::get('/home',[HomeController::class,'index'])->name('home')->middleware('auth');

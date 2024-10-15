@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CaisseUser;
+use App\Models\Departement;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Ville;
@@ -23,7 +24,8 @@ class UserController extends Controller
         $items = User::all();
         $roles = Role::all();
         $villes = Ville::all();
-        return view('/Admin/Users/index')->with(compact('items','roles','villes'));
+        $departements = Departement::all();
+        return view('/Admin/Users/index')->with(compact('items','roles','villes','departements'));
     }
 
     public function setCaisse(){
@@ -35,6 +37,13 @@ class UserController extends Controller
             $item->save();
             Session::flash('success','Enregistrement effectué avec succès!');
         }
+        return back();
+    }
+
+    public function setDepartement(){
+        $item = User::find(request()->user_id);
+        $item->departement_id = request()->departement_id;
+        $item->save();
         return back();
      }
 

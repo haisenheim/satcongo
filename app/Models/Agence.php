@@ -15,6 +15,16 @@ class Agence extends Model
         return $this->belongsTo('App\Models\Ville');
     }
 
+    public function libelles()
+    {
+        return $this->belongsToMany('App\Models\Libelle','libelle_agences');
+    }
+
+    public function departement()
+    {
+        return $this->belongsTo('App\Models\Departement');
+    }
+
     public function getStatusAttribute(){
         $data = [
             'name'=>'verrouillé',

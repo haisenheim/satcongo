@@ -30,6 +30,7 @@
                     <tr>
                         <th>Agence</th>
                         <th>Ville</th>
+                        <th>DEPARTEMENT</th>
                         <th>Statut</th>
                         <th></th>
                     </tr>
@@ -39,6 +40,7 @@
                         <tr>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->ville?$item->ville->name:'-' }}</td>
+                            <td>{{ $item->departement?$item->departement->name:'-' }}</td>
                             <td><span class="badge bg-{{ $item->status['color'] }}">{{ $item->status['name'] }}</span></td>
                             <td>
                                 <div class="btn-group">
@@ -47,6 +49,7 @@
                                        <span class="vr"></span>
                                     </button>
                                     <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ route('admin.agences.show',$item->id) }}">Afficher</a></li>
                                         @if($item->active)
                                             <li><a class="dropdown-item" href="{{ route('admin.agence.disable',$item->id) }}">Verrouiller</a></li>
                                         @else
@@ -85,6 +88,16 @@
                                     <select required name="ville_id" id="ville_id" class="form-control">
                                         <option value="">Selectionner une ville</option>
                                         @foreach($villes as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label for="">Departement</label>
+                                    <select required name="departement_id" id="departement_id" class="form-control">
+                                        <option value="">Selectionner un departement</option>
+                                        @foreach($departements as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>

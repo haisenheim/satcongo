@@ -1,4 +1,4 @@
-@extends('Layouts.comptable')
+@extends('Layouts.dcomptable')
 
 @section('title', 'Accueil')
 @section('breadcrumb')
@@ -24,20 +24,15 @@
             <div>
                 <fieldset class="">
                     <legend class="mb-0">Consultation</legend>
-                    <form method="get"  action="{{ route('comptable.dashboard') }}">
+                    <form method="get"  action="{{ route('dcomptable.dashboard') }}">
                         @csrf
                         <div class="d-flex gap-2">
                             <div>
-                                <select name="ville_id" required class="form-control" id="ville_id">
-                                    <option value="">SELECTIONNER LA VILLE ...</option>
-                                    @foreach($villes as $ville)
-                                        <option value="{{ $ville->id }}">{{ $ville->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div>
                                 <select name="agence_id" required class="form-control" id="agence_id">
                                     <option value="">SELECTIONNER UNE AGENCE ...</option>
+                                    @foreach($agences as $ville)
+                                        <option value="{{ $ville->id }}">{{ $ville->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div>
@@ -65,10 +60,10 @@
                     <legend class="mb-0">Exportation</legend>
                         <div class="d-flex gap-2">
                             <div class="">
-                                <a href="{{ route('comptable.bluk.export',[$caisse_id,$start,$end]) }}" class="btn btn-danger"><i class="fs-5 pli-download"></i> Exporter</a>
+                                <a href="{{ route('dcomptable.bluk.export',[$caisse_id,$start,$end]) }}" class="btn btn-danger"><i class="fs-5 pli-download"></i> Exporter</a>
                             </div>
                             <div class="">
-                                <a href="{{ route('comptable.bluk.validate',[$caisse_id,$start,$end]) }}" class="btn btn-success"><i class="fs-5 pli-pencil"></i> Valider</a>
+                                <a href="{{ route('dcomptable.bluk.validate',[$caisse_id,$start,$end]) }}" class="btn btn-success"><i class="fs-5 pli-pencil"></i> Valider</a>
                             </div>
                         </div>
                 </fieldset>
@@ -91,11 +86,13 @@
                         <th>LIBELLE DE L'ECRITURE</th>
                         <th>MONTANT DEBIT</th>
                         <th>MONTANT CREDIT</th>
+                        <th>STATUT</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($transactions as $item)
+                        
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($item->day)->format('d/m/Y')  }}</td>
                             <td>{{ $item->caisse->name }}-{{ $item->id }}</td>
@@ -111,6 +108,11 @@
                             <td>{{ $item->credit?'':$item->montant }}</td>
                             <td style="text-align: right">{{ $item->credit?$item->montant:'' }}</td>
                             <td><span class="badge bg-{{ $item->status['color'] }}">{{ $item->status['name'] }}</span></td>
+                            <td>
+                                @if(($item->compte != $item->caisse->compte)&&(!$item->validated_at))
+                                 <a class="btn btn-xs btn-light btn-edit" href="{{ route('dcomptable.single.validate',$item->operation->token) }}"><i class="pli-pencil fs-6"></i> Modifier</a>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

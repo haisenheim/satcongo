@@ -24,8 +24,16 @@ class DashboardController extends Controller
         $caisses = $user->caisses;
         $libelles = Libelle::where('active',1)->get();
         $tiers = Tier::where('active',1)->get();
-		return view('Caissier/dashboard',compact('transactions','caisses','libelles','tiers'));
+        $comptes = Compte::where('active',1)->get();
+		return view('Caissier/dashboard',compact('transactions','caisses','libelles','tiers','comptes'));
 	}
+
+    public function getLibelles(){
+        $caisse = Caisse::find(request()->id);
+        $agence = $caisse->agence;
+        $libelles = $agence->libelles;
+        return response()->json($libelles);
+    }
 
     public function create(){
         $cus = CaisseUser::where('user_id',auth()->user()->id)->get();

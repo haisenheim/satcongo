@@ -24,6 +24,9 @@ class HomeController extends Controller
            if($role_id == 3){
             return redirect('/caissier/dashboard');
            }
+           if($role_id == 4){
+            return redirect('/dcomptable/dashboard');
+           }
 
 
            return redirect('/login');
