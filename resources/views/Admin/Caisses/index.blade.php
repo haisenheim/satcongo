@@ -24,14 +24,15 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <table class="table table-sm">
+            <table class="table table-sm table-bordered">
                 <thead>
                     <tr>
-                        <th>Caisse</th>
+                        <th>Code</th>
+                        <th>Intitule</th>
+                        <th>Compte</th>
                         <th>Agence</th>
                         <th>Ville</th>
                         <th>Departement</th>
-                        <th>Operateur</th>
                         <th>Statut</th>
                         <th></th>
                     </tr>
@@ -39,11 +40,12 @@
                 <tbody>
                     @foreach($items as $item)
                         <tr>
+                            <td><a href="{{ route('admin.caisses.show',$item->id) }}">{{ $item->code }}</a></td>
                             <td><a href="{{ route('admin.caisses.show',$item->id) }}">{{ $item->name }}</a></td>
+                            <td>{{ $item->compte }}</td>
                             <td>{{ $item->agence?$item->agence->name:'-' }}</td>
                             <td>{{ $item->ville?$item->ville->name:'-' }}</td>
                             <td>{{ $item->departement?$item->departement->name:'-' }}</td>
-                            <td>{{ $item->user?$item->user->name:'-' }}</td>
                             <td><span class="badge bg-{{ $item->status['color'] }}">{{ $item->status['name'] }}</span></td>
                             <td>
                                 <div class="btn-group">
@@ -57,7 +59,7 @@
                                         @else
                                             <li><a class="dropdown-item" href="{{ route('admin.caisse.enable',$item->id) }}">Activer</a></li>
                                         @endif
-                                                                          
+
                                     </ul>
                                  </div>
                             </td>
@@ -80,8 +82,16 @@
                     <form enctype="multipart/form-data" action="{{ route('admin.caisses.store') }}" method="post">
                         @csrf
                         <div class="mt-3">
-                            <label for="">LIBELLE</label>
-                            <input type="text" required name="name" placeholder="Saisir le nom de l'agence" class="form-control">
+                            <label for="">CODE</label>
+                            <input type="text" required name="code" placeholder="Saisir le code" class="form-control">
+                        </div>
+                        <div class="mt-3">
+                            <label for="">INTITULE</label>
+                            <input type="text" required name="name" placeholder="Saisir l'intitule de la caisse" class="form-control">
+                        </div>
+                        <div class="mt-3">
+                            <label for="">COMPTE DE COMPENSATION</label>
+                            <input type="text" required name="compte" placeholder="Saisir le numero de compte" class="form-control">
                         </div>
                         <div class="mt-3">
                             <label for="">SOLDE INITIAL</label>
@@ -100,7 +110,7 @@
                             <label for="">Agence</label>
                             <select required name="agence_id" id="agence_id" class="form-control">
                                 <option value="">Selectionner une agence</option>
-                                
+
                             </select>
                         </div>
                         <div class="mt-5">
