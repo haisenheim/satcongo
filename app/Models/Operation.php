@@ -29,22 +29,37 @@ class Operation extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function tier()
+    {
+        return $this->belongsTo('App\Models\Tier');
+    }
+
     public function caisse()
     {
         return $this->belongsTo('App\Models\Caisse');
     }
 
-    public function agence()
+    public function agent()
     {
-        return $this->belongsTo('App\Models\Agence');
+        return $this->belongsTo('App\Models\Agent');
     }
 
-    public function ville()
+    public function departement_un()
     {
-        return $this->belongsTo('App\Models\Ville');
+        return $this->belongsTo('App\Models\Departement','departement_un_id');
     }
 
- 
+    public function departement_deux()
+    {
+        return $this->belongsTo('App\Models\Departement','departement_deux_id');
+    }
+
+    public function type()
+    {
+        return $this->belongsTo('App\Models\Toperation','type_id');
+    }
+
+
 
     public function getSommeAttribute(){
         $trs = $this->transactions;
@@ -72,6 +87,19 @@ class Operation extends Model
                 'status'=>false,
             ];
             return $data;
+        }
+    }
+
+    public function getMontantAttribute(){
+
+        if($this->type_id==1){
+            return $this->mt;
+        }
+        if($this->type_id==2){
+            return $this->ration + $this->peage + $this->hotel + $this->bac + $this->autres + $this->prime;
+        }
+        if($this->type_id==3){
+            return $this->mt_especes + $this->mt_cheque;
         }
     }
 

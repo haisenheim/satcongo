@@ -4,7 +4,7 @@
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-       <li class="breadcrumb-item"><a href="#">Cogelo</a></li>
+       <li class="breadcrumb-item"><a href="#">Satcongo</a></li>
        <li class="breadcrumb-item"><a href="#">Agences</a></li>
        <li class="breadcrumb-item active" aria-current="page">Liste des Agences</li>
     </ol>
@@ -55,7 +55,7 @@
                                         @else
                                             <li><a class="dropdown-item" href="{{ route('admin.agence.enable',$item->id) }}">Activer</a></li>
                                         @endif
-                                                                          
+
                                     </ul>
                                  </div>
                             </td>

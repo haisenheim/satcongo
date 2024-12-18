@@ -5,8 +5,8 @@
     <meta name="generator" content="Hugo 0.87.0" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-    <meta name="description" content="Plateforme Cogelo de gestion de la collecte de la feve au Cameroun.">
-    <title>@yield('title') | Cogelo</title>
+    <meta name="description" content="Plateforme Satcongo de gestion de la collecte de la feve au Cameroun.">
+    <title>@yield('title') | Satcongo</title>
 
     <!-- STYLESHEETS -->
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~--- -->
@@ -61,7 +61,7 @@
             <!-- FOOTER -->
             <footer class="content__boxed mt-auto">
                 <div class="content__wrap py-3 py-md-1 d-flex flex-column flex-md-row align-items-md-center">
-                    <div class="text-nowrap mb-4 mb-md-0">Copyright &copy; {{ date('Y') }} <a href="#" class="ms-1 btn-link fw-bold">Cogelo</a></div>
+                    <div class="text-nowrap mb-4 mb-md-0">Copyright &copy; {{ date('Y') }} <a href="#" class="ms-1 btn-link fw-bold">Satcongo</a></div>
                     <nav class="nav flex-column gap-1 flex-md-row gap-md-3 ms-md-auto" style="row-gap: 0 !important;">
                         <a class="nav-link px-0" href="#">Contactez nous</a>
                     </nav>
@@ -89,7 +89,7 @@
                         </a>
 
                         <!-- Brand title -->
-                        <div class="brand-title">Cogelo</div>
+                        <div class="brand-title">Satcongo</div>
 
                         <!-- You can also use IMG or SVG instead of a text element. -->
 

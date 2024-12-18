@@ -8,7 +8,7 @@
                 <tbody>
                     <tr>
                         <td colspan="1">
-                            <img src="{{public_path('img/logo_cogelo.png')}}" height="180" alt="">
+                            <img src="{{public_path('img/logo_satcongo.png')}}" height="180" alt="">
                         </td>
                         <td colspan="4">
                             <h4 style="font-size: 24px; text-align: center;">Journal des operations</h4>

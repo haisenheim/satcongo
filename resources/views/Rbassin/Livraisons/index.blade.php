@@ -4,7 +4,7 @@
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-       <li class="breadcrumb-item"><a href="#">Cogelo</a></li>
+       <li class="breadcrumb-item"><a href="#">Satcongo</a></li>
        <li class="breadcrumb-item"><a href="#">Livraisons</a></li>
        <li class="breadcrumb-item active" aria-current="page">Suivi des transactions</li>
     </ol>

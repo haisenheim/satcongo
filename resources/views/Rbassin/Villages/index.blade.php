@@ -4,7 +4,7 @@
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-       <li class="breadcrumb-item"><a href="#">Cogelo</a></li>
+       <li class="breadcrumb-item"><a href="#">Satcongo</a></li>
        <li class="breadcrumb-item"><a href="#">Villages</a></li>
        <li class="breadcrumb-item active" aria-current="page">Liste des arrondissements</li>
     </ol>
@@ -69,7 +69,7 @@
                                     <label for="">NOM</label>
                                     <input type="text" name="name" placeholder="Saisir le nom du departement" class="form-control">
                                 </div>
-                                
+
                                 <div>
                                     <label for="">ARRONDISSEMENT</label>
                                     <select required name="arrondissement_id" id="arrondissement_id" class="form-control">

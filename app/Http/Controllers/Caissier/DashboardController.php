@@ -7,13 +7,20 @@ use App\Models\Caisse;
 use App\Models\CaisseCompte;
 use App\Models\CaisseUser;
 use App\Models\Compte;
+use App\Models\Departement;
 use App\Models\Libelle;
 use App\Models\Operation;
 use App\Models\Tier;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Agent;
+use App\Http\Resources\TransactionResource;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use function Spatie\LaravelPdf\Support\pdf;
+//use Spatie\LaravelPdf\Facades\Pdf;
+use Spatie\LaravelPdf\Enums\Format;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DashboardController extends Controller
 {
@@ -21,30 +28,206 @@ class DashboardController extends Controller
 	{
         $transactions = Transaction::orderBy('created_at','DESC')->where('user_id',auth()->user()->id)->whereNull('validated_at')->get();
         $user = User::find(auth()->user()->id);
-        $caisses = $user->caisses;
-        $libelles = Libelle::where('active',1)->get();
+        //$caisses = $user->caisses;
+        $caisses = Caisse::where('active',1)->get();
+        $departements = Departement::where('active',1)->get();
         $tiers = Tier::where('active',1)->get();
         $comptes = Compte::where('active',1)->get();
-		return view('Caissier/dashboard',compact('transactions','caisses','libelles','tiers','comptes'));
+        $agents = Agent::where('active',1)->get();
+		return view('Caissier/dashboard',compact('transactions','caisses','departements','tiers','comptes','agents'));
 	}
 
-    public function getLibelles(){
-        $caisse = Caisse::find(request()->id);
-        $agence = $caisse->agence;
-        $libelles = $agence->libelles;
-        return response()->json($libelles);
+    public function getOperations(){
+        $transactions = Transaction::orderBy('created_at','DESC')->where('user_id',auth()->user()->id)->whereNull('validated_at')->get();
+        return response()->json(TransactionResource::collection($transactions));
     }
+
+
 
     public function create(){
         $cus = CaisseUser::where('user_id',auth()->user()->id)->get();
         $ids = $cus->pluck('caisse_id');
         $caisses = Caisse::whereIn('id',$ids)->get();
-        $libelles = Libelle::where('active',1)->get();
+       // $libelles = Libelle::where('active',1)->get();
         $tiers = Tier::where('active',1)->get();
 		return view('Caissier/create',compact('caisses','libelles','tiers'));
     }
 
     public function store(){
+        $user = auth()->user();
+        $caisse = Caisse::find(request()->caisse_id);
+        $op = new Operation();
+        $op->user_id = $user->id;
+        $op->caisse_id = $caisse->id;
+        $op->libelle = request()->libelle;
+        $op->dossier = request()->dossier;
+        $op->type_id = 1;
+        $op->agent_id = request()->agent_id;
+        $op->departement_un_id = request()->departement_un_id;
+        $op->departement_deux_id = request()->departement_deux_id;
+        $op->day = request()->day;
+        $dt = Carbon::parse(request()->day);
+        $op->moi_id = $dt->month;
+        $op->semaine = $dt->week;
+        $op->annee = $dt->year;
+        $op->token = sha1(time().$user->id);
+        $op->save();
+
+            //Je renseigne le compte lie a la caisse au credit
+            $item = new Transaction();
+            $item->operation_id = $op->id;
+            $item->user_id = $user->id;
+            $item->caisse_id = $caisse->id;
+            $item->montant = request()->montant;
+            $item->credit = 1;
+            $item->compte = $caisse->compte;
+            $item->token = sha1(time().$op->id.rand(0,9999));
+            $item->save();
+            $caisse->solde = $caisse->solde - request()->montant;
+            $caisse->save();
+
+            //Et je renseigne le compte saisi au credit
+            $item = new Transaction();
+            $compte = Compte::find(request()->compte_id);
+            $item->operation_id = $op->id;
+            $item->user_id = $user->id;
+            $item->caisse_id = $caisse->id;
+            $item->montant = request()->montant;
+            $item->credit = 0;
+            $item->compte = $compte->code;
+            $item->token = sha1(time().$op->id.rand(0,9999));
+            $item->save();
+        /*
+        //return pdf()
+        return Pdf::view('Pdf.type_1', compact('op'))
+            //->view('pdf.type_1', compact('op'))
+            ->headerView('Pdf.header')
+            ->footerView('Pdf.footer')
+            ->format(Format::A3) // or you can pass a string like 'a3'
+            //->save(public_path('files').'/'.time().'.pdf');
+            ->name(time().'.pdf');
+            */
+            $data = [
+                [
+                    'quantity' => 1,
+                    'description' => '1 Year Subscription',
+                    'price' => '129.00'
+                ]
+            ];
+
+            $pdf = Pdf::loadView('Pdf.type_1', ['data' => $data])->setPaper('a5', 'portrait');
+        
+        return $pdf->stream();
+    }
+
+    public function store2(){
+        $user = auth()->user();
+        $caisse = Caisse::find(request()->caisse_id);
+        $op = new Operation();
+        $op->user_id = $user->id;
+        $op->caisse_id = $caisse->id;
+        $op->dossier = request()->dossier;
+        $op->type_id = 2;
+        $op->agent_id = request()->agent_id;
+        $op->camion = request()->camion;
+        $op->chauffeur = request()->chauffeur;
+        $op->hotel = request()->mt_hotel;
+        $op->ration = request()->mt_ration;
+        $op->peage = request()->mt_peage;
+        $op->prime = request()->mt_prime;
+        $op->bac = request()->mt_bac;
+        $op->autres = request()->mt_autres;
+
+        $op->day = request()->day;
+        $dt = Carbon::parse(request()->day);
+        $op->moi_id = $dt->month;
+        $op->semaine = $dt->week;
+        $op->annee = $dt->year;
+        $op->token = sha1(time().$user->id);
+        $op->save();
+
+            //Je renseigne le compte lie a la caisse au credit
+            $item = new Transaction();
+            $item->operation_id = $op->id;
+            $item->user_id = $user->id;
+            $item->caisse_id = $caisse->id;
+            $item->montant = request()->montant;
+            $item->credit = 1;
+            $item->compte = $caisse->compte;
+            $item->token = sha1(time().$op->id.rand(0,9999));
+            $item->save();
+            $caisse->solde = $caisse->solde - request()->montant;
+            $caisse->save();
+
+            //Et je renseigne le compte saisi au credit
+            $item = new Transaction();
+            $compte = Compte::find(request()->compte_id);
+            $item->operation_id = $op->id;
+            $item->user_id = $user->id;
+            $item->caisse_id = $caisse->id;
+            $item->montant = request()->montant;
+            $item->credit = 0;
+            $item->compte = $compte->code;
+            $item->token = sha1(time().$op->id.rand(0,9999));
+            $item->save();
+
+        Session::flash('success','Enregistrement effectué avec succès!');
+        return redirect(route('caissier.dashboard'));
+    }
+
+    public function store3(){
+        $user = auth()->user();
+        $caisse = Caisse::find(request()->caisse_id);
+        $op = new Operation();
+        $op->user_id = $user->id;
+        $op->caisse_id = $caisse->id;
+        $op->dossier = request()->dossier;
+        $op->type_id = 3;
+        $op->agent_id = request()->agent_id;
+        $op->tier_id = request()->tier_id;
+        $op->mt_especes = request()->mt_especes;
+        $op->mt_cheque = request()->mt_cheque;
+        $op->num_cheque = request()->num_cheque;
+        $op->is_debours = request()->is_debours;
+
+        $op->day = request()->day;
+        $dt = Carbon::parse(request()->day);
+        $op->moi_id = $dt->month;
+        $op->semaine = $dt->week;
+        $op->annee = $dt->year;
+        $op->token = sha1(time().$user->id);
+        $op->save();
+
+            //Je renseigne le compte lie a la caisse au credit
+            $item = new Transaction();
+            $item->operation_id = $op->id;
+            $item->user_id = $user->id;
+            $item->caisse_id = $caisse->id;
+            $item->montant = request()->montant;
+            $item->credit = 1;
+            $item->compte = $caisse->compte;
+            $item->token = sha1(time().$op->id.rand(0,9999));
+            $item->save();
+            $caisse->solde = $caisse->solde - request()->montant;
+            $caisse->save();
+
+            //Et je renseigne le compte saisi au credit
+            $item = new Transaction();
+            $compte = Compte::find(request()->compte_id);
+            $item->operation_id = $op->id;
+            $item->user_id = $user->id;
+            $item->caisse_id = $caisse->id;
+            $item->montant = request()->montant;
+            $item->credit = 0;
+            $item->compte = $compte->code;
+            $item->token = sha1(time().$op->id.rand(0,9999));
+            $item->save();
+
+        Session::flash('success','Enregistrement effectué avec succès!');
+        return redirect(route('caissier.dashboard'));
+    }
+
+    public function _store(){
 
         //dd(request()->all());
         $user = auth()->user();
@@ -65,9 +248,7 @@ class DashboardController extends Controller
         $op->token = sha1(time().$user->id);
         $op->save();
         $sens = request()->sens;
-        $libelle = Libelle::find(request()->libelle_id);
-        //dd($libelle);
-        
+
         //Si c'est une entree
         if($sens == 1){
             //Je renseigne le compte lie a la caisse au debit
@@ -135,8 +316,6 @@ class DashboardController extends Controller
             $item->moi_id = $dt->month;
             $item->semaine = $dt->week;
             $item->annee = $dt->year;
-            $item->libelle_id = $libelle->id;
-            $item->name = $libelle->name;
             $item->token = sha1(time().$op->id.rand(0,9999));
             $item->save();
             $caisse->solde = $caisse->solde - request()->montant;
@@ -150,8 +329,6 @@ class DashboardController extends Controller
             $item->agence_id = $caisse->agence_id;
             $item->ville_id = $caisse->ville_id;
             $item->montant = request()->montant;
-            $item->libelle_id = $libelle->id;
-            $item->name = $libelle->name;
             $item->credit = 0;
             $item->compte = request()->compte;
             $item->ref = $op->ref;
@@ -164,7 +341,7 @@ class DashboardController extends Controller
             $item->token = sha1(time().$op->id.rand(0,9999));
             $item->save();
         }
-        
+
         Session::flash('success','Enregistrement effectué avec succès!');
         return redirect(route('caissier.dashboard'));
     }
@@ -214,7 +391,7 @@ class DashboardController extends Controller
             $item->token = sha1(time().$op->id.rand(0,9999));
             $item->save();
         }
-        
+
        // Session::flash('success','Enregistrement effectué avec succès!');
         return response()->json('ok');
     }
@@ -227,7 +404,7 @@ class DashboardController extends Controller
         //$cpt = Compte::find(request()->compte_id);
         Transaction::updateOrCreate(['id'=>$data['id']],$data);
         $operation = Operation::find($data['operation_id']);
-        
+
         Session::flash('success','Enregistrement effectué avec succès!');
         return back();
     }
@@ -255,7 +432,7 @@ class DashboardController extends Controller
         $sens = request()->sens;
         $libelle = Libelle::find(request()->libelle_id);
         //dd($libelle);
-        
+
         //Si c'est une entree
         if($sens == 1){
             //Je renseigne le compte lie a la caisse au debit
@@ -352,7 +529,7 @@ class DashboardController extends Controller
             //$item->token = sha1(time().$op->id.rand(0,9999));
             $item->save();
         }
-        
+
         Session::flash('success','Modification effectuée avec succès!');
         return redirect(route('caissier.dashboard'));
     }

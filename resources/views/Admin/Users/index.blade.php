@@ -4,7 +4,7 @@
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-       <li class="breadcrumb-item"><a href="#">Cogelo</a></li>
+       <li class="breadcrumb-item"><a href="#">Satcongo</a></li>
        <li class="breadcrumb-item"><a href="#">Utilisateurs</a></li>
        <li class="breadcrumb-item active" aria-current="page">Liste des comptes utilisateurs</li>
     </ol>
@@ -35,7 +35,7 @@
                         <th>Departement</th>
                         <td>Statut</td>
                         <td>
-                            
+
                         </td>
                     </tr>
                 </thead>
@@ -64,8 +64,8 @@
                                         @if($item->role_id==4)
                                             <li><a data-id="{{ $item->id }}" data-bs-target="#depModal" data-bs-toggle="modal" class="dropdown-item btn-user" href="#">Affecter</a></li>
                                         @endif
-                                       
-                                                                          
+
+
                                     </ul>
                                  </div>
                             </td>
@@ -149,14 +149,14 @@
                             <label for="">Agence</label>
                             <select required name="agence_id" id="agence_id" class="form-control">
                                 <option value="">Selectionner une agence</option>
-                                
+
                             </select>
                         </div>
                         <div class="mt-3">
                             <label for="">Caisse</label>
                             <select required name="caisse_id" id="caisse_id" class="form-control">
                                 <option value="">Selectionner une caisse</option>
-                                
+
                             </select>
                         </div>
                         <div class="mt-5">

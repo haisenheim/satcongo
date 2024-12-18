@@ -4,7 +4,7 @@
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-       <li class="breadcrumb-item"><a href="#">Cogelo</a></li>
+       <li class="breadcrumb-item"><a href="#">Satcongo</a></li>
        <li class="breadcrumb-item"><a href="#">Caisses</a></li>
        <li class="breadcrumb-item active" aria-current="page">{{ $item->name }}</li>
     </ol>
@@ -49,7 +49,7 @@
         </div>
         <div class="card w-75">
             <div class="card-body">
-                
+
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-       <li class="breadcrumb-item"><a href="#">Cogelo</a></li>
+       <li class="breadcrumb-item"><a href="#">Satcongo</a></li>
        <li class="breadcrumb-item"><a href="#">Coopératives</a></li>
        <li class="breadcrumb-item active" aria-current="page">Liste des coopératives</li>
     </ol>
@@ -87,7 +87,7 @@
                                     <label for="">Immatriculation</label>
                                     <input required type="text" name="immatriculation" class="form-control">
                                 </div>
-                                
+
                                 <div>
                                     <label for="">ARRONDISSEMENT</label>
                                     <select required name="arrondissement_id" id="arrondissement_id" class="form-control">

@@ -4,7 +4,7 @@
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-       <li class="breadcrumb-item"><a href="#">Cogelo</a></li>
+       <li class="breadcrumb-item"><a href="#">Satcongo</a></li>
        <li class="breadcrumb-item"><a href="#">Tableau de bord</a></li>
        <li class="breadcrumb-item active" aria-current="page">Accueil</li>
     </ol>
@@ -13,8 +13,8 @@
 
 @section('page-header')
     <div>
-        <h5 class="page-title mb-0 mt-1 fs-3">Hello <span class="text-muted">{{ auth()->user()->name }}</span>, vous etes sur <span class="text-muted">Cogelo Reporting</span></h5>
-        
+        <h5 class="page-title mb-0 mt-1 fs-3">Hello <span class="text-muted">{{ auth()->user()->name }}</span>, vous etes sur <span class="text-muted">Satcongo Reporting</span></h5>
+
     </div>
 @endsection
 
@@ -54,7 +54,7 @@
                             <div class="">
                                 <button class="btn btn-primary"><i class="fs-5 pli-data-search"></i> Consulter</button>
                             </div>
-    
+
                         </div>
                     </form>
                 </fieldset>
@@ -78,7 +78,7 @@
     </div>
     <div style="height: 50vh; overflow:scroll;" class="card mt-1">
         <div class="card-body">
-           
+
             <table class="table table-sm table-bordered table-striped table-hover">
                 <thead>
                     <tr>
@@ -117,7 +117,7 @@
             </table>
         </div>
 
-       
+
     </div>
 
     <script>

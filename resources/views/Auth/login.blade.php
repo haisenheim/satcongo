@@ -5,7 +5,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
     <meta name="description" content="The login page allows a user to gain access to an application by entering their username and password or by authenticating using a social media login.">
-    <title>Login | Cogelo</title>
+    <title>Login | Satcongo</title>
     <link rel="icon" type="image/svg" sizes="32x32" href="{{ asset('img/favicon.ico') }}">
 
     <!-- STYLESHEETS -->

@@ -5,7 +5,7 @@
     <meta name="generator" content="Hugo 0.87.0" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-    <meta name="description" content="Plateforme Cogelo de gestion de la collecte de la feve au Cameroun.">
+    <meta name="description" content="Plateforme Satcongo de gestion de la collecte de la feve au Cameroun.">
     <title>@yield('title') | Alliages Technologies - Adjuvant</title>
 
     <!-- STYLESHEETS -->
@@ -97,7 +97,7 @@
 
 
                      <!-- Brand title -->
-                     <div class="brand-title">Cogelo</div>
+                     <div class="brand-title">Satcongo</div>
                   </div>
                </div>
                <!-- End - Brand -->

@@ -4,7 +4,7 @@
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-       <li class="breadcrumb-item"><a href="#">Cogelo</a></li>
+       <li class="breadcrumb-item"><a href="#">Satcongo</a></li>
        <li class="breadcrumb-item"><a href="#">Tableau de bord</a></li>
        <li class="breadcrumb-item active" aria-current="page">Accueil</li>
     </ol>
@@ -14,12 +14,12 @@
 @section('page-header')
     <div>
         <h5 class="page-title mb-0 mt-2">Tableau de bord de l'administrateur</h5>
-        <p class="lead">Hello {{ auth()->user()->name }}, bienvenu sur <span class="text-muted">Cogelo</span> votre plateforme de trading de la feve!</p>
+        <p class="lead">Hello {{ auth()->user()->name }}, bienvenu sur <span class="text-muted">Satcongo</span> votre plateforme de trading de la feve!</p>
     </div>
 @endsection
 
 @section('content')
-    <div class="container"></div>   
+    <div class="container"></div>
     <script src="{{ asset('assets/vendors/chart.js/chart.umd.min.js') }}">
 
     </script>

@@ -25,7 +25,7 @@ Route::namespace('App\Http\Controllers\Util')
         Route::get('ville/agences','SearchController@getAgencesByVilleId')->name('ville.agences');
        Route::get('agence/caisses','SearchController@getCaissesByAgenceId')->name('agence.caisses');
         #Route::get('departement/arrondissements','SearchController@getArrondissementsByDepartementId')->name('departement.arrondissements');
-        
+
     });
 
 Route::namespace('App\Http\Controllers\Admin')
@@ -47,9 +47,9 @@ Route::namespace('App\Http\Controllers\Admin')
         Route::post('caisse/set/compte','CaisseController@setCompte')->name('caisse.set.compte');
         Route::post('caisse/add/compte','CaisseController@addCompte')->name('caisse.add.compte');
         Route::get('caisse/enable/{token}','CaisseController@enable')->name('caisse.enable');
-        
-        
-        
+
+
+
         Route::get('caisse/disable/{token}','CaisseController@disable')->name('caisse.disable');
         Route::resource('libelles','LibelleController');
         Route::resource('comptes','CompteController');
@@ -61,7 +61,7 @@ Route::namespace('App\Http\Controllers\Admin')
         Route::get('tier/enable/{token}','TierController@enable')->name('tier.enable');
         Route::get('tier/disable/{token}','TierController@disable')->name('tier.disable');
         Route::resource('transactions','TransactionController');
-        
+
     });
 
 Route::namespace('App\Http\Controllers\Caissier')
@@ -77,7 +77,11 @@ Route::namespace('App\Http\Controllers\Caissier')
         Route::post('operation/update','DashboardController@updateOperation')->name('operation.update');
         Route::get('caisse/libelles','DashboardController@getLibelles')->name('agence.libelles');
         Route::get('create','DashboardController@create')->name('create');
-        Route::post('store','DashboardController@store')->name('store');
+        Route::post('store1','DashboardController@store')->name('store');
+        Route::post('store2','DashboardController@store2')->name('store2');
+        Route::post('store3','DashboardController@store3')->name('store3');
+
+        Route::get('data/operations','DashboardController@getOperations')->name('operations.all');
     });
 
 Route::namespace('App\Http\Controllers\Comptable')

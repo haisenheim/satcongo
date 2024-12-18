@@ -97,7 +97,7 @@
 
 
                      <!-- Brand title -->
-                     <div class="brand-title">Cogelo</div>
+                     <div class="brand-title">Satcongo</div>
                   </div>
                </div>
                <!-- End - Brand -->
@@ -126,7 +126,7 @@
 
                         <!-- Searchbox input -->
                         <form class="searchbox searchbox--auto-expand searchbox--hide-btn input-group">
-                           <input id="header-search-input" class="searchbox__input form-control bg-transparent" type="search" placeholder="Rechercher ..." aria-label="Search">
+                            <input id="header-search-input" class="searchbox__input form-control bg-transparent" type="search" placeholder="Rechercher ..."  oninput="onFilterTextBoxChanged()" aria-label="Search">
                            <div class="searchbox__backdrop">
                               <button class="searchbox__btn header__btn btn btn-icon rounded shadow-none border-0 btn-sm" type="button">
                                  <i class="demo-pli-magnifi-glass"></i>

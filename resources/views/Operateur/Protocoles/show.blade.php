@@ -4,7 +4,7 @@
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Cogelo</a></li>
+        <li class="breadcrumb-item"><a href="#">Satcongo</a></li>
         <li class="breadcrumb-item"><a href="#">Producteurs</a></li>
         <li class="breadcrumb-item"><a href="#">Contrats</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ $protocole->name }}</li>
@@ -73,7 +73,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                <li><a class="dropdown-item" href="{{ route('operateur.protocole.calendar.item.show',$item->token) }}">Afficher</a></li>
-                                                                                  
+
                                             </ul>
                                          </div>
                                     </td>
@@ -84,7 +84,7 @@
                                 <th>{{ $qty }} tonnes</th>
                                 <td colspan="3"></td>
                             </tr>
-                       
+
                     </tbody>
                 </table>
                 @else
@@ -92,7 +92,7 @@
                         <div class="text-center">
                             <a href="{{ route('operateur.protocole.calendar',$protocole->token) }}" class="btn btn-sm btn-primary"><i class="pli-file-edit"></i> Editer le calendrier de la saison</a>
                         </div>
-                    </div>  
+                    </div>
                 @endif
             </div>
         </div>
@@ -230,7 +230,7 @@
             margin-top: 10px;
         }
         #d-text p{
-            margin: 2px 2px; 
+            margin: 2px 2px;
             font-weight: 600;
         }
     </style>

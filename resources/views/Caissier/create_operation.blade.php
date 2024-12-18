@@ -4,7 +4,7 @@
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-       <li class="breadcrumb-item"><a href="#">Cogelo</a></li>
+       <li class="breadcrumb-item"><a href="#">Satcongo</a></li>
        <li class="breadcrumb-item"><a href="#">Operations</a></li>
        <li class="breadcrumb-item active" aria-current="page">Nouvelle operation</li>
     </ol>
@@ -29,7 +29,7 @@
                         <select class="form-control" name="caisse_id" id="caisse_id">
                             <option value=0>SELECTIONNER UNE CAISSE ...</option>
                             @foreach($caisses as $caisse)
-                              <option value="{{ $caisse->id }}">{{ $caisse->name }}</option>  
+                              <option value="{{ $caisse->id }}">{{ $caisse->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -118,8 +118,8 @@
                 var _montant = $('#montant').val();
                 var _cpt_id = $('#compte_id').val();
                 var _cpt_text = $('#compte_id option:selected').text();
-                
-                var content = 
+
+                var content =
                 `<fieldset class="mt-2">
                     <legend>${legend}</legend>
                     <div>

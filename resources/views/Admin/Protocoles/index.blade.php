@@ -4,7 +4,7 @@
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-       <li class="breadcrumb-item"><a href="#">Cogelo</a></li>
+       <li class="breadcrumb-item"><a href="#">Satcongo</a></li>
        <li class="breadcrumb-item"><a href="#">Producteurs</a></li>
        <li class="breadcrumb-item"><a href="#">Contrats</a></li>
        <li class="breadcrumb-item active" aria-current="page">Liste des contrats producteurs</li>
@@ -60,7 +60,7 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                        <li><a class="dropdown-item" href="{{ route('admin.protocoles.show',$item->id) }}">Afficher</a></li>
-                                                                          
+
                                     </ul>
                                  </div>
                             </td>
