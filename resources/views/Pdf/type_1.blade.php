@@ -124,8 +124,6 @@
             </tr>
         </table>
         <br>
-        <br>
-        <br>
         <div class="d-flex justify-content-between">
             <div>
                 <p><span>NATURE DE LA DEPENSE :</span> <span class="fw-bold">{{ $item->libelle }}</span></p>
@@ -143,7 +141,13 @@
         </div>
         <div class="d-flex justify-content-between">
             <div>
-                <p><span>TOTAL MONTANT CHIFFRE :</span> <span class="fw-bold">{{ number_format($item->montant,0,',','.') }} FCFA</span></p>
+                <p><span>TOTAL MONTANT CHIFFRE :</span> <span class="fw-bold">{{ number_format($mc,0,',','.') }} FCFA</span></p>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <div>
+                <p><span>TOTAL MONTANT EN LETTRES :</span> <span class="fw-bold">{{ $ml }} Francs cfa</span></p>
             </div>
         </div>
 

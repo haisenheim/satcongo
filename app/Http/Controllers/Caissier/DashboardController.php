@@ -19,8 +19,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use function Spatie\LaravelPdf\Support\pdf;
 //use Spatie\LaravelPdf\Facades\Pdf;
-use Spatie\LaravelPdf\Enums\Format;
+//use Spatie\LaravelPdf\Enums\Format;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Helpers\NombreHelper;
 
 class DashboardController extends Controller
 {
@@ -55,6 +56,7 @@ class DashboardController extends Controller
 
     public function store(){
         $user = auth()->user();
+        $montant = request()->montant;
         $caisse = Caisse::find(request()->caisse_id);
         $op = new Operation();
         $op->user_id = $user->id;
@@ -72,6 +74,7 @@ class DashboardController extends Controller
         $op->annee = $dt->year;
         $op->token = sha1(time().$user->id);
         $op->save();
+        
 
             //Je renseigne le compte lie a la caisse au credit
             $item = new Transaction();
@@ -97,9 +100,11 @@ class DashboardController extends Controller
             $item->compte = $compte->code;
             $item->token = sha1(time().$op->id.rand(0,9999));
             $item->save();
-            $pdf = Pdf::loadView('Pdf.type_1', ['item' => $op])->setPaper('a5', 'portrait');
+            $lettre = NombreHelper::convertirEnLettres($montant);
+            $pdf = Pdf::loadView('Pdf.type_1', ['item' => $op,'ml'=>$lettre,'mc'=>$montant])->setPaper('a5', 'portrait');
         
-        return $pdf->stream();
+         return $pdf->stream();
+         return back();
     }
 
     public function store2(){
