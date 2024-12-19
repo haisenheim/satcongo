@@ -42,6 +42,9 @@
         .justify-content-between{
             justify-content: space-between
         }
+        main{
+            font-size: 11px;
+        }
     </style>
 </head>
 <body>
@@ -49,15 +52,15 @@
         <div style="">
             <div style="">
                 <div class="d-flex justify-content-between">
-                    <div class="" style="height: 100px; float:left">
-                        <img style="border:none;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/dhl.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
+                    <div class="" style="float:left">
+                        <img style="border:none; height: 75px; width:120px;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/dhl.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
                     </div>
-                    <div class="col-sm-10" style="padding-left:20px; float: left;text-align:center;">
-                        <h5>PIECE DE DECAISSEMENT</h5>
-                        <p>&numero; {{ time() }}</p>
+                    <div  style="padding-left:20px; float: left;text-align:center;">
+                        <h6>PIECE DE DECAISSEMENT</h6>
+                        <p>N {{ time() }}</p>
                     </div>
-                    <div>
-                        <img style="border:none;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/satcongo.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
+                    <div style="float:right;">
+                        <img style="border:none; height: 75px; width:120px;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/satcongo.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
                     </div>
                 </div>
             </div>
