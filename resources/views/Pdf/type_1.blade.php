@@ -36,6 +36,12 @@
             padding-top: 5px;
             font-weight: 700;
         }
+        .w-full {
+            width: 100%;
+        }
+        .w-half {
+            width: 50%;
+        }
         .d-flex{
             display: flex;
         }
@@ -73,30 +79,53 @@
         </div>
     </footer>
     <main style="margin-top:10px;">
-        <div class="d-flex justify-content-between">
-            <div style="float: left">
-                <p><span>DEMANDEUR:</span> <span class="fw-bold">{{ $item->agent?->name }}</span></p>
-            </div>
-            <div style="float: right">
-                <p><span>DATE:</span> <span class="fw-bold">{{ \Carbon\Carbon::parse($item->day)->format('d/m/Y') }}</span></p>
-            </div>
-        </div>
-        <div class="d-flex justify-content-between">
-            <div style="float: left">
-                <p><span>DEPARTEMENT 1:</span> <span class="fw-bold">{{ $item->departement_un?->name }}</span></p>
-            </div>
-            <div style="width: 100px; height: 30px; border: 3px #000 solid; float: left;">
+        <table class="w-full">
+            <tbody>
+                <tr>
+                    <td class="w-half">
+                        <div style="float: left">
+                            <p><span>DEMANDEUR:</span> <span class="fw-bold">{{ $item->agent?->name }}</span></p>
+                        </div>
+                    </td>
+                    <td class="w-half">
+                        <div style="float: right">
+                            <p><span>DATE:</span> <span class="fw-bold">{{ \Carbon\Carbon::parse($item->day)->format('d/m/Y') }}</span></p>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table style="margin-top: 2rem;">
+            <tr style="margin-top: 1rem;" class="w-full">
+                <td class="w-half">
+                    <div style="float: left">
+                        <p><span>DEP 1:</span> <span class="fw-bold">{{ $item->departement_un?->name }}</span></p>
+                    </div>
+                </td>
+                <td class="w-half">
+                    <div style="width: 100px; height: 20px; border: 3px #000 solid; float: left;">
 
-            </div>
-        </div>
-        <div class="d-flex justify-content-between">
-            <div style="float: left">
-                <p><span>DEPARTEMENT 2:</span> <span class="fw-bold">{{ $item->departement_un?->name }}</span></p>
-            </div>
-            <div style="width: 100px; height: 30px; border: 3px #000 solid; float: left;">
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table style="margin-top: 2rem;">
+            <tr class="w-full">
+                <td class="w-half">
+                    <div style="float: left">
+                        <p><span>DEP 2:</span> <span class="fw-bold">{{ $item->departement_deux?->name }}</span></p>
+                    </div>
+                </td>
+                <td class="w-half">
+                    <div style="width: 100px; height: 20px; border: 3px #000 solid; float: left;">
 
-            </div>
-        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <br>
         <div class="d-flex justify-content-between">
             <div>
                 <p><span>NATURE DE LA DEPENSE :</span> <span class="fw-bold">{{ $item->libelle }}</span></p>
@@ -104,7 +133,7 @@
         </div>
         <div class="d-flex justify-content-between">
             <div>
-                <p><span>&numero; DOSSIER :</span> <span class="fw-bold">{{ $item->dossier }}</span></p>
+                <p><span>DOSSIER :</span> <span class="fw-bold">{{ $item->dossier }}</span></p>
             </div>
         </div>
         <div class="d-flex justify-content-between">
@@ -119,24 +148,30 @@
         </div>
 
         <div class="d-flex justify-content-between">
-            <div>
-                <p style="margin-bottom: 0; text-align: center;">SIGN. DEMANDEUR</p>
-                <div style="width: 100px; height: 30px; border: 3px #000 solid;">
+            <table>
+                <tbody>
+                    <tr style="width: 100%;">
+                        <td style="width: 175px;">
+                            <p style="margin-bottom: 0; text-align: center;">SIGN. DEMANDEUR</p>
+                            <div style="width: 160px; height: 30px; border: 3px #000 solid;">
 
-                </div>
-            </div>
-            <div>
-                <p style="margin-bottom: 0; text-align: center;">SIGN. DG</p>
-                <div style="width: 100px; height: 30px; border: 3px #000 solid;">
+                            </div>
+                        </td>
+                        <td style="width: 175px;">
+                            <p style="margin-bottom: 0; text-align: center;">SIGN. DG</p>
+                            <div style="width: 160px; height: 30px; border: 3px #000 solid;">
 
-                </div>
-            </div>
-            <div>
-                <p style="margin-bottom: 0; text-align: center;">NOM ET SIGN. BENEFICIAIRE</p>
-                <div style="width: 100px; height: 30px; border: 3px #000 solid;">
+                            </div>
+                        </td>
+                        <td style="width: 175px;">
+                            <p style="margin-bottom: 0; text-align: center;">NOM ET SIGN. BENEFICIAIRE</p>
+                            <div style="width: 160px; height: 30px; border: 3px #000 solid;">
 
-                </div>
-            </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
     </main>
