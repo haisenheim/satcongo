@@ -72,6 +72,12 @@
             </div>
       </div>
     </header>
+
+    <footer>
+        <div style="font-size: 12px">
+             <p style="margin:0"><span>&copy; SatCongo</span></p>
+        </div>
+    </footer>
     <main style="margin-top:10px;">
         <table class="w-full">
             <tbody>
