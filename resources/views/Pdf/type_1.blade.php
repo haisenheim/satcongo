@@ -57,7 +57,7 @@
                     </div>
                     <div  style="padding-left:20px; float: left;text-align:center;">
                         <h6>PIECE DE DECAISSEMENT</h6>
-                        <p>N {{ time() }}</p>
+                        <h6>N° {{ time() }}</h6>
                     </div>
                     <div style="float:right;">
                         <img style="border:none; height: 75px; width:120px;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/satcongo.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
@@ -74,26 +74,26 @@
     </footer>
     <main style="margin-top:10px;">
         <div class="d-flex justify-content-between">
-            <div>
+            <div style="float: left">
                 <p><span>DEMANDEUR:</span> <span class="fw-bold">{{ $item->agent?->name }}</span></p>
             </div>
-            <div>
+            <div style="float: right">
                 <p><span>DATE:</span> <span class="fw-bold">{{ \Carbon\Carbon::parse($item->day)->format('d/m/Y') }}</span></p>
             </div>
         </div>
         <div class="d-flex justify-content-between">
-            <div>
+            <div style="float: left">
                 <p><span>DEPARTEMENT 1:</span> <span class="fw-bold">{{ $item->departement_un?->name }}</span></p>
             </div>
-            <div style="width: 30px; height: 200px; border: 3px #000 solid">
+            <div style="width: 100px; height: 30px; border: 3px #000 solid; float: left;">
 
             </div>
         </div>
         <div class="d-flex justify-content-between">
-            <div>
+            <div style="float: left">
                 <p><span>DEPARTEMENT 2:</span> <span class="fw-bold">{{ $item->departement_un?->name }}</span></p>
             </div>
-            <div style="width: 30px; height: 200px; border: 3px #000 solid">
+            <div style="width: 100px; height: 30px; border: 3px #000 solid; float: left;">
 
             </div>
         </div>
@@ -109,7 +109,7 @@
         </div>
         <div class="d-flex justify-content-between">
             <div>
-                <p><span>PC :</span> </p>
+                <p><span>P/C :</span> </p>
             </div>
         </div>
         <div class="d-flex justify-content-between">
@@ -121,19 +121,19 @@
         <div class="d-flex justify-content-between">
             <div>
                 <p style="margin-bottom: 0; text-align: center;">SIGN. DEMANDEUR</p>
-                <div style="width: 30px; height: 200px; border: 3px #000 solid">
+                <div style="width: 100px; height: 30px; border: 3px #000 solid;">
 
                 </div>
             </div>
             <div>
                 <p style="margin-bottom: 0; text-align: center;">SIGN. DG</p>
-                <div style="width: 30px; height: 200px; border: 3px #000 solid">
+                <div style="width: 100px; height: 30px; border: 3px #000 solid;">
 
                 </div>
             </div>
             <div>
                 <p style="margin-bottom: 0; text-align: center;">NOM ET SIGN. BENEFICIAIRE</p>
-                <div style="width: 30px; height: 200px; border: 3px #000 solid">
+                <div style="width: 100px; height: 30px; border: 3px #000 solid;">
 
                 </div>
             </div>
