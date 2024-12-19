@@ -42,14 +42,8 @@
                 </a>
                 <!-- Settings submenu list -->
                 <ul class="mininav-content nav collapse">
-                    <li class="nav-item">
-                        <a href="{{ route('admin.libelles.index') }}" class="nav-link {{ $active==701?'active':'' }}">Libellés d'ecriture</a>
-                    </li>
                    <li class="nav-item">
                        <a href="{{ route('admin.caisses.index') }}" class="nav-link {{ $active==702?'active':'' }}">Caisses</a>
-                   </li>
-                   <li class="nav-item">
-                       <a href="{{ route('admin.agences.index') }}" class="nav-link {{ $active==703?'active':'' }}">Agences</a>
                    </li>
                    <li class="nav-item">
                     <a href="{{ route('admin.tiers.index') }}" class="nav-link {{ $active==705?'active':'' }}">Tiers</a>

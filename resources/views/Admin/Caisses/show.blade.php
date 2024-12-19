@@ -20,6 +20,7 @@
         <ul class="dropdown-menu">
             <li><a data-bs-toggle="modal" data-bs-target="#addModal" class="dropdown-item" href="#">Parametrer le compte principal</a></li>
             <li><a data-bs-toggle="modal" data-bs-target="#addModal2" class="dropdown-item" href="#">Associer un compte d'operation</a></li>
+            <li><a data-bs-toggle="modal" data-bs-target="#addUserModal" class="dropdown-item" href="#">Lier un caissier</a></li>
         </ul>
     </div>
 @endsection
@@ -37,7 +38,7 @@
             <div class="card-body">
                 <h5>CAISSE : {{ $item->name }}</h5>
                 <h5>COMPTE : {{ $item->compte }}</h5>
-                <h6>AGENCE : {{ $item->agence->name }} / {{ $item->ville->name }}</h6>
+
                 <h6>OPERATEUR : {{ $item->user?$item->user->name:'-' }}</h6>
                 <fieldset>
                     <legend>Comptes des operations</legend>
@@ -49,7 +50,52 @@
         </div>
         <div class="card w-75">
             <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>CAISSIER</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($item->users as $user)
+                            <tr>
+                                <td>{{ $user->name }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
+        <div class="modal fade" id="addUserModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header justify-content-between">
+                    <h5 class="modal-title">Parametrer un caissier</h5>
+                    <div style="float: right">
+                        <button data-bs-dismiss="modal" class="btn btn-sm" >x</button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form enctype="multipart/form-data" action="{{ route('admin.caisse.set.user') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="caisse_id" value="{{ $item->id }}">
+                        <div class="mt-3">
+                            <label for="">Caissier</label>
+                            <select name="user_id" required id="" class="form-control">
+                                <option value="">Choix du caissier ...</option>
+                                @foreach($users as $cpt)
+                                    <option value="{{ $cpt->id }}">{{ $cpt->code }} - {{ $cpt->name }}</option>
+                                @endforeach
+                            </select>
+                           
+                        </div>
+                        <div class="mt-5">
+                            <button type="submit" class="btn-primary btn">ENREGISTRER</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -58,7 +104,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header justify-content-between">
-                    <h5 class="modal-title">Parametrage du compte principal</h5>
+                    <h5 class="modal-title">Parametrage du compte de compensation</h5>
                     <div style="float: right">
                         <button data-bs-dismiss="modal" class="btn btn-sm" >x</button>
                     </div>

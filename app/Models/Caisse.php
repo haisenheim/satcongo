@@ -10,15 +10,9 @@ class Caisse extends Model
     protected $guarded = [];
     public $timestamps = false;
 
-    public function ville()
-    {
-        return $this->belongsTo('App\Models\Ville');
-    }
+    
 
-    public function departement()
-    {
-        return $this->belongsTo('App\Models\Departement');
-    }
+   
 
     public function comptes()
     {
@@ -35,14 +29,11 @@ class Caisse extends Model
         return $this->belongsToMany('App\Models\User','caisses_users');
     }
 
-    public function agence()
-    {
-        return $this->belongsTo('App\Models\Agence');
-    }
+    
 
     public function getFullNameAttribute(){
         
-        return $this->name . "_" . $this->agence->name. " ". $this->ville->name;;
+        return $this->name;
     }
 
     public function getStatusAttribute(){

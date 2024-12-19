@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Caisse;
 use App\Models\Agence;
 use App\Models\CaisseCompte;
+use App\Models\CaisseUser;
 use App\Models\Compte;
+use App\Models\User;
 use App\Models\Ville;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -22,8 +24,7 @@ class CaisseController extends Controller
     {
         //
         $items = Caisse::all();
-        $villes = Ville::all();
-        return view('/Admin/Caisses/index')->with(compact('items','villes'));
+        return view('/Admin/Caisses/index')->with(compact('items'));
     }
 
 
@@ -50,8 +51,8 @@ class CaisseController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $ag = Agence::find($data['agence_id']);
-        $data['departement_id'] = $ag->departement_id;
+       // $ag = Agence::find($data['agence_id']);
+        //$data['departement_id'] = $ag->departement_id;
         Caisse::create($data);
         return back();
     }
@@ -75,6 +76,14 @@ class CaisseController extends Controller
         $item = Caisse::find(request()->caisse_id);
         $item->compte = request()->compte;
         $item->save();
+        Session::flash('success','Enregistrement effectué avec succès!');
+        return back();
+    }
+
+    public function setUser(){
+        //dd(request()->all());
+        $data = request()->except('_token');
+        CaisseUser::updateOrCreate($data,$data);
         Session::flash('success','Enregistrement effectué avec succès!');
         return back();
     }
@@ -103,10 +112,10 @@ class CaisseController extends Controller
      */
 	public function show($id)
 	{
-		//$projet = Creance::where('token',$token)->first();
         $item = Caisse::find($id);
         $comptes = Compte::where('active',1)->get();
-		return view('/Admin/Caisses/show')->with(compact('item','comptes'));
+        $users = User::where('active',1)->where('role_id',3)->get();
+		return view('/Admin/Caisses/show')->with(compact('item','comptes','users'));
 	}
 
 

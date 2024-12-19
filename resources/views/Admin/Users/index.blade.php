@@ -32,7 +32,6 @@
                         <th>Telephone</th>
                         <th>Email</th>
                         <th>Role</th>
-                        <th>Departement</th>
                         <td>Statut</td>
                         <td>
 
@@ -46,7 +45,6 @@
                             <td>{{ $item->phone }}</td>
                             <td>{{ $item->email }}</td>
                             <th>{{ $item->role->name }}</th>
-                            <td>{{ $item->departement?$item->departement->name:'-'  }}</td>
                             <td><span class="badge bg-{{ $item->status['color'] }}">{{ $item->status['name'] }}</span></td>
                             <td>
                                 <div class="btn-group">
@@ -60,12 +58,6 @@
                                         @else
                                             <li><a class="dropdown-item" href="{{ route('admin.user.enable',$item->token) }}">Activer</a></li>
                                         @endif
-
-                                        @if($item->role_id==4)
-                                            <li><a data-id="{{ $item->id }}" data-bs-target="#depModal" data-bs-toggle="modal" class="dropdown-item btn-user" href="#">Affecter</a></li>
-                                        @endif
-
-
                                     </ul>
                                  </div>
                             </td>
@@ -123,81 +115,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="caisseModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header justify-content-between">
-                    <h5 class="modal-title">Nouvelle Affectation</h5>
-                    <div style="float: right">
-                        <button data-bs-dismiss="modal" class="btn btn-sm" >x</button>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <form enctype="multipart/form-data" action="{{ route('admin.user.caisse') }}" method="post">
-                        @csrf
-                        <input type="hidden" name="user_id" id="user_id">
-                        <div class="mt-3">
-                            <label for="">Ville</label>
-                            <select required name="ville_id" id="ville_id" class="form-control">
-                                <option value="">Selectionner une ville</option>
-                                @foreach($villes as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mt-3">
-                            <label for="">Agence</label>
-                            <select required name="agence_id" id="agence_id" class="form-control">
-                                <option value="">Selectionner une agence</option>
+  
 
-                            </select>
-                        </div>
-                        <div class="mt-3">
-                            <label for="">Caisse</label>
-                            <select required name="caisse_id" id="caisse_id" class="form-control">
-                                <option value="">Selectionner une caisse</option>
-
-                            </select>
-                        </div>
-                        <div class="mt-5">
-                            <button type="submit" class="btn-primary btn">ENREGISTRER</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="depModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header justify-content-between">
-                    <h5 class="modal-title">Nouvelle Affectation</h5>
-                    <div style="float: right">
-                        <button data-bs-dismiss="modal" class="btn btn-sm" >x</button>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <form enctype="multipart/form-data" action="{{ route('admin.user.departement') }}" method="post">
-                        @csrf
-                        <input type="hidden" name="user_id" id="_user_id">
-                        <div class="mt-3">
-                            <label for="">Departement</label>
-                            <select required name="departement_id" id="departement_id" class="form-control">
-                                <option value="">Selectionner un departement</option>
-                                @foreach($departements as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mt-5">
-                            <button type="submit" class="btn-primary btn">ENREGISTRER</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
     <script>
         $(document).ready(function(){
 

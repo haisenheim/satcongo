@@ -28,8 +28,8 @@ class DashboardController extends Controller
 	{
         $transactions = Transaction::orderBy('created_at','DESC')->where('user_id',auth()->user()->id)->whereNull('validated_at')->get();
         $user = User::find(auth()->user()->id);
-        //$caisses = $user->caisses;
-        $caisses = Caisse::where('active',1)->get();
+        $caisses = $user->caisses;
+        //$caisses = Caisse::where('active',1)->get();
         $departements = Departement::where('active',1)->get();
         $tiers = Tier::where('active',1)->get();
         $comptes = Compte::where('active',1)->get();
@@ -97,25 +97,7 @@ class DashboardController extends Controller
             $item->compte = $compte->code;
             $item->token = sha1(time().$op->id.rand(0,9999));
             $item->save();
-        /*
-        //return pdf()
-        return Pdf::view('Pdf.type_1', compact('op'))
-            //->view('pdf.type_1', compact('op'))
-            ->headerView('Pdf.header')
-            ->footerView('Pdf.footer')
-            ->format(Format::A3) // or you can pass a string like 'a3'
-            //->save(public_path('files').'/'.time().'.pdf');
-            ->name(time().'.pdf');
-            */
-            $data = [
-                [
-                    'quantity' => 1,
-                    'description' => '1 Year Subscription',
-                    'price' => '129.00'
-                ]
-            ];
-
-            $pdf = Pdf::loadView('Pdf.type_1', ['data' => $data])->setPaper('a5', 'portrait');
+            $pdf = Pdf::loadView('Pdf.type_1', ['item' => $op])->setPaper('a5', 'portrait');
         
         return $pdf->stream();
     }

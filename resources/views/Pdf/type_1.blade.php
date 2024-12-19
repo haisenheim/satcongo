@@ -36,21 +36,28 @@
             padding-top: 5px;
             font-weight: 700;
         }
+        .d-flex{
+            display: flex;
+        }
+        .justify-content-between{
+            justify-content: space-between
+        }
     </style>
 </head>
 <body>
     <header>
         <div style="">
             <div style="">
-                <div class="">
+                <div class="d-flex justify-content-between">
                     <div class="" style="height: 100px; float:left">
-                        <img style="border:none;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/logo-alt.png'))) }}" class="image img-thumbnail" height="80px" width="80px" />
+                        <img style="border:none;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/dhl.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
                     </div>
                     <div class="col-sm-10" style="padding-left:20px; float: left;text-align:center;">
-                        <p style="margin: 0;font-size:18px;font-weight: 900; color:#777">ETS CHRISTEVIE</p>
-                        <p style="margin: 0;font-size:14px; font-weight: 600">FROID GENERAL & VENTE EQUIPEMENTS - ACCESSOIRES</p>
-                        <p style="margin: 0;font-size:12px;">Adresse : Mahouata - Avenue MOE PRATT</p>
-                        <p style="margin: 0; font-size:12px;">TELEPHONE: +242 06 631 32 11 - Email : nonochristevie@gmail.com </p>
+                        <h5>PIECE DE DECAISSEMENT</h5>
+                        <p>&numero; {{ time() }}</p>
+                    </div>
+                    <div>
+                        <img style="border:none;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/satcongo.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
                     </div>
                 </div>
             </div>
@@ -59,21 +66,76 @@
 
     <footer>
         <div style="font-size: 12px">
-             <p style="margin:0"><span>SatCongo</span></p>
-         
+             <p style="margin:0"><span>&copy; SatCongo</span></p>
         </div>
     </footer>
     <main style="margin-top:10px;">
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Et ducimus, adipisci illum eveniet placeat mollitia quos! Unde tenetur et praesentium, maxime incidunt aut voluptatum, dolorem voluptatem corrupti porro error aspernatur.</p>
-        <p>Nostrum ut reprehenderit nesciunt, quis alias blanditiis rerum? Minima repellat libero asperiores veritatis provident aspernatur suscipit repudiandae voluptatum, eos, perspiciatis nulla ipsum ab accusamus labore! Alias distinctio ea nostrum molestiae.</p>
-        <p>Obcaecati inventore non assumenda sint. Minus, dolor laudantium. Optio dolores officia eum. Iusto odit consequatur distinctio eum, deserunt consectetur culpa explicabo maxime recusandae fuga beatae quod, nihil nulla enim. At?</p>
-        <p>Qui eos quia dolorem odio exercitationem ipsam quis debitis, beatae placeat tenetur atque magnam sint harum saepe iste veniam cumque laborum recusandae in, possimus aliquam ad blanditiis quod reprehenderit. Magnam.</p>
-        <p>Adipisci blanditiis magni culpa dolorum temporibus necessitatibus deserunt ipsa nesciunt quaerat dolorem eos dicta in, corrupti ullam. Omnis, quisquam libero nihil possimus itaque suscipit quis eius corrupti fuga perferendis. Facilis?</p>
-        <p>Corrupti, minima culpa atque saepe perspiciatis aut, distinctio deserunt quo iste veniam nostrum dolore et doloribus amet? Soluta officia, neque autem impedit enim facilis optio repellat repudiandae animi odit corporis!</p>
-        <p>Quam mollitia consequatur iusto illo odio nostrum rem sapiente blanditiis beatae fugit ut similique accusantium sunt, ipsa inventore. Ratione sed facilis incidunt deleniti similique blanditiis voluptatibus deserunt voluptatem voluptates eveniet!</p>
-        <p>Nesciunt dolore repellat quod aperiam commodi deserunt placeat, debitis iusto facilis consequuntur, distinctio error sed obcaecati maxime similique non! Voluptatem optio et dolorem eos! Voluptatibus officiis laboriosam tempora eos harum.</p>
-        <p>Sint totam, libero molestiae ex nihil vel vitae tenetur voluptas nisi impedit magni pariatur, veritatis delectus itaque aut cum deleniti? Quae provident suscipit facere, ipsam consequuntur culpa doloremque dicta quod.</p>
-        <p>Nam animi provident perferendis aut repellat quaerat sapiente reprehenderit nemo explicabo consectetur cupiditate nisi deserunt hic corrupti totam, fuga fugiat, nobis rerum, quae quis nulla quidem sed corporis? Accusantium, quaerat!</p>
+        <div class="d-flex justify-content-between">
+            <div>
+                <p><span>DEMANDEUR:</span> <span class="fw-bold">{{ $item->agent?->name }}</span></p>
+            </div>
+            <div>
+                <p><span>DATE:</span> <span class="fw-bold">{{ \Carbon\Carbon::parse($item->day)->format('d/m/Y') }}</span></p>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                <p><span>DEPARTEMENT 1:</span> <span class="fw-bold">{{ $item->departement_un?->name }}</span></p>
+            </div>
+            <div style="width: 30px; height: 200px; border: 3px #000 solid">
+
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                <p><span>DEPARTEMENT 2:</span> <span class="fw-bold">{{ $item->departement_un?->name }}</span></p>
+            </div>
+            <div style="width: 30px; height: 200px; border: 3px #000 solid">
+
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                <p><span>NATURE DE LA DEPENSE :</span> <span class="fw-bold">{{ $item->libelle }}</span></p>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                <p><span>&numero; DOSSIER :</span> <span class="fw-bold">{{ $item->dossier }}</span></p>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                <p><span>PC :</span> </p>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                <p><span>TOTAL MONTANT CHIFFRE :</span> <span class="fw-bold">{{ number_format($item->montant,0,',','.') }} FCFA</span></p>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <div>
+                <p style="margin-bottom: 0; text-align: center;">SIGN. DEMANDEUR</p>
+                <div style="width: 30px; height: 200px; border: 3px #000 solid">
+
+                </div>
+            </div>
+            <div>
+                <p style="margin-bottom: 0; text-align: center;">SIGN. DG</p>
+                <div style="width: 30px; height: 200px; border: 3px #000 solid">
+
+                </div>
+            </div>
+            <div>
+                <p style="margin-bottom: 0; text-align: center;">NOM ET SIGN. BENEFICIAIRE</p>
+                <div style="width: 30px; height: 200px; border: 3px #000 solid">
+
+                </div>
+            </div>
+        </div>
+
     </main>
 </body>
 </html>

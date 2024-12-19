@@ -28,7 +28,7 @@
 @section('page-header')
     <div class="d-flex justify-content-between mt-1">
         <h5 class="page-title mb-0 mt-1 fs-3">Hello <span class="text-muted">{{ auth()->user()->name }}</span>, vous etes sur <span class="text-danger">Satcongo Reporting</span></h5>
-        <div style="width: 520px;" class="d-flex gap-1 flex-wrap">
+        <div style="width: 320px;" class="d-flex gap-1 flex-wrap">
             @foreach($caisses as $caisse)
                 <div>
                     <span style="font-size: 0.65rem;" class="badge bg-blue"><span class="text-white">{{ $caisse->name }}</span> : <span class="">{{ number_format($caisse->solde,0,',','.') }}</span></span>
@@ -42,7 +42,7 @@
 
     <div style="height: 75vh; overflow:scroll;" class="card mt-1">
         <div class="card-body">
-            <div id="myGrid" style="height: 400px"></div>
+            <div id="myGrid" style="height: 480px"></div>
         </div>
     </div>
 

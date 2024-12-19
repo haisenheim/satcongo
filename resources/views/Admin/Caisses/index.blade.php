@@ -30,9 +30,6 @@
                         <th>Code</th>
                         <th>Intitule</th>
                         <th>Compte</th>
-                        <th>Agence</th>
-                        <th>Ville</th>
-                        <th>Departement</th>
                         <th>Statut</th>
                         <th></th>
                     </tr>
@@ -43,9 +40,6 @@
                             <td><a href="{{ route('admin.caisses.show',$item->id) }}">{{ $item->code }}</a></td>
                             <td><a href="{{ route('admin.caisses.show',$item->id) }}">{{ $item->name }}</a></td>
                             <td>{{ $item->compte }}</td>
-                            <td>{{ $item->agence?$item->agence->name:'-' }}</td>
-                            <td>{{ $item->ville?$item->ville->name:'-' }}</td>
-                            <td>{{ $item->departement?$item->departement->name:'-' }}</td>
                             <td><span class="badge bg-{{ $item->status['color'] }}">{{ $item->status['name'] }}</span></td>
                             <td>
                                 <div class="btn-group">
@@ -92,26 +86,6 @@
                         <div class="mt-3">
                             <label for="">COMPTE DE COMPENSATION</label>
                             <input type="text" required name="compte" placeholder="Saisir le numero de compte" class="form-control">
-                        </div>
-                        <div class="mt-3">
-                            <label for="">SOLDE INITIAL</label>
-                            <input type="number" required name="solde" placeholder="Saisir le solde initial" class="form-control">
-                        </div>
-                        <div class="mt-3">
-                            <label for="">Ville</label>
-                            <select required name="ville_id" id="ville_id" class="form-control">
-                                <option value="">Selectionner une ville</option>
-                                @foreach($villes as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mt-3">
-                            <label for="">Agence</label>
-                            <select required name="agence_id" id="agence_id" class="form-control">
-                                <option value="">Selectionner une agence</option>
-
-                            </select>
                         </div>
                         <div class="mt-5">
                             <button type="submit" class="btn-primary btn">ENREGISTRER</button>

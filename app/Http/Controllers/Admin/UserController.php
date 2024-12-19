@@ -23,9 +23,7 @@ class UserController extends Controller
         //
         $items = User::all();
         $roles = Role::all();
-        $villes = Ville::all();
-        $departements = Departement::all();
-        return view('/Admin/Users/index')->with(compact('items','roles','villes','departements'));
+        return view('/Admin/Users/index')->with(compact('items','roles'));
     }
 
     public function setCaisse(){

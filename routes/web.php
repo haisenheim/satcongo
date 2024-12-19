@@ -46,6 +46,7 @@ Route::namespace('App\Http\Controllers\Admin')
         Route::post('caisse/compte','CaisseController@addCompte')->name('caisse.compte');
         Route::post('caisse/set/compte','CaisseController@setCompte')->name('caisse.set.compte');
         Route::post('caisse/add/compte','CaisseController@addCompte')->name('caisse.add.compte');
+        Route::post('caisse/set/user','CaisseController@setUser')->name('caisse.set.user');
         Route::get('caisse/enable/{token}','CaisseController@enable')->name('caisse.enable');
 
 
