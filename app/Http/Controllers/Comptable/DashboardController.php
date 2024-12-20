@@ -18,8 +18,8 @@ class DashboardController extends Controller
 {
     public function index()
 	{
-        
-        $villes = Ville::all();
+
+       // $villes = Ville::all();
         $start = request()->start;
         $end = request()->end;
         $agence_id = request()->agence_id;
@@ -28,13 +28,13 @@ class DashboardController extends Controller
         if($start && $end && $agence_id && $caisse_id){
             $transactions = Transaction::orderBy('created_at','DESC')->whereBetween('day',[$start,$end])->where('caisse_id',$caisse_id)->get();
             $ready = true;
-            return view('Comptable/dashboard',compact('transactions','villes','ready','start','end','agence_id','caisse_id'));
+            return view('Comptable/dashboard',compact('transactions','ready','start','end','agence_id','caisse_id'));
         }else{
             $transactions = collect();
-            return view('Comptable/dashboard',compact('transactions','villes','ready'));
+            return view('Comptable/dashboard',compact('transactions','ready'));
         }
-        return view('Comptable/dashboard',compact('transactions','villes','ready'));
-        
+        return view('Comptable/dashboard',compact('transactions','ready'));
+
 	}
 
     public function blukValidate(){
@@ -67,10 +67,10 @@ class DashboardController extends Controller
     }
 
 
-    
+
 
     public function getComptes(){
-        $type = request()->id; 
+        $type = request()->id;
         $ccs = CaisseCompte::where('caisse_id',auth()->user()->caisse_id)->get();
         $ids = $ccs->pluck('compte_id');
         $comptes = Compte::whereIn('id',$ids)->where('credit',$type)->where('active',1)->get();

@@ -109,6 +109,9 @@ class DashboardController extends Controller
         $op->libelle = request()->libelle;
         $op->dossier = request()->dossier;
         $op->type_id = 1;
+        $op->mt_departement_un = request()->mt_dep_1;
+        $op->mt_departement_deux = request()->mt_dep_2;
+        $op->pc = request()->pc;
         $op->agent_id = request()->agent_id;
         $op->departement_un_id = request()->departement_un_id;
         $op->departement_deux_id = request()->departement_deux_id;
@@ -227,7 +230,8 @@ class DashboardController extends Controller
         $op->mt_especes = request()->mt_especes;
         $op->mt_cheque = request()->mt_cheque;
         $op->num_cheque = request()->num_cheque;
-        $op->is_debours = request()->is_debours;
+        $op->mt_debours = request()->mt_debours;
+        $op->mt_prestations = request()->mt_prestations;
         $op->libelle = request()->libelle;
 
         $op->day = request()->day;

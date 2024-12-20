@@ -29,6 +29,10 @@ class Operation extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function getNameAttribute(){
+        return str_pad($this->id,8,'0',STR_PAD_LEFT);
+    }
+
     public function tier()
     {
         return $this->belongsTo('App\Models\Tier');

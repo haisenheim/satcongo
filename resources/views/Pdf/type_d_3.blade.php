@@ -68,6 +68,9 @@
             opacity: 0.3; /* Opacité de l'image du filigrane */
             z-index: -1; /* Placer le filigrane derrière le texte */
         }
+        .fw-bold{
+            font-weight: 900;
+        }
     </style>
 </head>
 <body>
@@ -77,14 +80,14 @@
             <div style="">
                 <div class="d-flex justify-content-between">
                     <div class="" style="float:left">
-                        <img style="border:none; height: 75px; width:120px;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/dhl.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
+                        <img style="border:none; height: 75px; width:160px;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/dhl.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
                     </div>
                     <div  style="padding-left:20px; float: left;text-align:center;">
-                        <h6>PIECE DE DECAISSEMENT TRANSIT</h6>
+                        <h5>PIECE DE DECAISSEMENT TRANSPORT</h5>
                         <h6>N° {{ $item->name }}</h6>
                     </div>
                     <div style="float:right;">
-                        <img style="border:none; height: 75px; width:120px;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/satcongo.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
+                        <img style="border:none; height: 75px; width:160px;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/satcongo.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
                     </div>
                 </div>
             </div>
@@ -133,42 +136,50 @@
         <table>
             <tr>
                 <td style="width:270px;">
-                    <p><span>ESPECE :</span> <span class="fw-bold">{{ number_format($item->mt_especes,0,',','.') }} FCFA</span></p>
+                    <span>ESPECE :</span> <span class="fw-bold">{{ number_format($item->mt_especes,0,',','.') }} FCFA</span>
                 </td>
                 <td style="width:270px;">
-                    <p><span>CHEQUE :</span> <span class="fw-bold">{{ number_format($item->mt_cheque,0,',','.') }} FCFA</span></p>
+                    <span>CHEQUE :</span> <span class="fw-bold">{{ number_format($item->mt_cheque,0,',','.') }} FCFA</span>
                 </td>
                 <td style="width:270px;">
-                    <p><span>N° CHEQUE :</span> <span class="fw-bold">{{ $item->num_cheque }}</span></p>
+                   <span>N° CHEQUE :</span> <span class="fw-bold">{{ $item->num_cheque }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:270px;">
+                    <span>DEBOURS :</span> <span class="fw-bold">{{ number_format($item->mt_debours,0,',','.') }} FCFA</span>
+                </td>
+                <td style="width:270px;">
+                    <span>PRESTATIONS :</span> <span class="fw-bold">{{ number_format($item->mt_prestations,0,',','.') }} FCFA</span>
                 </td>
             </tr>
         </table>
 
         <div class="d-flex justify-content-between">
-            <table>
+            <table style="margin-top: 2rem;">
                 <tbody>
                     <tr style="width: 100%;">
                         <td style="width: 180px;">
-                            <p style="margin-bottom: 0;">SIGN. CHEF DEPARTEMENT</p>
-                            <div style="width: 160px; height: 30px; border: 2px #000 solid;">
+                            <p style="margin-bottom: 0; font-size:10px;">SIGN. CHEF DEPARTEMENT</p>
+                            <div style="width: 160px; height: 90px; border: 1px #777 solid;">
 
                             </div>
                         </td>
                         <td style="width: 180px;">
-                            <p style="margin-bottom: 0;">SIGN. SERV. CONTROLE DEPENSE</p>
-                            <div style="width: 160px; height: 30px; border: 2px #000 solid;">
+                            <p style="margin-bottom: 0; font-size:10px;">SIGN. SERV. CONTROLE DEPENSE</p>
+                            <div style="width: 160px; height: 90px; border: 1px #777 solid;">
 
                             </div>
                         </td>
                         <td style="width: 180px;">
-                            <p style="margin-bottom: 0;">SIGN. DG</p>
-                            <div style="width: 160px; height: 30px; border: 2px #000 solid;">
+                            <p style="margin-bottom: 0; font-size:10px;">SIGN. DG</p>
+                            <div style="width: 160px; height: 90px; border: 1px #777 solid;">
 
                             </div>
                         </td>
                         <td style="width: 180px;">
-                            <p style="margin-bottom: 0;">NOM ET SIGN. BENEFICIAIRE</p>
-                            <div style="width: 160px; height: 30px; border: 2px #000 solid;">
+                            <p style="margin-bottom: 0; font-size:10px;">NOM ET SIGN. BENEFICIAIRE</p>
+                            <div style="width: 160px; height: 90px; border: 1px #777 solid;">
 
                             </div>
                         </td>

@@ -68,6 +68,9 @@
             opacity: 0.3; /* Opacité de l'image du filigrane */
             z-index: -1; /* Placer le filigrane derrière le texte */
         }
+        .fw-bold{
+            font-weight: 900;
+        }
     </style>
 </head>
 <body>
@@ -77,14 +80,14 @@
             <div style="">
                 <div class="d-flex justify-content-between">
                     <div class="" style="float:left">
-                        <img style="border:none; height: 75px; width:120px;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/dhl.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
+                        <img style="border:none; height: 75px; width:160px;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/dhl.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
                     </div>
                     <div  style="padding-left:20px; float: left;text-align:center;">
-                        <h6>PIECE DE DECAISSEMENT TRANSPORT</h6>
+                        <h5>PIECE DE DECAISSEMENT TRANSPORT</h5>
                         <h6>N° {{ $item->name }}</h6>
                     </div>
                     <div style="float:right;">
-                        <img style="border:none; height: 75px; width:120px;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/satcongo.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
+                        <img style="border:none; height: 75px; width:160px;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/satcongo.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
                     </div>
                 </div>
             </div>
@@ -114,18 +117,18 @@
                         <table>
                             <tr>
                                 <td>
-                                    <p>PEAGE:</p>
+                                    <span>PEAGE:</span>
                                 </td>
                                 <td>
-                                    <p class="fw-bold">{{ number_format($item->peage,0,',','.') }}</p>
+                                    <span class="fw-bold">{{ number_format($item->peage,0,',','.') }}</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <p>HOTEL:</p>
+                                    <span>HOTEL:</span>
                                 </td>
                                 <td>
-                                    <p class="fw-bold">{{ number_format($item->hotel,0,',','.') }}</p>
+                                    <span class="fw-bold">{{ number_format($item->hotel,0,',','.') }}</span>
                                 </td>
                             </tr>
 
@@ -137,18 +140,18 @@
                         <table>
                             <tr>
                                 <td>
-                                    <p>RATION :</p>
+                                    <span>RATION :</span>
                                 </td>
                                 <td>
-                                    <p class="fw-bold">{{ number_format($item->ration,0,',','.') }}</p>
+                                    <span class="fw-bold">{{ number_format($item->ration,0,',','.') }}</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <p>PRIME : </p>
+                                    <span>PRIME : </span>
                                 </td>
                                 <td>
-                                    <p class="fw-bold">{{ number_format($item->prime,0,',','.') }}</p>
+                                    <span class="fw-bold">{{ number_format($item->prime,0,',','.') }}</span>
                                 </td>
                             </tr>
                         </table>
@@ -159,18 +162,18 @@
                         <table>
                             <tr>
                                 <td>
-                                    <p>BAC:</p>
+                                    <span>BAC:</span>
                                 </td>
                                 <td>
-                                    <p class="fw-bold">{{ number_format($item->bac,0,',','.') }}</p>
+                                    <span class="fw-bold">{{ number_format($item->bac,0,',','.') }}</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <p>AUTRE:</p>
+                                    AUTRE :
                                 </td>
                                 <td>
-                                    <p class="fw-bold">{{ number_format($item->autres,0,',','.') }}</p>
+                                    <span class="fw-bold">{{ number_format($item->autres,0,',','.') }}</span>
                                 </td>
                             </tr>
                         </table>
@@ -195,32 +198,30 @@
         <p><span>TOTAL MONTANT CHIFFRE :</span> <span class="fw-bold">{{ number_format($mc,0,',','.') }} FCFA</span></p>
         <p><span>TOTAL MONTANT EN LETTRES :</span> <span class="fw-bold">{{ $ml }} Francs cfa</span></p>
 
-        <div class="d-flex justify-content-between">
-            <table>
-                <tbody>
-                    <tr style="width: 100%;">
-                        <td style="width: 260px;">
-                            <p style="margin-bottom: 0;">SIGN. DEMANDEUR</p>
-                            <div style="width: 220px; height: 30px; border: 2px #000 solid;">
+        <table>
+            <tbody>
+                <tr style="width: 100%;">
+                    <td style="width: 260px;">
+                        <p style="margin-bottom: 0;">SIGN. DEMANDEUR</p>
+                        <div style="width: 220px; height: 45px; border: 1px #777 solid;">
 
-                            </div>
-                        </td>
-                        <td style="width: 260px;">
-                            <p style="margin-bottom: 0;">SIGN. DG</p>
-                            <div style="width: 220px; height: 30px; border: 2px #000 solid;">
+                        </div>
+                    </td>
+                    <td style="width: 260px;">
+                        <p style="margin-bottom: 0;">SIGN. DG</p>
+                        <div style="width: 220px; height: 45px; border: 1px #777 solid;">
 
-                            </div>
-                        </td>
-                        <td style="width: 260px;">
-                            <p style="margin-bottom: 0;">NOM ET SIGN. BENEFICIAIRE</p>
-                            <div style="width: 220px; height: 30px; border: 2px #000 solid;">
+                        </div>
+                    </td>
+                    <td style="width: 260px;">
+                        <p style="margin-bottom: 0;">NOM ET SIGN. BENEFICIAIRE</p>
+                        <div style="width: 220px; height: 45px; border: 1px #777 solid;">
 
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
     </main>
 </body>

@@ -27,14 +27,7 @@
                     <form method="get"  action="{{ route('comptable.dashboard') }}">
                         @csrf
                         <div class="d-flex gap-2">
-                            <div>
-                                <select name="ville_id" required class="form-control" id="ville_id">
-                                    <option value="">SELECTIONNER LA VILLE ...</option>
-                                    @foreach($villes as $ville)
-                                        <option value="{{ $ville->id }}">{{ $ville->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            
                             <div>
                                 <select name="agence_id" required class="form-control" id="agence_id">
                                     <option value="">SELECTIONNER UNE AGENCE ...</option>

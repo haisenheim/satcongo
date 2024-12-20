@@ -80,11 +80,8 @@
                 </table>
                 <p><span>TOTAL MONTANT CHIFFRE :</span> <span class="fw-bold">{{ number_format($mc,0,',','.') }} FCFA</span></p>
                 <p><span>TOTAL MONTANT EN LETTRES :</span> <span class="fw-bold">{{ $ml }} Francs cfa</span></p>
-
             </div>
         </div>
-    </div>
-
 
 @endsection
 

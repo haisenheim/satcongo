@@ -99,36 +99,48 @@
 
                             <div class="flex-fill">
                                 <label class="text-blue fs-6 fw-bolder" for="">MONTANT</label>
-                                <input required type="number" placeholder="Saisir le montant de l'operation ici ..." name="montant" id="montant" class="form-control">
+                                <input readonly type="number" placeholder="Saisir le montant de l'operation ici ..." name="montant" id="montantd" class="form-control">
+                            </div>
+                            <div class="w-25">
+                                <label class="text-blue fs-6 fw-bolder" for="">DATE</label>
+                                <input required type="date" name="day" id="day" class="form-control">
                             </div>
                         </div>
-                        <div class="d-flex gap-1">
-                            <div class="w-25">
-                                <label class="text-blue fs-6 fw-bolder" for="">DEPARTEMENT 1</label>
-                                <select class="form-control" name="departement_un_id" id="agent_id">
-                                    <option value="">SELECTIONNER UN DEPARTEMENT ...</option>
-                                    @foreach($departements as $tier)
-                                    <option value="{{ $tier->id }}">{{ $tier->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="w-25">
-                                <label class="text-blue fs-6 fw-bolder" for="">DEPARTEMENT 2</label>
-                                <select class="form-control" name="departement_deux_id" id="agent_id">
-                                    <option value="">SELECTIONNER UN DEPARTEMENT ...</option>
-                                    @foreach($departements as $tier)
-                                    <option value="{{ $tier->id }}">{{ $tier->name }}</option>
-                                    @endforeach
-                                </select>
+                        <div class="d-flex gap-2">
+                            <div class="w-50">
+                                <fieldset>
+                                    <legend>DEPARTEMENT 1</legend>
+                                    <div>
+                                    <select class="form-control" name="departement_un_id" id="agent_id">
+                                        <option value="">SELECTIONNER UN DEPARTEMENT ...</option>
+                                        @foreach($departements as $tier)
+                                        <option value="{{ $tier->id }}">{{ $tier->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    </div>
+                                    <div>
+                                        <label for="">MONTANT</label>
+                                        <input type="number" value="0" name="mt_dep_1" class="form-control mtd">
+                                    </div>
+                                </fieldset>
+
                             </div>
                             <div class="w-50">
-                                <label class="text-blue fs-6 fw-bolder" for="">DEMANDEUR</label>
-                                <select class="form-control" name="agent_id" id="agent_id">
-                                    <option value="">SELECTIONNER UN AGENT ...</option>
-                                    @foreach($agents as $tier)
-                                    <option value="{{ $tier->id }}">{{ $tier->name }}</option>
-                                    @endforeach
-                                </select>
+                                <fieldset>
+                                    <legend>DEPARTEMENT 2</legend>
+                                    <div>
+                                    <select class="form-control" name="departement_deux_id" id="dep2_id">
+                                        <option value="">SELECTIONNER UN DEPARTEMENT ...</option>
+                                        @foreach($departements as $tier)
+                                        <option value="{{ $tier->id }}">{{ $tier->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    </div>
+                                    <div>
+                                        <label for="">MONTANT</label>
+                                        <input type="number" value="0" name="mt_dep_2" class="form-control mtd">
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
 
@@ -141,10 +153,20 @@
                                 <label class="text-blue fs-6 fw-bolder" for="">NATURE DE LA DEPENSE</label>
                                 <input type="text" name="libelle" class="form-control">
                             </div>
-                            <div class="w-25">
-                                <label class="text-blue fs-6 fw-bolder" for="">DATE</label>
-                                <input required type="date" name="day" id="day" class="form-control">
+                            <div class="flex-fill">
+                                <label class="text-blue fs-6 fw-bolder" for="">DEMANDEUR</label>
+                                <select class="form-control" name="agent_id" id="agent_id">
+                                    <option value="">SELECTIONNER UN AGENT ...</option>
+                                    @foreach($agents as $tier)
+                                    <option value="{{ $tier->id }}">{{ $tier->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="">P/C</label>
+                            <input type="text" name="pc" placeholder="Pour le client ..." class="form-control">
                         </div>
 
                         <div class="mt-3">
@@ -342,18 +364,14 @@
                                 <input required type="text" name="num_cheque" placeholder="num. du cheque ici ..." class="form-control">
                             </div>
                             <div class="w-25">
-                                <div class="mt-4">
-                                    <div class="form-check form-check-inline">
-                                        <input id="" class="form-check-input" type="radio" name="is_debours" value=1>
-                                        <label for="" class="form-check-label">DEBOURS</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input id="" class="form-check-input" type="radio" name="is_debours" value=0>
-                                        <label for="" class="form-check-label">PRESTATIONS</label>
-                                    </div>
-                                </div>
-
+                                <label for="">DEBOURS</label>
+                                <input required type="number" value="0" name="mt_debours" class="form-control mnt">
                             </div>
+                            <div class="w-25">
+                                <label for="">PRESTATIONS</label>
+                                <input required type="number" value="0" name="mt_prestations" class="form-control mnt">
+                            </div>
+
                         </div>
 
                         <div class="mt-2">
@@ -382,6 +400,14 @@
                 somme = somme + parseInt($(this).val())
             })
             $('#montant_total').val(somme);
+        })
+
+        $('.mtd').keyup(function(){
+            var somme = 0;
+            $('.mtd').each(function(){
+                somme = somme + parseInt($(this).val())
+            })
+            $('#montantd').val(somme);
         })
 
         $('#tier_id').change(function(){
@@ -437,6 +463,10 @@
                     }
                 });
             })
+
+        $('.modal-header .btn').click(function(){
+            window.location.reload();
+        })
 
         $('#type_id').change(function(){
                  var _id = $('#type_id').val();

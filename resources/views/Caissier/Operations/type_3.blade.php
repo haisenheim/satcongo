@@ -33,14 +33,14 @@
 @section('content')
     <div style="height: 75vh; width: 600px; margin:1rem auto; overflow:scroll;" class="card mt-1">
         <div class="card-body">
-            <div class="d-flex justify-content-between">
-                <div style="float: left">
-                    <p><span>DEMANDEUR:</span> <span class="fw-bold">{{ $item->agent?->name }}</span></p>
+                <div class="d-flex justify-content-between">
+                    <div style="float: left">
+                        <p><span>DEMANDEUR:</span> <span class="fw-bold">{{ $item->agent?->name }}</span></p>
+                    </div>
+                    <div style="float: right">
+                        <p><span>DATE:</span> <span class="fw-bold">{{ \Carbon\Carbon::parse($item->day)->format('d/m/Y') }}</span></p>
+                    </div>
                 </div>
-                <div style="float: right">
-                    <p><span>DATE:</span> <span class="fw-bold">{{ \Carbon\Carbon::parse($item->day)->format('d/m/Y') }}</span></p>
-                </div>
-            </div>
 
                 <table class="table" style="margin-top:1rem">
                     <tbody>
@@ -60,8 +60,6 @@
                 </table>
 
                 <p><span>LIBELLE :</span> <span class="fw-bold">{{ $item->libelle }}</span></p>
-
-
                 <p><span>TOTAL MONTANT CHIFFRE :</span> <span class="fw-bold">{{ number_format($mc,0,',','.') }} FCFA</span></p>
                 <p><span>TOTAL MONTANT EN LETTRES :</span> <span class="fw-bold">{{ $ml }} Francs cfa</span></p>
 
@@ -80,6 +78,5 @@
                 </table>
             </div>
         </div>
-    </div>
 @endsection
 
