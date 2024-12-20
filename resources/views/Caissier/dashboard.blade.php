@@ -321,7 +321,7 @@
                         <div class="mt-3 d-flex gap-1">
                             <div class="w-75">
                                 <label for="">LIBELLE</label>
-                                <input required type="text" name="libelle" placeholder="Saisor le libelle ici ..." class="form-control">
+                                <input required type="text" name="libelle" placeholder="Saisir le libelle ici ..." class="form-control">
                             </div>
                             <div class="w-25">
                                 <label for="">MONTANT</label>
@@ -339,7 +339,7 @@
                             </div>
                             <div class="w-25">
                                 <label for="">&numero; DE CHEQUE</label>
-                                <input required type="text" name="libelle" placeholder="num. du cheque ici ..." class="form-control">
+                                <input required type="text" name="num_cheque" placeholder="num. du cheque ici ..." class="form-control">
                             </div>
                             <div class="w-25">
                                 <div class="mt-4">

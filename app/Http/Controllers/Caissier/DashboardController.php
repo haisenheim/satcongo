@@ -160,14 +160,14 @@ class DashboardController extends Controller
             $montant = request()->montant;
             $lettre = NombreHelper::convertirEnLettres($montant);
             $pdf = Pdf::loadView('Pdf.type_2', ['item' => $op,'ml'=>$lettre,'mc'=>$montant])->setPaper('a5', 'landscape');
-        
-         return $pdf->stream();
+            return $pdf->stream();
 
         Session::flash('success','Enregistrement effectué avec succès!');
         return redirect(route('caissier.dashboard'));
     }
 
     public function store3(){
+        //dd(request()->all());
         $user = auth()->user();
         $caisse = Caisse::find(request()->caisse_id);
         $op = new Operation();
@@ -181,6 +181,7 @@ class DashboardController extends Controller
         $op->mt_cheque = request()->mt_cheque;
         $op->num_cheque = request()->num_cheque;
         $op->is_debours = request()->is_debours;
+        $op->libelle = request()->libelle;
 
         $op->day = request()->day;
         $dt = Carbon::parse(request()->day);
@@ -214,6 +215,11 @@ class DashboardController extends Controller
             $item->compte = $compte->code;
             $item->token = sha1(time().$op->id.rand(0,9999));
             $item->save();
+
+        $montant = request()->montant;
+        $lettre = NombreHelper::convertirEnLettres($montant);
+        $pdf = Pdf::loadView('Pdf.type_3', ['item' => $op,'ml'=>$lettre,'mc'=>$montant])->setPaper('a5', 'landscape');
+        return $pdf->stream();
 
         Session::flash('success','Enregistrement effectué avec succès!');
         return redirect(route('caissier.dashboard'));
