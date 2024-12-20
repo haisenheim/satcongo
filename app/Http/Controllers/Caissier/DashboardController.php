@@ -101,7 +101,7 @@ class DashboardController extends Controller
             $item->token = sha1(time().$op->id.rand(0,9999));
             $item->save();
             $lettre = NombreHelper::convertirEnLettres($montant);
-            $pdf = Pdf::loadView('Pdf.type_1', ['item' => $op,'ml'=>$lettre,'mc'=>$montant])->setPaper('a5', 'portrait');
+            $pdf = Pdf::loadView('Pdf.type_1', ['item' => $op,'ml'=>$lettre,'mc'=>$montant])->setPaper('a5', 'landscape');
         
          return $pdf->stream();
          return back();
@@ -157,6 +157,11 @@ class DashboardController extends Controller
             $item->compte = $compte->code;
             $item->token = sha1(time().$op->id.rand(0,9999));
             $item->save();
+            $montant = request()->montant;
+            $lettre = NombreHelper::convertirEnLettres($montant);
+            $pdf = Pdf::loadView('Pdf.type_2', ['item' => $op,'ml'=>$lettre,'mc'=>$montant])->setPaper('a5', 'landscape');
+        
+         return $pdf->stream();
 
         Session::flash('success','Enregistrement effectué avec succès!');
         return redirect(route('caissier.dashboard'));
