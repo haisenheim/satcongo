@@ -555,7 +555,7 @@
 
     function rowSelected(e){
         console.log(e.data.token)
-       // window.location.href = "programmes/"+e.data.token
+       window.location.href = "/caissier/operation/"+e.data.token
     }
 
     function onFilterTextBoxChanged() {

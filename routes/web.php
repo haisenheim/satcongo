@@ -73,6 +73,8 @@ Route::namespace('App\Http\Controllers\Caissier')
         Route::get('dashboard','DashboardController@index')->name('dashboard');
         Route::get('operation/create','DashboardController@createOperation')->name('operation.create');
         Route::get('caisse/comptes','DashboardController@getComptes')->name('caisse.comptes');
+        Route::get('operation/{token}','DashboardController@getOperation')->name('operation.show');
+        Route::get('print/operation/{token}','DashboardController@printOperation')->name('operation.print');
        # Route::post('transactions','DashboardController@saveOperation')->name('operation.store');
         Route::post('operations','DashboardController@saveOperation')->name('operation.save');
         Route::post('operation/update','DashboardController@updateOperation')->name('operation.update');

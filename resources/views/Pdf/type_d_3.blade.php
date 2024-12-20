@@ -60,9 +60,18 @@
             line-height: 1.6;
             position: relative;
         }
+        .filigrane-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg); /* Rotation de l'image */
+            opacity: 0.3; /* Opacité de l'image du filigrane */
+            z-index: -1; /* Placer le filigrane derrière le texte */
+        }
     </style>
 </head>
 <body>
+    <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/duplicata.jpg'))) }}" class="filigrane-image" width="300" height="300" />
     <header>
         <div style="">
             <div style="">

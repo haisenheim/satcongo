@@ -43,6 +43,50 @@ class DashboardController extends Controller
         return response()->json(TransactionResource::collection($transactions));
     }
 
+    public function getOperation($token){
+        $item = Transaction::where('token',$token)->first();
+        $item = $item->operation;
+        $mc = $item->montant;
+        $ml = NombreHelper::convertirEnLettres($item->montant);
+        //dd($item);
+        if($item->type_id==1){
+            return view('Caissier/Operations/type_1',compact('item','mc','ml'));
+        }
+
+        if($item->type_id==2){
+            return view('Caissier/Operations/type_2',compact('item','mc','ml'));
+        }
+
+        if($item->type_id==3){
+            return view('Caissier/Operations/type_3',compact('item','mc','ml'));
+        }
+    }
+
+    public function printOperation($token){
+        $item = Operation::where('token',$token)->first();
+        //$item = $item->operation;
+        $mc = $item->montant;
+        $ml = NombreHelper::convertirEnLettres($item->montant);
+        //dd($item);
+        $lettre = NombreHelper::convertirEnLettres($mc);
+        if($item->type_id==1){
+
+             $pdf = Pdf::loadView('Pdf.type_d_1', ['item' => $item,'ml'=>$lettre,'mc'=>$mc])->setPaper('a5', 'landscape');
+             return $pdf->stream();
+            //return view('Caissier/Operations/type_d_1',compact('item','mc','ml'));
+        }
+
+        if($item->type_id==2){
+             $pdf = Pdf::loadView('Pdf.type_d_2', ['item' => $item,'ml'=>$lettre,'mc'=>$mc])->setPaper('a5', 'landscape');
+             return $pdf->stream();
+        }
+
+        if($item->type_id==3){
+            $pdf = Pdf::loadView('Pdf.type_d_3', ['item' => $item,'ml'=>$lettre,'mc'=>$mc])->setPaper('a5', 'landscape');
+            return $pdf->stream();
+        }
+    }
+
 
 
     public function create(){
@@ -59,6 +103,7 @@ class DashboardController extends Controller
         $montant = request()->montant;
         $caisse = Caisse::find(request()->caisse_id);
         $op = new Operation();
+        $op->name = time();
         $op->user_id = $user->id;
         $op->caisse_id = $caisse->id;
         $op->libelle = request()->libelle;
@@ -74,7 +119,7 @@ class DashboardController extends Controller
         $op->annee = $dt->year;
         $op->token = sha1(time().$user->id);
         $op->save();
-        
+
 
             //Je renseigne le compte lie a la caisse au credit
             $item = new Transaction();
@@ -102,7 +147,7 @@ class DashboardController extends Controller
             $item->save();
             $lettre = NombreHelper::convertirEnLettres($montant);
             $pdf = Pdf::loadView('Pdf.type_1', ['item' => $op,'ml'=>$lettre,'mc'=>$montant])->setPaper('a5', 'landscape');
-        
+
          return $pdf->stream();
          return back();
     }
@@ -111,6 +156,7 @@ class DashboardController extends Controller
         $user = auth()->user();
         $caisse = Caisse::find(request()->caisse_id);
         $op = new Operation();
+        $op->name = time();
         $op->user_id = $user->id;
         $op->caisse_id = $caisse->id;
         $op->dossier = request()->dossier;
@@ -171,6 +217,7 @@ class DashboardController extends Controller
         $user = auth()->user();
         $caisse = Caisse::find(request()->caisse_id);
         $op = new Operation();
+        $op->name = time();
         $op->user_id = $user->id;
         $op->caisse_id = $caisse->id;
         $op->dossier = request()->dossier;

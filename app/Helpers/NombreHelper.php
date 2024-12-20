@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Helpers;
 class NombreHelper{
@@ -23,8 +23,38 @@ class NombreHelper{
     $montant = number_format($montant, 2, ',', '');
     list($entier, $decimal) = explode(',', $montant);
 
+
+
+    // Convertir la partie entière (avant la virgule)
+    $resultat = '';
+    $groupCount = 0;
+
+    while ($entier > 0) {
+        $partie = $entier % 1000; // Prendre les 3 derniers chiffres
+        if ($partie > 0) {
+            $partieTexte = self::convertirMoinsDeMille($partie, $unit, $tens);
+            if ($powers[$groupCount] != '') {
+                $resultat = $partieTexte . ' ' . $powers[$groupCount] . ' ' . $resultat;
+            } else {
+                $resultat = $partieTexte . ' ' . $resultat;
+            }
+        }
+        $entier = floor($entier / 1000); // Réduire le montant pour le prochain groupe
+        $groupCount++;
+    }
+
+    // Partie décimale (centimes)
+    if ($decimal > 0) {
+        $resultat .= ' et ' . $decimal . ' centime';
+        if ($decimal > 1) {
+            $resultat .= 's';
+        }
+    }
+
+    return ucfirst(trim($resultat)); // Première lettre en majuscule
+}
     // Fonction pour convertir les parties entières (moins de 1000)
-    function convertirMoinsDeMille($number, $unit, $tens) {
+    static function convertirMoinsDeMille($number, $unit, $tens) {
         $resultat = '';
 
         if ($number >= 100) {
@@ -46,33 +76,4 @@ class NombreHelper{
 
         return trim($resultat);
     }
-
-    // Convertir la partie entière (avant la virgule)
-    $resultat = '';
-    $groupCount = 0;
-
-    while ($entier > 0) {
-        $partie = $entier % 1000; // Prendre les 3 derniers chiffres
-        if ($partie > 0) {
-            $partieTexte = convertirMoinsDeMille($partie, $unit, $tens);
-            if ($powers[$groupCount] != '') {
-                $resultat = $partieTexte . ' ' . $powers[$groupCount] . ' ' . $resultat;
-            } else {
-                $resultat = $partieTexte . ' ' . $resultat;
-            }
-        }
-        $entier = floor($entier / 1000); // Réduire le montant pour le prochain groupe
-        $groupCount++;
-    }
-
-    // Partie décimale (centimes)
-    if ($decimal > 0) {
-        $resultat .= ' et ' . $decimal . ' centime';
-        if ($decimal > 1) {
-            $resultat .= 's';
-        }
-    }
-
-    return ucfirst(trim($resultat)); // Première lettre en majuscule
-}
 }

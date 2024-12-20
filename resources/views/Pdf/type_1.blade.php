@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+
     <title>Bordereau</title>
     <style>
         /** Define the margins of your page **/
@@ -63,7 +63,7 @@
                     </div>
                     <div  style="padding-left:20px; float: left;text-align:center;">
                         <h6>PIECE DE DECAISSEMENT</h6>
-                        <h6>N° {{ time() }}</h6>
+                        <h6>N° {{ $item->name }}</h6>
                     </div>
                     <div style="float:right;">
                         <img style="border:none; height: 75px; width:120px;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/satcongo.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
