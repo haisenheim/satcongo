@@ -45,16 +45,9 @@
                             <td>{{ $loop->index + 1 }}</td>
                             <td>{{ $item->operation->libelle }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->day)->format('y/m/d')  }}</td>
-                            @if(!$item->credit)
-                                <td>{{ number_format($item->montant,0,',','.') }}</td>
-                            @else
-                                <td></td>
-                            @endif
-                            @if($item->credit)
-                                <td></td>
-                            @else
-                                <td>{{ number_format($item->montant,0,',','.') }}</td>
-                            @endif
+                            <td>{{ $item->credit?number_format($item->montant,0,',','.'):'' }}</td>
+                            <td>{{ $item->credit?'':number_format($item->montant,0,',','.') }}</td>
+
                             <td></td>
                             <td>{{ $item->operation->dossier }}</td>
                         </tr>
