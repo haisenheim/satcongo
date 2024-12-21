@@ -95,6 +95,7 @@ Route::namespace('App\Http\Controllers\Comptable')
         Route::get('dashboard','DashboardController@index')->name('dashboard');
         Route::get('bluk/validate/{caisse_id}/{start}/{end}','DashboardController@blukValidate')->name('bluk.validate');
         Route::get('bluk/export/{caisse_id}/{start}/{end}','DashboardController@blukExport')->name('bluk.export');
+        Route::get('data/operations','DashboardController@getOperations')->name('operations.all');
     });
 
 Route::namespace('App\Http\Controllers\Dcomptable')

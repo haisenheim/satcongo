@@ -44,7 +44,7 @@ class OperationExport implements FromView, ShouldAutoSize, WithStyles, WithTitle
         );
         $sheet->getStyle('B1')
          ->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        
+
          $sheet->getStyle('A3:I3')
          ->getFill()
          ->applyFromArray(
@@ -57,7 +57,7 @@ class OperationExport implements FromView, ShouldAutoSize, WithStyles, WithTitle
          );
         //$sheet->getStyle(3)->getFont()->setColor(new Color($this->colors['white']));
 
-         
+
         $rows[3] = [
             'font' => ['bold' => true, 'size'=>16],
             'color' => ['rgb' => $this->colors['white']],
@@ -82,6 +82,6 @@ class OperationExport implements FromView, ShouldAutoSize, WithStyles, WithTitle
 
     public function title(): string
     {
-        return $this->caisse->name . "/" . $this->caisse->agence->name. " ". $this->caisse->ville->name;
+        return $this->caisse->name . "_" . $this->start."_".$this->end;
     }
 }

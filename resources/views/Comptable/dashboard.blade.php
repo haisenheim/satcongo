@@ -24,137 +24,195 @@
             <div>
                 <fieldset class="">
                     <legend class="mb-0">Consultation</legend>
-                    <form method="get"  action="{{ route('comptable.dashboard') }}">
+                    <form method="get" id="fom-show">
                         @csrf
                         <div class="d-flex gap-2">
-                            
                             <div>
-                                <select name="agence_id" required class="form-control" id="agence_id">
-                                    <option value="">SELECTIONNER UNE AGENCE ...</option>
+                                <select name="caisse_id" class="form-control" id="caisse_id">
+                                    <option value="">SELECTIONNER UNE CAISSE ...</option>
+                                    @foreach ($caisses as $caisse)
+                                      <option value="{{ $caisse->id }}">{{ $caisse->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div>
-                                <select name="caisse_id" required class="form-control" id="caisse_id">
-                                    <option value="">SELECTIONNER UNE CAISSE...</option>
-                                </select>
+                                <input id="start" name="start" type="date" required placeholder="Saisir la date de l'operation" class="form-control">
                             </div>
                             <div>
-                                <input name="start" type="date" required placeholder="Saisir la date de l'operation" class="form-control">
-                            </div>
-                            <div>
-                                <input name="end" type="date" required placeholder="Saisir la date de l'operation" class="form-control">
+                                <input id="end" name="end" type="date" required placeholder="Saisir la date de l'operation" class="form-control">
                             </div>
                             <div class="">
-                                <button class="btn btn-primary"><i class="fs-5 pli-data-search"></i> Consulter</button>
+                                <button id="btn-show" class="btn btn-primary"><i class="fs-5 pli-data-search"></i> Consulter</button>
                             </div>
 
                         </div>
                     </form>
                 </fieldset>
             </div>
-            @if($ready)
-            <div>
+            <div id="export-section" style="display:none">
                 <fieldset>
                     <legend class="mb-0">Exportation</legend>
                         <div class="d-flex gap-2">
                             <div class="">
-                                <a href="{{ route('comptable.bluk.export',[$caisse_id,$start,$end]) }}" class="btn btn-danger"><i class="fs-5 pli-download"></i> Exporter</a>
+                                <a id="btn-export" href="#" class="btn btn-danger"><i class="fs-5 pli-download"></i> Exporter</a>
                             </div>
                             <div class="">
-                                <a href="{{ route('comptable.bluk.validate',[$caisse_id,$start,$end]) }}" class="btn btn-success"><i class="fs-5 pli-pencil"></i> Valider</a>
+                                <a id="btn-validate" href="#" class="btn btn-success"><i class="fs-5 pli-pencil"></i> Valider</a>
                             </div>
                         </div>
                 </fieldset>
             </div>
-            @endif
         </div>
     </div>
     <div style="height: 50vh; overflow:scroll;" class="card mt-1">
         <div class="card-body">
 
-            <table class="table table-sm table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>DATE</th>
-                        <th>&numero; OPERATION</th>
-                        <th>JOURNAL</th>
-                        <th>REFERENCE</th>
-                        <th>&numero; COMPTE</th>
-                        <th>COMPTE TIERS</th>
-                        <th>LIBELLE DE L'ECRITURE</th>
-                        <th>MONTANT DEBIT</th>
-                        <th>MONTANT CREDIT</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($transactions as $item)
-                        <tr>
-                            <td>{{ \Carbon\Carbon::parse($item->day)->format('d/m/Y')  }}</td>
-                            <td>{{ $item->caisse->name }}-{{ $item->id }}</td>
-                            <td>{{ $item->caisse->name }}</td>
-                            <td>{{ $item->ref }}</td>
-                            <td>{{ $item->compte }}</td>
-                            @if($item->compte != $item->caisse->compte)
-                             <td title="{{ $item->tier?$item->tier->name:''  }}">{{ $item->tier?$item->tier->code:'-' }}</td>
-                            @else
-                             <td></td>
-                            @endif
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->credit?'':$item->montant }}</td>
-                            <td style="text-align: right">{{ $item->credit?$item->montant:'' }}</td>
-                            <td><span class="badge bg-{{ $item->status['color'] }}">{{ $item->status['name'] }}</span></td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div style="height: 75vh; overflow:scroll;" class="card mt-1">
+                <div class="card-body">
+                    <div id="myGrid" style="height: 480px"></div>
+                </div>
+            </div>
         </div>
 
 
     </div>
 
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/ag-grid-community.min.js') }}"></script>
+
     <script>
-        $(document).ready(function(){
-            $('#ville_id').change(function(){
-                 var _id = $('#ville_id').val();
-                $.ajax({
-                    url: "{{ route('util.ville.agences') }}",
-                    type:'get',
-                    dataType:'json',
-                    data:{id:_id},
-                    success:function(data){
-                        $('#agence_id').html("<option value=0>Choisir une agence ...</option>");
-                        data.forEach(element => {
-                            $('#agence_id').append(`<option value=${element.id}>${element.name}</option>`);
-                        });
-                    },
-                    error:function(err){
-                        console.log(err)
+        const myTheme = agGrid.themeQuartz.withParams({
+            /* Low spacing = very compact */
+            spacing: 2,
+            /* Changes the color of the grid text */
+            foregroundColor: "rgb(14, 68, 145)",
+            /* Changes the color of the grid background */
+            backgroundColor: "rgb(241, 247, 255)",
+            /* Changes the header color of the top row */
+            headerBackgroundColor: "rgb(228, 237, 250)",
+            /* Changes the hover color of the row*/
+            rowHoverColor: "rgb(216, 226, 255)",
+            });
+            const columnDefs = [
+                        { field: "operation.date",headerName:'Date'},
+                        { field: "operation.type",headerName:'Type'},
+                        { field: "operation.journal",headerName:'Journal'},
+                        { field: "compte"},
+                        { field: "sens",headerName:"Sens"},
+                        { field: "operation.dossier",headerName:'Dossier'},
+                        { field: "operation.demandeur",headerName:'Demandeur'},
+                        { field: "operation.client",headerName:'Client'},
+                        { field: "operation.libelle",headerName:'Libelle'},
+
+
+                        {
+                            headerName: "Montants",
+                            children: [
+                            { columnGroupShow: "closed", field: "montant", headerName:'Total' },
+                            { columnGroupShow: "open", field: "operation.mt_especes",headerName:'Montant en especes'},
+                            { columnGroupShow: "open", field: "operation.mt_cheque",headerName:'Montant en cheque'},
+                            { columnGroupShow: "open", field: "operation.peage",headerName:'Peage'},
+                            { columnGroupShow: "open", field: "operation.hotel",headerName:'Hotel'},
+                            { columnGroupShow: "open", field: "operation.prime",headerName:'Prime'},
+                            { columnGroupShow: "open", field: "operation.ration",headerName:'Ration'},
+                            { columnGroupShow: "open", field: "operation.bac",headerName:'Bac'},
+                            { columnGroupShow: "open", field: "operation.autre",headerName:'Autre'},
+                            ],
+                        },
+                        { field: "operation.departement_un",headerName:'Departement 1'},
+                        { field: "operation.departement_deux",headerName:'Departement 2'},
+
+                        { field: "operation.num_cheque",headerName:'Numero de cheque'},
+                        { field: "operation.chauffeur",headerName:'Chauffeur'},
+                        { field: "operation.camion",headerName:'Camion'},
+                        { field: "token",hide:true},
+                        { field: "type_id",hide:true},
+
+
+            ];
+
+            let gridApi;
+
+            const gridOptions = {
+            theme: agGrid.themeBalham.withParams({
+                headerBackgroundColor: '#0f85f2',
+                headerHeight: '30px',
+                headerTextColor: 'white',
+            }),
+            rowData: null,
+            columnDefs: columnDefs,
+            defaultColDef: {
+                filter: true,
+                //floatingFilter: true,
+            },
+            autoSizeStrategy: {
+                type: 'fitCellContents',
+                defaultMinWidth: 100,
+                columnLimits: [
+                    {
+                        colId: 'name',
+                        minWidth: 150
                     }
-                });
+                ]
+            },
+            pagination: true,
+            paginationPageSize: 200,
+            paginationPageSizeSelector: [100, 200, 1000],
+            rowSelection: {
+                mode: 'singleRow',
+                enableClickSelection: true,
+                isRowSelectable: (rowNode) => rowNode.data ? rowNode.data.sens === 'DEBIT' : false,
+                checkboxes: false,
+            },
+            rowClassRules: {
+                'type_1': params => (params.data.type_id === 1)&&(params.data.sens==='DEBIT'),
+                'type_2': params => params.data.type_id === 2&&(params.data.sens==='DEBIT'),
+                'type_3': params => params.data.type_id === 3&&(params.data.sens==='DEBIT'),
+            },
+        };
+
+        function rowSelected(e){
+            console.log(e.data.token)
+           window.location.href = "/comptable/operation/"+e.data.token
+        }
+
+        function onFilterTextBoxChanged() {
+            gridApi.setGridOption(
+                "quickFilterText",
+                document.getElementById("header-search-input").value,
+            );
+        }
+
+            // setup the grid after the page has finished loading
+            document.addEventListener("DOMContentLoaded", function () {
+                const gridDiv = document.querySelector("#myGrid");
+                gridApi = agGrid.createGrid(gridDiv, gridOptions);
+                gridApi.addEventListener('rowSelected',rowSelected)
+
+                fetch("{{ route('comptable.operations.all') }}")
+                    .then((response) => response.json())
+                    .then((data) => gridApi.setGridOption("rowData", data));
+
+            });
+
+            $('#btn-show').click(function(e){
+                e.preventDefault();
+                var start = $('#start').val()
+                var end = $('#end').val()
+                var caisse_id = $('#caisse_id').val()
+                fetch('/comptable/data/operations?caisse_id='+caisse_id+'&start='+start+'&end='+end)
+                    .then((response) => response.json())
+                    .then((data) => gridApi.setGridOption("rowData", data));
+                $('#export-section').show();
             })
 
-            $('#agence_id').change(function(){
-                 var _id = $('#agence_id').val();
-                $.ajax({
-                    url: "{{ route('util.agence.caisses') }}",
-                    type:'get',
-                    dataType:'json',
-                    data:{id:_id},
-                    success:function(data){
-                        $('#caisse_id').html("<option value=0>Choisir une caisse ...</option>");
-                        data.forEach(element => {
-                            $('#caisse_id').append(`<option value=${element.id}>${element.name}</option>`);
-                        });
-                    },
-                    error:function(err){
-                        console.log(err)
-                    }
-                });
+            $('#btn-export').click(function(e){
+                e.preventDefault();
+                var start = $('#start').val()
+                var end = $('#end').val()
+                var caisse_id = $('#caisse_id').val()
+                window.location.href = '/comptable/bluk/export/'+caisse_id+'/'+start+'/'+end;
             })
-
-
-        })
     </script>
 
 @endsection

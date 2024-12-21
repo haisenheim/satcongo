@@ -39,6 +39,7 @@ class OperationResource extends JsonResource
             'client'=>$this->tier?->name,
             'journal'=>$this->caisse?->name,
             'type_id'=>$this->type_id,
+            'caisse'=>$this->caisse?->name,
             'date'=>Carbon::parse($this->day)->format('d/m/Y')
         ];
     }

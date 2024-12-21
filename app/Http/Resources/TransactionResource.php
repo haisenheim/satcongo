@@ -22,6 +22,7 @@ class TransactionResource extends JsonResource
             'sens'=>$this->credit?'CREDIT':'DEBIT',
             'montant'=>$this->montant,
             'type_id'=>$this->operation?->type_id,
+            
         ];
     }
 }

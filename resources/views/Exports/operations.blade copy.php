@@ -8,11 +8,11 @@
                 <tbody>
                     <tr>
                         <td colspan="1">
-                            <img src="{{public_path('img/satcongo.jpeg')}}" height="180" alt="">
+                            <img src="{{public_path('img/logo_satcongo.png')}}" height="180" alt="">
                         </td>
                         <td colspan="4">
                             <h4 style="font-size: 24px; text-align: center;">Journal des operations</h4>
-                            <h5 style="font-size: 16px; text-align: center;">Journal : {{ $caisse->name }} </h5>
+                            <h5 style="font-size: 16px; text-align: center;">Journal : {{ $caisse->name }} / {{ $caisse->agence->name }} {{ $caisse->ville->name }}</h5>
                             <h6 style="font-size: 14px; text-align: center;">Periode du {{ $start }} au {{ $end }}</h6>
                         </td>
                     </tr>

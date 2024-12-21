@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Comptable;
 
 use App\Exports\OperationExport;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TransactionResource;
 use App\Models\Caisse;
 use App\Models\CaisseCompte;
 use App\Models\Compte;
@@ -20,22 +21,45 @@ class DashboardController extends Controller
 	{
 
        // $villes = Ville::all();
+       $caisses = Caisse::all();
         $start = request()->start;
         $end = request()->end;
-        $agence_id = request()->agence_id;
         $caisse_id = request()->caisse_id;
         $ready = false;
-        if($start && $end && $agence_id && $caisse_id){
+        if($start && $end && $caisse_id){
             $transactions = Transaction::orderBy('created_at','DESC')->whereBetween('day',[$start,$end])->where('caisse_id',$caisse_id)->get();
             $ready = true;
-            return view('Comptable/dashboard',compact('transactions','ready','start','end','agence_id','caisse_id'));
+            return view('Comptable/dashboard',compact('transactions','ready','start','end','caisses','caisse_id'));
         }else{
             $transactions = collect();
-            return view('Comptable/dashboard',compact('transactions','ready'));
+            return view('Comptable/dashboard',compact('transactions','caisses','ready'));
         }
-        return view('Comptable/dashboard',compact('transactions','ready'));
+        return view('Comptable/dashboard',compact('transactions','caisses','ready'));
 
 	}
+
+    public function getOperations(){
+        $start = request()->start;
+        $end = request()->end;
+        $caisse_id = request()->caisse_id;
+        if($start && $end && $caisse_id){
+            $transactions = Transaction::orderBy('created_at','DESC')->where('caisse_id',$caisse_id)->get();
+            $ready = true;
+            $transactions = $transactions->filter(function($item)use($start,$end){
+                $day = Carbon::parse($item->operation->day);
+                return $day>=$start && $day<=$end;
+            });
+            //$transactions = Transaction::orderBy('created_at','DESC')->whereNull('validated_at')->get();
+            return response()->json(TransactionResource::collection($transactions));
+            //return view('Comptable/dashboard',compact('transactions','ready','start','end','caisses','caisse_id'));
+        }else{
+            //$transactions = collect();
+            return response()->json([]);
+            return view('Comptable/dashboard',compact('transactions','caisses','ready'));
+        }
+        //$transactions = Transaction::orderBy('created_at','DESC')->whereNull('validated_at')->get();
+        //return response()->json(TransactionResource::collection($transactions));
+    }
 
     public function blukValidate(){
         $start = request()->start;
@@ -60,7 +84,13 @@ class DashboardController extends Controller
         $caisse_id = request()->caisse_id;
         if($start && $end && $caisse_id){
             $caisse = Caisse::find($caisse_id);
-            $transactions = Transaction::orderBy('created_at','DESC')->whereBetween('day',[$start,$end])->where('caisse_id',$caisse_id)->get();
+            
+            $transactions = Transaction::orderBy('created_at','DESC')->where('caisse_id',$caisse_id)->get();
+            $transactions = $transactions->filter(function($item)use($start,$end){
+                $day = Carbon::parse($item->operation->day);
+                return $day>=$start && $day<=$end;
+            });
+
             return Excel::download(new OperationExport($transactions,$caisse,$start,$end), $caisse->full_name.'_'.$start.' - '.$end.'.xlsx');
         }
         return back();
