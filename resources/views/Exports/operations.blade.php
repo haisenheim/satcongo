@@ -10,7 +10,7 @@
                         <td colspan="1">
                             <img src="{{public_path('img/satcongo.jpeg')}}" height="180" alt="">
                         </td>
-                        <td colspan="4">
+                        <td colspan="6">
                             <h4 style="font-size: 24px; text-align: center;">Journal des operations</h4>
                             <h5 style="font-size: 16px; text-align: center;">Journal : {{ $caisse->name }} </h5>
                             <h6 style="font-size: 14px; text-align: center;">Periode du {{ $start }} au {{ $end }}</h6>
@@ -21,33 +21,42 @@
                 <table>
                     <thead>
                         <tr>
-                            <th style="color: white;">DATE</th>
-                            <th style="color: white;">NUMERO D'OPERATION</th>
-                            <th style="color: white;">FACTURE</th>
-                            <th style="color: white;">REFERENCE</th>
-                            <th style="color: white;">Numero de Compte</th>
-                            <th style="color: white;">COMPTE TIERS</th>
-                            <th style="color: white;">Libellé Ecriture</th>
-                            <th style="color: white;">Mt Débit</th>
-                            <th style="color: white;">Mt Crédit</th>
+                            <th style="color: white;">N° compte général</th>
+                            <th style="color: white;">N° compte tiers</th>
+                            <th style="color: white;">Code journal</th>
+                            <th style="color: white;">Numéro facture</th>
+                            <th style="color: white;"> N° pièce</th>
+                            <th style="color: white;">Libellé écriture</th>
+                            <th style="color: white;">Date de pièce</th>
+                            <th style="color: white;">Montant débit</th>
+                            <th style="color: white;">Montant crédit</th>
+                            <th style="color: white;"> N° plan analytique</th>
+                            <th style="color: white;">N° section 1</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($transactions as $item)
                         <tr>
-                            <td>{{ \Carbon\Carbon::parse($item->day)->format('d/m/Y')  }}</td>
-                            <td>{{ $item->caisse->name }}-{{ $item->id }}</td>
-                            <td>{{ $item->facture }}</td>
-                            <td>{{ $item->ref }}</td>
                             <td>{{ $item->compte }}</td>
-                            @if($item->compte != $item->caisse->compte)
-                             <td title="{{ $item->tier?$item->tier->name:''  }}">{{ $item->tier?$item->tier->code:'-' }}</td>
+                            <td></td>
+                            <td>{{ $item->operation->caisse?->name }}</td>
+                            <td>{{ $item->operation->name }}</td>
+                            <td>{{ $loop->index + 1 }}</td>
+                            <td>{{ $item->operation->libelle }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->day)->format('y/m/d')  }}</td>
+                            @if(!$item->credit)
+                                <td>{{ number_format($item->montant,0,',','.') }}</td>
                             @else
-                             <td></td>
+                                <td></td>
                             @endif
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->credit?'':$item->montant }}</td>
-                            <td>{{ $item->credit?$item->montant:'' }}</td>
+                            @if($item->credit)
+                                <td></td>
+                            @else
+                                <td>{{ number_format($item->montant,0,',','.') }}</td>
+                            @endif
+                            <td></td>
+                            <td>{{ $item->operation->dossier }}</td>
                         </tr>
                     @endforeach
                     </tbody>

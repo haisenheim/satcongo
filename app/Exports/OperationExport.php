@@ -45,12 +45,12 @@ class OperationExport implements FromView, ShouldAutoSize, WithStyles, WithTitle
         $sheet->getStyle('B1')
          ->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 
-         $sheet->getStyle('A3:I3')
+         $sheet->getStyle('A3:K3')
          ->getFill()
          ->applyFromArray(
              [
                  'fillType' => 'solid','rotation' => 0,
-                 'color' => ['rgb' => $this->colors['red']],
+                 'color' => ['rgb' => '201132'],
                  'font'=>['bold'=>true, 'size'=>16],
                  'alignment'=>'center'
              ]
