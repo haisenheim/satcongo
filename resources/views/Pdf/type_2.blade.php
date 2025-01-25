@@ -178,7 +178,7 @@
         <table>
             <tr>
                 <td style="width:270px;">
-                    <p><span>DOSSIER :</span> <span class="fw-bold">{{ $item->dossier }}</span></p>
+                    <p><span>DOSSIER :</span> <span class="fw-bold">{{ $item->dossier?->code }}</span></p>
                 </td>
                 <td style="width:270px;">
                     <p><span>CHAUFFEUR :</span> <span class="fw-bold">{{ $item->chauffeur }}</span></p>

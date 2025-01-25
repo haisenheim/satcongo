@@ -29,13 +29,14 @@ class Operation extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public function getNameAttribute(){
-        return str_pad($this->id,8,'0',STR_PAD_LEFT);
+    public function client()
+    {
+        return $this->belongsTo('App\Models\Client');
     }
 
-    public function tier()
+    public function dossier()
     {
-        return $this->belongsTo('App\Models\Tier');
+        return $this->belongsTo('App\Models\Dossier');
     }
 
     public function caisse()
@@ -43,25 +44,9 @@ class Operation extends Model
         return $this->belongsTo('App\Models\Caisse');
     }
 
-    public function agent()
-    {
-        return $this->belongsTo('App\Models\Agent');
-    }
 
-    public function departement_un()
-    {
-        return $this->belongsTo('App\Models\Departement','departement_un_id');
-    }
 
-    public function departement_deux()
-    {
-        return $this->belongsTo('App\Models\Departement','departement_deux_id');
-    }
 
-    public function type()
-    {
-        return $this->belongsTo('App\Models\Toperation','type_id');
-    }
 
 
 
@@ -94,18 +79,6 @@ class Operation extends Model
         }
     }
 
-    public function getMontantAttribute(){
-
-        if($this->type_id==1){
-            return $this->mt;
-        }
-        if($this->type_id==2){
-            return $this->ration + $this->peage + $this->hotel + $this->bac + $this->autres + $this->prime;
-        }
-        if($this->type_id==3){
-            return $this->mt_especes + $this->mt_cheque;
-        }
-    }
 
 
     public function getStatusAttribute(){

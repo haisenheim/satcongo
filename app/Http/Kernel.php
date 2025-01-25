@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'comptable'=> \App\Http\Middleware\Comptable::class,
         'dcomptable'=> \App\Http\Middleware\Dcomptable::class,
         'caissier'=> \App\Http\Middleware\Caissier::class,
+        'operateur'=> \App\Http\Middleware\Operateur::class,
     ];
 }

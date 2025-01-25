@@ -113,8 +113,8 @@
         <br>
         <br>
         <p><span>NATURE DE LA DEPENSE :</span> <span class="fw-bold">{{ $item->libelle }}</span></p>
-        <p><span>DOSSIER :</span> <span class="fw-bold">{{ $item->dossier }}</span></p>
-        <p><span>P/C :</span> <span class="fw-bold">{{ $item->pc }}</span> </p>
+        <p><span>DOSSIER :</span> <span class="fw-bold">{{ $item->dossier?->code }}</span></p>
+        <p><span>P/C :</span> <span class="fw-bold">{{ $item->dossier?->client?->name }}</span> </p>
         <p><span>TOTAL MONTANT CHIFFRE :</span> <span class="fw-bold">{{ number_format($mc,0,',','.') }} FCFA</span></p>
         <p><span>TOTAL MONTANT EN LETTRES :</span> <span class="fw-bold">{{ $ml }} Francs cfa</span></p>
 

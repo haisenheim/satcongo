@@ -12,9 +12,9 @@
 @endsection
 
 @section('page-header')
-    <div>
+    <div class="d-flex justify-content-between">
         <h5 class="page-title mb-0 mt-1 fs-3">Hello <span class="text-muted">{{ auth()->user()->name }}</span>, vous etes sur <span class="text-muted">Satcongo Reporting</span></h5>
-
+        <a href="#" data-bs-toggle="modal" data-bs-target="#addModal" class="btn btn-primary btn-sm"><i class="pli-coins fs-5 me-2"> Saisir appro caisse</i></a>
     </div>
 @endsection
 
@@ -57,7 +57,7 @@
                                 <a id="btn-export" href="#" class="btn btn-danger"><i class="fs-5 pli-download"></i> Exporter</a>
                             </div>
                             <div class="">
-                                <a id="btn-validate" href="#" class="btn btn-success"><i class="fs-5 pli-pencil"></i> Valider</a>
+                                <a style="display: none" id="btn-validate" href="#" class="btn btn-success"><i class="fs-5 pli-pencil"></i> Valider</a>
                             </div>
                         </div>
                 </fieldset>
@@ -73,8 +73,63 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="modal fade" id="addModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header justify-content-between">
+                    <h5 class="modal-title">Nouvel appro caisse</h5>
+                    <div style="float: right">
+                        <button data-bs-dismiss="modal" id="btn-close" class="btn btn-sm" >x</button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('comptable.store') }}">
+                        @csrf
+                        <div class="mb-3 d-flex gap-1">
+                            <div class="w-25">
+                                <label class="text-blue fs-6 fw-bolder" for="">JOURNAL</label>
+                                <select required class="form-control" name="caisse_id" id="journal_id">
+                                    <option value=0>SELECTIONNER UN JOURNAL ...</option>
+                                    @foreach($caisses as $caisse)
+                                    <option value="{{ $caisse->id }}">{{ $caisse->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="w-300px">
+                                <label class="text-blue fs-6 fw-bolder" for="">COMPTE</label>
+                                <select name="compte_id" class="form-control">
+                                    <option value="">SELECTIONNER UN COMPTE</option>
+                                    @foreach($comptes as $compte)
+                                        <option value="{{ $compte->id }}">{{ $compte->code }}-{{ $compte->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="w-25">
+                                <label class="text-blue fs-6 fw-bolder" for="">DATE</label>
+                                <input required type="date" name="day" id="day" class="form-control">
+                            </div>
+                        </div>
+                        <div class="mt-3 d-flex gap-1">
+                            <div class="w-75">
+                                <label for="">LIBELLE</label>
+                                <input required type="text" name="libelle" placeholder="Saisir le libelle ici ..." class="form-control">
+                            </div>
+                            <div class="w-25">
+                                <label for="">MONTANT</label>
+                                <input required type="number" readonly name="montant" id="montant_total" value="0" class="form-control">
+                            </div>
+                        </div>
 
 
+                        <div class="mt-2">
+                            <button type="submit" id="btn-save" class="btn btn-primary"><i class="fs-5 pli-save"></i> ENREGISTRER</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>

@@ -20,9 +20,14 @@ class Transaction extends Model
         return $this->belongsTo('App\Models\Operation');
     }
 
-    public function tier()
+    public function client()
     {
-        return $this->belongsTo('App\Models\Tier');
+        return $this->belongsTo('App\Models\Client');
+    }
+
+    public function dossier()
+    {
+        return $this->belongsTo('App\Models\Dossier');
     }
 
     public function validateur()
@@ -30,7 +35,7 @@ class Transaction extends Model
         return $this->belongsTo('App\Models\User','validated_by');
     }
 
-   
+
 
     public function user()
     {

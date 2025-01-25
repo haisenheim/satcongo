@@ -1,187 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
-    <title>Bordereau</title>
-    <style>
-        /** Define the margins of your page **/
-        @page {
-            margin: 100px 25px;
-        }
 
-        header {
-            position: fixed;
-            top: -90px;
-            left: 0px;
-            right: 0px;
-            border-bottom: #000 solid 1px;
-            padding-bottom: 90px;
-            /** Extra personal styles **/
-        }
 
-        footer {
-            position: fixed;
-            bottom: -60px;
-            left: 0px;
-            right: 0px;
-            height: 50px;
+ErrorException: Attempt to read property "name" on string in file /Users/haisenheim/projects/satcongo/app/Http/Resources/OperationResource.php on line 24
 
-            /** Extra personal styles **/
-
-            text-align: center;
-            border-top: #000 solid 1px;
-            padding-top: 5px;
-            font-weight: 700;
-        }
-        .w-full {
-            width: 100%;
-        }
-        .w-half {
-            width: 50%;
-        }
-        .d-flex{
-            display: flex;
-        }
-        .justify-content-between{
-            justify-content: space-between
-        }
-        main{
-            font-size: 11px;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div style="">
-            <div style="">
-                <div class="d-flex justify-content-between">
-                    <div class="" style="float:left">
-                        <img style="border:none; height: 75px; width:120px;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/dhl.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
-                    </div>
-                    <div  style="padding-left:20px; float: left;text-align:center;">
-                        <h6>PIECE DE DECAISSEMENT</h6>
-                        <h6>N° {{ time() }}</h6>
-                    </div>
-                    <div style="float:right;">
-                        <img style="border:none; height: 75px; width:120px;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/satcongo.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
-                    </div>
-                </div>
-            </div>
-      </div>
-    </header>
-
-    <footer>
-        <div style="font-size: 12px">
-             <p style="margin:0"><span>&copy; SatCongo</span></p>
-        </div>
-    </footer>
-    <main style="margin-top:10px;">
-        <table class="w-full">
-            <tbody>
-                <tr>
-                    <td class="w-half">
-                        <div style="float: left">
-                            <p><span>DEMANDEUR:</span> <span class="fw-bold">{{ $item->agent?->name }}</span></p>
-                        </div>
-                    </td>
-                    <td class="w-half">
-                        <div style="float: right">
-                            <p><span>DATE:</span> <span class="fw-bold">{{ \Carbon\Carbon::parse($item->day)->format('d/m/Y') }}</span></p>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table style="margin-top: 2rem;">
-            <tr style="margin-top: 1rem;" class="w-full">
-                <td class="w-half">
-                    <div style="float: left">
-                        <p><span>DEP 1:</span> <span class="fw-bold">{{ $item->departement_un?->name }}</span></p>
-                    </div>
-                </td>
-                <td class="w-half">
-                    <div style="width: 100px; height: 20px; border: 3px #000 solid; float: left;">
-
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <table style="margin-top: 2rem;">
-            <tr class="w-full">
-                <td class="w-half">
-                    <div style="float: left">
-                        <p><span>DEP 2:</span> <span class="fw-bold">{{ $item->departement_deux?->name }}</span></p>
-                    </div>
-                </td>
-                <td class="w-half">
-                    <div style="width: 100px; height: 20px; border: 3px #000 solid; float: left;">
-
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <br>
-        <br>
-        <br>
-        <div style="margin-top: 1rem;" class="d-flex justify-content-between">
-            <div>
-                <p><span>NATURE DE LA DEPENSE :</span> <span class="fw-bold">{{ $item->libelle }}</span></p>
-            </div>
-        </div>
-        <div class="d-flex justify-content-between">
-            <div>
-                <p><span>DOSSIER :</span> <span class="fw-bold">{{ $item->dossier }}</span></p>
-            </div>
-        </div>
-        <div class="d-flex justify-content-between">
-            <div>
-                <p><span>P/C :</span> </p>
-            </div>
-        </div>
-        <div class="d-flex justify-content-between">
-            <div>
-                <p><span>TOTAL MONTANT CHIFFRE :</span> <span class="fw-bold">{{ number_format($mc,0,',','.') }} FCFA</span></p>
-            </div>
-        </div>
-
-        <div class="d-flex justify-content-between">
-            <div>
-                <p><span>TOTAL MONTANT EN LETTRES :</span> <span class="fw-bold">{{ $ml }} Francs cfa</span></p>
-            </div>
-        </div>
-
-        <div class="d-flex justify-content-between">
-            <table>
-                <tbody>
-                    <tr style="width: 100%;">
-                        <td style="width: 175px;">
-                            <p style="margin-bottom: 0; text-align: center;">SIGN. DEMANDEUR</p>
-                            <div style="width: 160px; height: 30px; border: 3px #000 solid;">
-
-                            </div>
-                        </td>
-                        <td style="width: 175px;">
-                            <p style="margin-bottom: 0; text-align: center;">SIGN. DG</p>
-                            <div style="width: 160px; height: 30px; border: 3px #000 solid;">
-
-                            </div>
-                        </td>
-                        <td style="width: 175px;">
-                            <p style="margin-bottom: 0; text-align: center;">NOM ET SIGN. BENEFICIAIRE</p>
-                            <div style="width: 160px; height: 30px; border: 3px #000 solid;">
-
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-    </main>
-</body>
-</html>
-
+#0 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'Attempt to read...', '/Users/haisenhe...', 24)
+#1 /Users/haisenheim/projects/satcongo/app/Http/Resources/OperationResource.php(24): Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(2, 'Attempt to read...', '/Users/haisenhe...', 24)
+#2 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Http/Resources/Json/JsonResource.php(107): App\Http\Resources\OperationResource->toArray(Object(Illuminate\Http\Request))
+#3 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Http/Resources/Json/JsonResource.php(254): Illuminate\Http\Resources\Json\JsonResource->resolve(Object(Illuminate\Http\Request))
+#4 [internal function]: Illuminate\Http\Resources\Json\JsonResource->jsonSerialize()
+#5 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Http/JsonResponse.php(82): json_encode(Array, 0)
+#6 /Users/haisenheim/projects/satcongo/vendor/symfony/http-foundation/JsonResponse.php(49): Illuminate\Http\JsonResponse->setData(Object(Illuminate\Http\Resources\Json\AnonymousResourceCollection))
+#7 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Http/JsonResponse.php(32): Symfony\Component\HttpFoundation\JsonResponse->__construct(Object(Illuminate\Http\Resources\Json\AnonymousResourceCollection), 200, Array, false)
+#8 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(102): Illuminate\Http\JsonResponse->__construct(Object(Illuminate\Http\Resources\Json\AnonymousResourceCollection), 200, Array, 0)
+#9 /Users/haisenheim/projects/satcongo/app/Http/Controllers/Caissier/DashboardController.php(46): Illuminate\Routing\ResponseFactory->json(Object(Illuminate\Http\Resources\Json\AnonymousResourceCollection))
+#10 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Routing/Controller.php(54): App\Http\Controllers\Caissier\DashboardController->getOperations()
+#11 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(43): Illuminate\Routing\Controller->callAction('getOperations', Array)
+#12 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Routing/Route.php(259): Illuminate\Routing\ControllerDispatcher->dispatch(Object(Illuminate\Routing\Route), Object(App\Http\Controllers\Caissier\DashboardController), 'getOperations')
+#13 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Routing/Route.php(205): Illuminate\Routing\Route->runController()
+#14 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Routing/Router.php(806): Illuminate\Routing\Route->run()
+#15 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(144): Illuminate\Routing\Router->Illuminate\Routing\{closure}(Object(Illuminate\Http\Request))
+#16 /Users/haisenheim/projects/satcongo/app/Http/Middleware/Caissier.php(22): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#17 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): App\Http\Middleware\Caissier->handle(Object(Illuminate\Http\Request), Object(Closure))
+#18 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(50): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#19 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\Routing\Middleware\SubstituteBindings->handle(Object(Illuminate\Http\Request), Object(Closure))
+#20 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php(57): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#21 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\Auth\Middleware\Authenticate->handle(Object(Illuminate\Http\Request), Object(Closure))
+#22 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php(78): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#23 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\Foundation\Http\Middleware\VerifyCsrfToken->handle(Object(Illuminate\Http\Request), Object(Closure))
+#24 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/View/Middleware/ShareErrorsFromSession.php(49): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#25 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\View\Middleware\ShareErrorsFromSession->handle(Object(Illuminate\Http\Request), Object(Closure))
+#26 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(121): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#27 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(64): Illuminate\Session\Middleware\StartSession->handleStatefulRequest(Object(Illuminate\Http\Request), Object(Illuminate\Session\Store), Object(Closure))
+#28 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\Session\Middleware\StartSession->handle(Object(Illuminate\Http\Request), Object(Closure))
+#29 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/AddQueuedCookiesToResponse.php(37): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#30 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse->handle(Object(Illuminate\Http\Request), Object(Closure))
+#31 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/EncryptCookies.php(67): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#32 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\Cookie\Middleware\EncryptCookies->handle(Object(Illuminate\Http\Request), Object(Closure))
+#33 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(119): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#34 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Routing/Router.php(805): Illuminate\Pipeline\Pipeline->then(Object(Closure))
+#35 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Routing/Router.php(784): Illuminate\Routing\Router->runRouteWithinStack(Object(Illuminate\Routing\Route), Object(Illuminate\Http\Request))
+#36 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Routing/Router.php(748): Illuminate\Routing\Router->runRoute(Object(Illuminate\Http\Request), Object(Illuminate\Routing\Route))
+#37 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Routing/Router.php(737): Illuminate\Routing\Router->dispatchToRoute(Object(Illuminate\Http\Request))
+#38 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(200): Illuminate\Routing\Router->dispatch(Object(Illuminate\Http\Request))
+#39 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(144): Illuminate\Foundation\Http\Kernel->Illuminate\Foundation\Http\{closure}(Object(Illuminate\Http\Request))
+#40 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#41 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#42 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle(Object(Illuminate\Http\Request), Object(Closure))
+#43 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#44 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(40): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#45 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\Foundation\Http\Middleware\TrimStrings->handle(Object(Illuminate\Http\Request), Object(Closure))
+#46 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#47 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle(Object(Illuminate\Http\Request), Object(Closure))
+#48 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(99): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#49 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle(Object(Illuminate\Http\Request), Object(Closure))
+#50 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(49): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#51 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\Http\Middleware\HandleCors->handle(Object(Illuminate\Http\Request), Object(Closure))
+#52 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(39): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#53 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\Http\Middleware\TrustProxies->handle(Object(Illuminate\Http\Request), Object(Closure))
+#54 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(119): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
+#55 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(175): Illuminate\Pipeline\Pipeline->then(Object(Closure))
+#56 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#57 /Users/haisenheim/projects/satcongo/public/index.php(51): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#58 /Users/haisenheim/projects/satcongo/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(16): require_once('/Users/haisenhe...')
+#59 {main}
 

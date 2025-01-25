@@ -23,13 +23,18 @@
            </li>
 
            <li class="nav-item">
-               <a href="{{ route('admin.transactions.index') }}" class="nav-link mininav-toggle {{ $active==2?'active':'' }}"><i class="pli-sync fs-5 me-2"></i>
-                   <span class="nav-label mininav-content ms-1">Transactions</span>
+               <a href="{{ route('admin.dossiers.index') }}" class="nav-link mininav-toggle {{ $active==2?'active':'' }}"><i class="pli-folders fs-5 me-2"></i>
+                   <span class="nav-label mininav-content ms-1">DOSSIERS</span>
                </a>
            </li>
+           <li class="nav-item">
+            <a href="{{ route('admin.clients.index') }}" class="nav-link mininav-toggle {{ $active==3?'active':'' }}"><i class="pli-conference fs-5 me-2"></i>
+                <span class="nav-label mininav-content ms-1">CLIENTS</span>
+            </a>
+        </li>
 
            <li class="nav-item">
-            <a href="{{ route('admin.users.index') }}" class="nav-link mininav-toggle {{ $active==2?'active':'' }}"><i class="pli-conference fs-5 me-2"></i>
+            <a href="{{ route('admin.users.index') }}" class="nav-link mininav-toggle {{ $active==4?'active':'' }}"><i class="pli-conference fs-5 me-2"></i>
                 <span class="nav-label mininav-content ms-1">Utilisateurs</span>
             </a>
         </li>

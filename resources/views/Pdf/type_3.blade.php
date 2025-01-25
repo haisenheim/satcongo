@@ -111,7 +111,7 @@
                     </td>
                     <td class="w-half">
                         <div style="float: right">
-                            <p><span>DOSSIER:</span> <span class="fw-bold">{{ $item->dossier }}</span></p>
+                            <p><span>DOSSIER:</span> <span class="fw-bold">{{ $item->dossier?->name }}</span></p>
                         </div>
                     </td>
                 </tr>

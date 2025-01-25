@@ -10,10 +10,11 @@ use App\Models\Compte;
 use App\Models\Departement;
 use App\Models\Libelle;
 use App\Models\Operation;
-use App\Models\Tier;
+use App\Models\Client;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Agent;
+use App\Models\Dossier;
 use App\Http\Resources\TransactionResource;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -22,20 +23,22 @@ use function Spatie\LaravelPdf\Support\pdf;
 //use Spatie\LaravelPdf\Enums\Format;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Helpers\NombreHelper;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index()
 	{
-        $transactions = Transaction::orderBy('created_at','DESC')->where('user_id',auth()->user()->id)->whereNull('validated_at')->get();
+        //$transactions = Transaction::orderBy('created_at','DESC')->where('user_id',auth()->user()->id)->whereNull('validated_at')->get();
         $user = User::find(auth()->user()->id);
         $caisses = $user->caisses;
         //$caisses = Caisse::where('active',1)->get();
-        $departements = Departement::where('active',1)->get();
-        $tiers = Tier::where('active',1)->get();
+        //$departements = Departement::where('active',1)->get();
+        //$clients = Client::where('site_id',$this->site_id)->get();
         $comptes = Compte::where('active',1)->get();
-        $agents = Agent::where('active',1)->get();
-		return view('Caissier/dashboard',compact('transactions','caisses','departements','tiers','comptes','agents'));
+        //$agents = Agent::where('active',1)->get();
+        $dossiers = Dossier::whereNull('closed_at')->get();
+		return view('Caissier/dashboard',compact('caisses','comptes','dossiers'));
 	}
 
     public function getOperations(){
@@ -94,11 +97,64 @@ class DashboardController extends Controller
         $ids = $cus->pluck('caisse_id');
         $caisses = Caisse::whereIn('id',$ids)->get();
        // $libelles = Libelle::where('active',1)->get();
-        $tiers = Tier::where('active',1)->get();
+       // $tiers = Tier::where('active',1)->get();
 		return view('Caissier/create',compact('caisses','libelles','tiers'));
     }
 
-    public function store(){
+    public function store(Request $request){
+        //dd(request()->all());
+        $data = $request->except('compte_id');
+        $montant = $data['montant'];
+        $lettre = NombreHelper::convertirEnLettres($montant);
+
+        $user = auth()->user();
+        $dossier = Dossier::find(request()->dossier_id);
+        $caisse = Caisse::find(request()->caisse_id);
+        $data['user_id'] = $user->id;
+        $data['client_id'] = $dossier->client_id;
+        $data['moi_id'] = date('m');
+        $data['semaine'] = date('w');
+        $data['annee'] = date('Y');
+        $data['token'] = sha1(time().$user->id);
+        $data['mt_lettres'] = $lettre;
+        $op = Operation::create($data);
+        $name = $this->site_id . date('y') . $op->id;
+        $op->name = str_pad($name,9,'0',STR_PAD_LEFT);
+        $op->save();
+
+            $item = new Transaction();
+            $item->operation_id = $op->id;
+            $item->user_id = $user->id;
+            $item->caisse_id = $caisse->id;
+            $item->montant = request()->montant;
+            $item->credit = 1;
+            $item->compte = $caisse->compte;
+            $item->token = sha1(time().$op->id.rand(0,9999));
+            $item->save();
+            $caisse->solde = $caisse->solde - request()->montant;
+            $caisse->save();
+
+            //Et je renseigne le compte saisi au credit
+            $item = new Transaction();
+            $compte = Compte::find(request()->compte_id);
+            $item->operation_id = $op->id;
+            $item->user_id = $user->id;
+            $item->caisse_id = $caisse->id;
+            $item->montant = request()->montant;
+            $item->credit = 0;
+            $item->compte = $compte->code;
+            $item->token = sha1(time().$op->id.rand(0,9999));
+            $item->save();
+
+
+        $pdf = Pdf::loadView('Pdf.operation', ['item' => $op])->setPaper('a4');
+        return $pdf->stream();
+
+        Session::flash('success','Enregistrement effectué avec succès!');
+        return redirect(route('caissier.dashboard'));
+    }
+
+    public function store_(){
         $user = auth()->user();
         $montant = request()->montant;
         $caisse = Caisse::find(request()->caisse_id);
@@ -107,7 +163,7 @@ class DashboardController extends Controller
         $op->user_id = $user->id;
         $op->caisse_id = $caisse->id;
         $op->libelle = request()->libelle;
-        $op->dossier = request()->dossier;
+        $op->dossier_id = request()->dossier_id;
         $op->type_id = 1;
         $op->mt_departement_un = request()->mt_dep_1;
         $op->mt_departement_deux = request()->mt_dep_2;
@@ -162,7 +218,7 @@ class DashboardController extends Controller
         $op->name = time();
         $op->user_id = $user->id;
         $op->caisse_id = $caisse->id;
-        $op->dossier = request()->dossier;
+        $op->dossier_id = request()->dossier_id;
         $op->type_id = 2;
         $op->agent_id = request()->agent_id;
         $op->camion = request()->camion;
@@ -223,7 +279,7 @@ class DashboardController extends Controller
         $op->name = time();
         $op->user_id = $user->id;
         $op->caisse_id = $caisse->id;
-        $op->dossier = request()->dossier;
+        $op->dossier_id = request()->dossier_id;
         $op->type_id = 3;
         $op->agent_id = request()->agent_id;
         $op->tier_id = request()->tier_id;

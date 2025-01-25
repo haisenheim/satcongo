@@ -3,7 +3,7 @@
 <div class="d-flex gap-3">
     <div>
         <span>Connecté  en tant que :</span>
-        <strong><span class="badge bg-white text-dark fs-6">Opérateur de caisse</span></strong>
+        <strong><span class="badge bg-white text-dark fs-6">Opérateur de saisie</span></strong>
     </div>
 </div>
 @endsection

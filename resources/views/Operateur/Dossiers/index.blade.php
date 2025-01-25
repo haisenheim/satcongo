@@ -1,20 +1,20 @@
-@extends('Layouts.admin')
+@extends('Layouts.operateur')
 
 @section('title', 'Accueil')
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
        <li class="breadcrumb-item"><a href="#">Satcongo</a></li>
-       <li class="breadcrumb-item"><a href="#">Utilisateurs</a></li>
-       <li class="breadcrumb-item active" aria-current="page">Liste des comptes utilisateurs</li>
+       <li class="breadcrumb-item"><a href="#">Dossiers</a></li>
+       <li class="breadcrumb-item active" aria-current="page">Liste des dossiers</li>
     </ol>
  </nav>
 @endsection
 
 @section('page-header')
     <div>
-        <h5 class="page-title mb-0 mt-2">Comptes utilisateurs</h5>
-        <p class="lead">Liste des comptes utilisateurs</p>
+        <h5 class="page-title mb-0 mt-2">Dossiers</h5>
+        <p class="lead">Liste des Dossiers</p>
     </div>
 @endsection
 
@@ -28,11 +28,10 @@
             <table class="table table-sm">
                 <thead>
                     <tr>
-                        <th>Nom</th>
-                        <th>Telephone</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <td>Statut</td>
+                        <th>DATE DE CREATION</th>
+                        <th>CLIENT</th>
+                        <th>DESIGNATION</th>
+                        <th>CODE</th>
                         <td>
 
                         </td>
@@ -41,11 +40,10 @@
                 <tbody>
                     @foreach($items as $item)
                         <tr>
+                            <td>{{ $item->created_at->format('d/m/Y h:i') }}</td>
+                            <th>{{ $item->client?->name }}</th>
                             <td>{{ $item->name }}</td>
-                            <td>{{ $item->phone }}</td>
-                            <td>{{ $item->email }}</td>
-                            <th>{{ $item->role->name }}</th>
-                            <td><span class="badge bg-{{ $item->status['color'] }}">{{ $item->status['name'] }}</span></td>
+                            <td>{{ $item->code }}</td>
                             <td>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-xs btn-outline-primary dropdown-toggle hstack gap-2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -53,11 +51,7 @@
                                        <span class="vr"></span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        @if($item->active)
-                                            <li><a class="dropdown-item" href="{{ route('admin.user.disable',$item->token) }}">Verrouiller</a></li>
-                                        @else
-                                            <li><a class="dropdown-item" href="{{ route('admin.user.enable',$item->token) }}">Activer</a></li>
-                                        @endif
+
                                     </ul>
                                  </div>
                             </td>
@@ -71,43 +65,36 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header justify-content-between">
-                    <h5 class="modal-title">Nouveau compte utilisateur</h5>
+                    <h5 class="modal-title">Nouveau dossier</h5>
                     <div style="float: right">
                         <button data-bs-dismiss="modal" class="btn btn-sm" >x</button>
                     </div>
                 </div>
                 <div class="modal-body">
-                    <form enctype="multipart/form-data" action="{{ route('admin.users.store') }}" method="post">
+                    <form enctype="multipart/form-data" action="{{ route('operateur.dossiers.store') }}" method="post">
                         @csrf
                             <div class="">
                                 <div class="">
-                                    <label for="">NOM</label>
-                                    <input required type="text" name="name" placeholder="Saisir l'intitule de la saison" class="form-control">
+                                    <label for="">NOM DU DOSSIER</label>
+                                    <input required type="text" name="name" placeholder="Saisir l'intitule du dossier" class="form-control">
                                 </div>
-                                <div class="mt-2">
-                                    <label for="">ROLE</label>
-                                    <select name="role_id" required id="" class="form-control">
-                                        <option value="">Role ...</option>
-                                        @foreach($roles as $role)
+                                <div class="mt-3">
+                                    <label for="">CODE OU NUMERO</label>
+                                    <input required type="text" name="code" placeholder="Saisir le code du dossier" class="form-control">
+                                </div>
+                                <div class="mt-3">
+                                    <label for="">POOUR COMPTE</label>
+                                    <select name="client_id"  id="" class="form-control">
+                                        <option value="0">Choisir un client ...</option>
+                                        @foreach($clients as $role)
                                             <option value="{{ $role->id }}">{{ $role->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                
-                                <div class="mt-2">
-                                    <label for="">Telephone</label>
-                                    <input required type="text" name="phone" class="form-control">
-                                </div>
-                                <div class="mt-2">
-                                    <label for="">Email de connexion</label>
-                                    <input required type="email" name="email" class="form-control">
-                                </div>
-                                <div class="mt-2">
-                                    <label for="">Mot de passe</label>
-                                    <input required type="password" name="password" class="form-control">
-                                </div>
+
+
                             </div>
-                        <div class="mt-5">
+                        <div class="mt-3">
                             <button type="submit" class="btn-primary btn">ENREGISTRER</button>
                         </div>
                     </form>
@@ -121,10 +108,10 @@
     <script>
         $(document).ready(function(){
 
-            $('.btn-user').click(function(){
+            $('.btn-dossier').click(function(){
                 var _id = $(this).data('id');
-                $('#user_id').val(_id);
-                $('#_user_id').val(_id);
+                $('#dossier_id').val(_id);
+                $('#_dossier_id').val(_id);
             });
 
             $('#ville_id').change(function(){

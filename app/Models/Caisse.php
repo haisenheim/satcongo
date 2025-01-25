@@ -10,9 +10,7 @@ class Caisse extends Model
     protected $guarded = [];
     public $timestamps = false;
 
-    
 
-   
 
     public function comptes()
     {
@@ -29,10 +27,10 @@ class Caisse extends Model
         return $this->belongsToMany('App\Models\User','caisses_users');
     }
 
-    
+
 
     public function getFullNameAttribute(){
-        
+
         return $this->name;
     }
 

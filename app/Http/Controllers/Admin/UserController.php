@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CaisseUser;
-use App\Models\Departement;
 use App\Models\Role;
 use App\Models\User;
-use App\Models\Ville;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -23,7 +21,7 @@ class UserController extends Controller
         //
         $items = User::all();
         $roles = Role::all();
-        return view('/Admin/Users/index')->with(compact('items','roles'));
+        return view('Admin/Users/index')->with(compact('items','roles'));
     }
 
     public function setCaisse(){
@@ -82,6 +80,7 @@ class UserController extends Controller
         $user->role_id = request()->role_id;
         $user->phone = request()->phone;
         $user->email = request()->email;
+        $user->site_id = $this->site_id;
         $user->save();
         return back();
     }
@@ -108,7 +107,7 @@ class UserController extends Controller
      */
 	public function show($token)
 	{
-		
+
 	}
 
 

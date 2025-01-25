@@ -53,6 +53,7 @@ class CaisseController extends Controller
         $data = $request->all();
        // $ag = Agence::find($data['agence_id']);
         //$data['departement_id'] = $ag->departement_id;
+        
         Caisse::create($data);
         return back();
     }
@@ -81,7 +82,6 @@ class CaisseController extends Controller
     }
 
     public function setUser(){
-        //dd(request()->all());
         $data = request()->except('_token');
         CaisseUser::updateOrCreate($data,$data);
         Session::flash('success','Enregistrement effectué avec succès!');
@@ -102,7 +102,7 @@ class CaisseController extends Controller
         return back();
     }
 
-    
+
 
     /**
      * Display the specified resource.

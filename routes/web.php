@@ -50,6 +50,10 @@ Route::namespace('App\Http\Controllers\Admin')
         Route::get('caisse/enable/{token}','CaisseController@enable')->name('caisse.enable');
 
 
+        Route::resource('dossiers','DossierController');
+        Route::resource('clients','ClientController');
+        Route::get('dossier/close/{token}','DossierController@close')->name('dossier.close');
+
 
         Route::get('caisse/disable/{token}','CaisseController@disable')->name('caisse.disable');
         Route::resource('libelles','LibelleController');
@@ -96,6 +100,17 @@ Route::namespace('App\Http\Controllers\Comptable')
         Route::get('bluk/validate/{caisse_id}/{start}/{end}','DashboardController@blukValidate')->name('bluk.validate');
         Route::get('bluk/export/{caisse_id}/{start}/{end}','DashboardController@blukExport')->name('bluk.export');
         Route::get('data/operations','DashboardController@getOperations')->name('operations.all');
+        Route::post('store','DashboardController@store')->name('store');
+    });
+
+Route::namespace('App\Http\Controllers\Operateur')
+    ->prefix('operateur')
+    ->middleware(['auth','operateur'])
+    ->name('operateur.')
+    ->group(function(){
+        Route::get('dashboard','DashboardController@index')->name('dashboard');
+        Route::resource('dossiers','DossierController');
+        Route::resource('clients','ClientController');
     });
 
 Route::namespace('App\Http\Controllers\Dcomptable')

@@ -28,6 +28,10 @@ class HomeController extends Controller
             return redirect('/dcomptable/dashboard');
            }
 
+           if($role_id == 5){
+            return redirect('/operateur/dashboard');
+           }
+
 
            return redirect('/login');
         }
