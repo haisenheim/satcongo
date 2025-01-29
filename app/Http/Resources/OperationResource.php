@@ -25,6 +25,8 @@ class OperationResource extends JsonResource
             'dossier'=>$this->dossier?->code,
             'beneficiaire'=>$this->beneficiaire,
             'agent'=>$this->agent,
+            'name'=>$this->name,
+            'status'=>$this->status,
             'client'=>$this->client?->name,
             'journal'=>$this->caisse?->name,
             'caisse'=>$this->caisse?->name,

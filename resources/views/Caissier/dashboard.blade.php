@@ -271,8 +271,8 @@
     };
 
     function rowSelected(e){
-        console.log(e.data.token)
-       window.location.href = "/caissier/operation/"+e.data.token
+        //console.log(e.data.token)
+       //window.location.href = "/caissier/operation/"+e.data.token
     }
 
     function onFilterTextBoxChanged() {

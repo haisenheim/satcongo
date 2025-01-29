@@ -3,7 +3,7 @@
 <div class="d-flex gap-3">
     <div>
         <span>Connecté  en tant que :</span>
-        <strong><span class="badge bg-white text-dark fs-6">Chef comptable</span></strong>
+        <strong><span class="badge bg-white text-dark fs-6">Manager</span></strong>
     </div>
 </div>
 @endsection
@@ -17,10 +17,16 @@
         <h6 class="mainnav__caption mt-0 px-3 fw-bold">Navigation</h6>
         <ul class="mainnav__menu nav flex-column">
            <li class="nav-item">
-               <a href="{{ route('comptable.dashboard') }}" class="nav-link mininav-toggle {{ $active==1?'active':'' }}"><i class="demo-pli-home fs-5 me-2"></i>
+               <a href="{{ route('comptable.dashboard') }}" class="nav-link mininav-toggle {{ $active==1?'active':'' }}"><i class="demo-pli-home fs-3 me-2"></i>
                    <span class="nav-label mininav-content ms-1">Accueil</span>
                </a>
            </li>
+
+           <li class="nav-item">
+                <a href="{{ route('comptable.dossiers.index') }}" class="nav-link mininav-toggle {{ $active==2?'active':'' }}"><i class="pli-folders fs-3 me-2"></i>
+                    <span class="nav-label mininav-content ms-1">Dossiers</span>
+                </a>
+            </li>
 
 
 

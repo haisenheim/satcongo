@@ -83,15 +83,22 @@ class Operation extends Model
 
     public function getStatusAttribute(){
         $data = [
-            'name'=>'non validé',
-            'code'=>-1,
-            'color'=>'danger'
+            'name'=>'en attente de validation',
+            'code'=>0,
+            'color'=>'info'
         ];
         if($this->validated_at){
             $data = [
                 'name'=>'validé',
-                'code'=>0,
+                'code'=>1,
                 'color'=>'success'
+            ];
+        }
+        if($this->cancelled_at){
+            $data = [
+                'name'=>'annulé',
+                'code'=>-1,
+                'color'=>'danger'
             ];
         }
 

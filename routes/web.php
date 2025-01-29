@@ -101,6 +101,10 @@ Route::namespace('App\Http\Controllers\Comptable')
         Route::get('bluk/export/{caisse_id}/{start}/{end}','DashboardController@blukExport')->name('bluk.export');
         Route::get('data/operations','DashboardController@getOperations')->name('operations.all');
         Route::post('store','DashboardController@store')->name('store');
+        Route::get('operation/validate/{token}','DashboardController@valider')->name('operation.validate');
+        Route::get('operation/cancel/{token}','DashboardController@annuler')->name('operation.cancel');
+        Route::resource('dossiers','DossierController');
+        Route::get('dossier/close/{token}','DossierController@close')->name('dossier.close');
     });
 
 Route::namespace('App\Http\Controllers\Operateur')

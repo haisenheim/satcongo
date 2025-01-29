@@ -14,9 +14,21 @@
 @section('page-header')
     <div class="d-flex justify-content-between">
         <h5 class="page-title mb-0 mt-1 fs-3">Hello <span class="text-muted">{{ auth()->user()->name }}</span>, vous etes sur <span class="text-muted">Satcongo Reporting</span></h5>
-        <a href="#" data-bs-toggle="modal" data-bs-target="#addModal" class="btn btn-primary btn-sm"><i class="pli-coins fs-5 me-2"> Saisir appro caisse</i></a>
+
     </div>
 @endsection
+
+@section('actions')
+<div class="btn-group">
+    <button type="button" class="btn btn-xs btn-outline-primary dropdown-toggle hstack gap-2" data-bs-toggle="dropdown" aria-expanded="false">
+       Actions
+       <span class="vr"></span>
+    </button>
+    <ul class="dropdown-menu">
+        <li><a id="btn-export" style="display: none;" href="#" class="dropdown-item"><i class="fs-5 pli-download"></i> Exporter</a></li>
+    </ul>
+ </div>
+ @endsection
 
 @section('content')
     <div class="card">
@@ -29,7 +41,7 @@
                         <div class="d-flex gap-2">
                             <div>
                                 <select name="caisse_id" class="form-control" id="caisse_id">
-                                    <option value="">SELECTIONNER UNE CAISSE ...</option>
+                                    <option value="0">SELECTIONNER UNE CAISSE ...</option>
                                     @foreach ($caisses as $caisse)
                                       <option value="{{ $caisse->id }}">{{ $caisse->name }}</option>
                                     @endforeach
@@ -47,19 +59,6 @@
 
                         </div>
                     </form>
-                </fieldset>
-            </div>
-            <div id="export-section" style="display:none">
-                <fieldset>
-                    <legend class="mb-0">Exportation</legend>
-                        <div class="d-flex gap-2">
-                            <div class="">
-                                <a id="btn-export" href="#" class="btn btn-danger"><i class="fs-5 pli-download"></i> Exporter</a>
-                            </div>
-                            <div class="">
-                                <a style="display: none" id="btn-validate" href="#" class="btn btn-success"><i class="fs-5 pli-pencil"></i> Valider</a>
-                            </div>
-                        </div>
                 </fieldset>
             </div>
         </div>
@@ -132,58 +131,45 @@
         </div>
     </div>
 
+    <div class="modal fade" id="vModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header justify-content-between">
+                    <h5 class="modal-title">Actions</h5>
+                    <div style="float: right">
+                        <button data-bs-dismiss="modal" id="btn-close" class="btn btn-sm" >x</button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-3">
+                        <a class="btn btn-sm btn-success btn-block" href="#" id="btn-validate">Valider</a>
+                    </div>
+                    <div class="mt-3">
+                        <a class="btn btn-sm btn-danger btn-block" id="btn-cancel" href="#">Annuler</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/ag-grid-community.min.js') }}"></script>
 
     <script>
-        const myTheme = agGrid.themeQuartz.withParams({
-            /* Low spacing = very compact */
-            spacing: 2,
-            /* Changes the color of the grid text */
-            foregroundColor: "rgb(14, 68, 145)",
-            /* Changes the color of the grid background */
-            backgroundColor: "rgb(241, 247, 255)",
-            /* Changes the header color of the top row */
-            headerBackgroundColor: "rgb(228, 237, 250)",
-            /* Changes the hover color of the row*/
-            rowHoverColor: "rgb(216, 226, 255)",
-            });
             const columnDefs = [
                         { field: "operation.date",headerName:'Date'},
-                        { field: "operation.type",headerName:'Type'},
+                        { field: "operation.name",headerName:'Numero'},
                         { field: "operation.journal",headerName:'Journal'},
                         { field: "compte"},
                         { field: "sens",headerName:"Sens"},
                         { field: "operation.dossier",headerName:'Dossier'},
-                        { field: "operation.demandeur",headerName:'Demandeur'},
+                        { field: "operation.agent",headerName:'Agent'},
                         { field: "operation.client",headerName:'Client'},
-                        { field: "operation.libelle",headerName:'Libelle'},
+                        { field: "operation.libelle",headerName:'Nature de la depense'},
 
-
-                        {
-                            headerName: "Montants",
-                            children: [
-                            { columnGroupShow: "closed", field: "montant", headerName:'Total' },
-                            { columnGroupShow: "open", field: "operation.mt_especes",headerName:'Montant en especes'},
-                            { columnGroupShow: "open", field: "operation.mt_cheque",headerName:'Montant en cheque'},
-                            { columnGroupShow: "open", field: "operation.peage",headerName:'Peage'},
-                            { columnGroupShow: "open", field: "operation.hotel",headerName:'Hotel'},
-                            { columnGroupShow: "open", field: "operation.prime",headerName:'Prime'},
-                            { columnGroupShow: "open", field: "operation.ration",headerName:'Ration'},
-                            { columnGroupShow: "open", field: "operation.bac",headerName:'Bac'},
-                            { columnGroupShow: "open", field: "operation.autre",headerName:'Autre'},
-                            ],
-                        },
-                        { field: "operation.departement_un",headerName:'Departement 1'},
-                        { field: "operation.departement_deux",headerName:'Departement 2'},
-
-                        { field: "operation.num_cheque",headerName:'Numero de cheque'},
-                        { field: "operation.chauffeur",headerName:'Chauffeur'},
-                        { field: "operation.camion",headerName:'Camion'},
-                        { field: "token",hide:true},
-                        { field: "type_id",hide:true},
-
-
+                        { field: "operation.montant",headerName:'Montant'},
+                        { field: "operation.status.name",headerName:'Statut'},
+                        { field: "operation.token",hide:true},
             ];
 
             let gridApi;
@@ -216,19 +202,22 @@
             rowSelection: {
                 mode: 'singleRow',
                 enableClickSelection: true,
-                isRowSelectable: (rowNode) => rowNode.data ? rowNode.data.sens === 'DEBIT' : false,
+                isRowSelectable: (rowNode) => (rowNode.data?rowNode.data.sens === 'DEBIT':false)&&(rowNode.data?rowNode.data.validated===false:true),
                 checkboxes: false,
             },
             rowClassRules: {
-                'type_1': params => (params.data.type_id === 1)&&(params.data.sens==='DEBIT'),
-                'type_2': params => params.data.type_id === 2&&(params.data.sens==='DEBIT'),
-                'type_3': params => params.data.type_id === 3&&(params.data.sens==='DEBIT'),
+                'clickable': params => params.data.sens==='DEBIT',
+                'validated': params => params.data.validated,
+                'clickable': params => params.data.cancelled,
             },
         };
 
         function rowSelected(e){
             console.log(e.data.token)
-           window.location.href = "/comptable/operation/"+e.data.token
+            $('#vModal').modal('show');
+            $('#btn-validate').prop('href',`/comptable/operation/validate/${e.data.operation.token}`)
+            $('#btn-cancel').prop('href',`/comptable/operation/cancel/${e.data.operation.token}`)
+           //window.location.href = "/comptable/operation/"+e.data.token
         }
 
         function onFilterTextBoxChanged() {
@@ -250,6 +239,10 @@
 
             });
 
+            $('.clickable').click(function(){
+                //$('#vModal').modal('show');
+            })
+
             $('#btn-show').click(function(e){
                 e.preventDefault();
                 var start = $('#start').val()
@@ -258,7 +251,8 @@
                 fetch('/comptable/data/operations?caisse_id='+caisse_id+'&start='+start+'&end='+end)
                     .then((response) => response.json())
                     .then((data) => gridApi.setGridOption("rowData", data));
-                $('#export-section').show();
+                //$('#export-section').show();
+                $('#btn-export').show();
             })
 
             $('#btn-export').click(function(e){
@@ -269,6 +263,18 @@
                 window.location.href = '/comptable/bluk/export/'+caisse_id+'/'+start+'/'+end;
             })
     </script>
+
+    <style>
+        .clickable{
+            background-color: rgb(239, 246, 251);
+        }
+        .validated{
+            background-color: rgb(242, 251, 239);
+        }
+        .cancelled{
+            background-color: rgb(251, 239, 239);
+        }
+    </style>
 
 @endsection
 

@@ -21,8 +21,9 @@ class TransactionResource extends JsonResource
             'compte'=>$this->compte,
             'sens'=>$this->credit?'CREDIT':'DEBIT',
             'montant'=>$this->montant,
-            'type_id'=>$this->operation?->type_id,
-            
+            'validated'=>$this->operation->validated_at?true:false,
+            'cancelled'=>$this->operation->cancelled_at?true:false,
+
         ];
     }
 }

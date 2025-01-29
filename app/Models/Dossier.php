@@ -14,6 +14,14 @@ class Dossier extends Model
         return $this->belongsTo('App\Models\Client','client_id');
     }
 
+    public function transactions(){
+        return $this->hasMany('App\Models\Transaction','dossier_id');
+    }
+
+    public function operations(){
+        return $this->hasMany('App\Models\Operation','dossier_id');
+    }
+
     public function getStatusAttribute(){
         $data = [
             'name'=>'ouvert',
@@ -22,7 +30,7 @@ class Dossier extends Model
         if($this->closed_at){
             $data = [
                 'name'=>'fermé',
-                'color'=>'success'
+                'color'=>'danger'
             ];
         }
 

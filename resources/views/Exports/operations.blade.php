@@ -39,7 +39,7 @@
                         @foreach($transactions as $item)
                         <tr>
                             <td>{{ $item->compte }}</td>
-                            <td></td>
+                            <td>{{ $item->dossier?->client?->compte }}</td>
                             <td>{{ $item->operation->caisse?->name }}</td>
                             <td>{{ $item->operation->name }}</td>
                             <td>{{ $loop->index + 1 }}</td>
@@ -49,7 +49,7 @@
                             <td>{{ $item->credit?'':number_format($item->montant,0,',','.') }}</td>
 
                             <td></td>
-                            <td>{{ $item->operation->dossier }}</td>
+                            <td>{{ $item->operation->dossier?->code }}</td>
                         </tr>
                     @endforeach
                     </tbody>

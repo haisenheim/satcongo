@@ -42,7 +42,7 @@ class DashboardController extends Controller
 	}
 
     public function getOperations(){
-        $transactions = Transaction::orderBy('created_at','DESC')->where('user_id',auth()->user()->id)->whereNull('validated_at')->get();
+        $transactions = Transaction::orderBy('created_at','DESC')->where('user_id',auth()->user()->id)->whereNull('validated_at')->where('created_at', '>=', Carbon::today())->get();
         return response()->json(TransactionResource::collection($transactions));
     }
 
