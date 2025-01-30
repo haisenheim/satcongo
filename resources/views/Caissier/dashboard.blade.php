@@ -35,17 +35,6 @@
         <div class="card-body">
             <div id="myGrid" style="height: 480px"></div>
         </div>
-        <table class="table">
-           <tbody>
-                <tr>
-                    <th>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto impedit maxime cum, maiores quidem aliquam perferendis non? Quia doloremque impedit natus quis rem, hic commodi animi vero temporibus nam incidunt!</th>
-                    <th>Odit rem accusamus minus laborum tempora doloribus voluptates harum voluptas quis quam, eveniet magnam velit. Doloribus in dolores eum, sit amet iste animi vero exercitationem? Quos perferendis eaque quam nesciunt!</th>
-                    <th>Quibusdam odio nisi consequuntur alias quis corporis nemo nulla necessitatibus commodi suscipit, neque quisquam laborum, praesentium sit esse, voluptatem excepturi. Ullam voluptates, laborum excepturi velit quam dignissimos fuga repellendus aliquid.</th>
-                    <th>Commodi, aspernatur quam molestiae eligendi dignissimos quia ipsum quos rerum, ex eveniet cum impedit repellendus. Excepturi iure architecto dignissimos animi blanditiis! Corrupti laudantium vero, ea error blanditiis voluptate quae ipsam?</th>
-                    <th>Aliquam nulla qui sint ipsam tempora nesciunt ullam nostrum veniam ducimus ad delectus nihil, aut ratione aperiam. Ipsa debitis amet libero beatae a sit aperiam hic enim. Aperiam, exercitationem aut!</th>
-                </tr>
-            </tbody>
-        </table>
     </div>
 
     <div class="modal fade" id="editModal">
