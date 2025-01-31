@@ -62,7 +62,7 @@
                 <div class="modal-header justify-content-between">
                     <h5 class="modal-title">Nouveau ordre de paiement</h5>
                     <div style="float: right">
-                        <button data-bs-dismiss="modal" id="btn-close" class="btn btn-sm" >x</button>
+                        <button data-bs-dismiss="modal" id="btn-close" class="btn btn-sm btn-danger close" >x</button>
                     </div>
                 </div>
                 <div class="modal-body">
@@ -119,7 +119,7 @@
                         </div>
 
                         <div class="mt-2">
-                            <button type="submit" id="btn-save" class="btn btn-primary"><i class="fs-5 pli-save"></i> ENREGISTRER</button>
+                            <button type="submit" id="btn-save" data-bs-dismiss="modal" class="btn btn-primary"><i class="fs-5 pli-save"></i> ENREGISTRER</button>
                         </div>
                     </form>
                 </div>
@@ -130,13 +130,15 @@
 
     <script>
 
-        $('.mt').keyup(function(){
-            var somme = 0;
-            $('.mt').each(function(){
-                somme = somme + parseInt($(this).val())
-            })
-            $('#mt_total').val(somme);
-        })
+        window.addEventListener( "pageshow", function ( event ) {
+        var historyTraversal = event.persisted || 
+                                ( typeof window.performance != "undefined" && 
+                                    window.performance.navigation.type === 2 );
+        if ( historyTraversal ) {
+            // Handle page restore.
+            window.location.reload();
+        }
+        });
 
 
         $('#_compte').change(function(){
@@ -181,7 +183,7 @@
                 });
             })
 
-        $('.modal-header .btn').click(function(){
+        $('.close').click(function(){
             window.location.reload();
         })
 
