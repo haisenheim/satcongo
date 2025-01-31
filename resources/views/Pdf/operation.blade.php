@@ -45,12 +45,11 @@
             /** Extra personal styles **/
         }
         main{
-            font-size: 12px;
+            font-size: 11px;
         }
         body {
             font-family: Arial, sans-serif;
-
-            line-height: 1.6;
+            line-height: 1.2;
             position: relative;
         }
         .fw-bold{
@@ -143,31 +142,32 @@
                     <tr style="width: 100%;">
                         <td style="width: 180px;">
                             <p style="margin-bottom: 0; font-size:10px;">SIGN. CHEF DEPARTEMENT</p>
-                            <div style="width: 160px; height: 70px; border: 1px #777 solid;">
+                            <div style="width: 160px; height: 60px; border: 1px #777 solid;">
 
                             </div>
                         </td>
                         <td style="width: 180px;">
                             <p style="margin-bottom: 0; font-size:10px;">SIGN. SERV. CONTROLE DEPENSE</p>
-                            <div style="width: 160px; height: 70px; border: 1px #777 solid;">
+                            <div style="width: 160px; height: 60px; border: 1px #777 solid;">
 
                             </div>
                         </td>
                         <td style="width: 180px;">
                             <p style="margin-bottom: 0; font-size:10px;">SIGN. DG</p>
-                            <div style="width: 160px; height: 70px; border: 1px #777 solid;">
+                            <div style="width: 160px; height: 60px; border: 1px #777 solid;">
 
                             </div>
                         </td>
                         <td style="width: 180px;">
                             <p style="margin-bottom: 0; font-size:10px;">NOM ET SIGN. RECEPTEUR</p>
-                            <div style="width: 160px; height: 70px; border: 1px #777 solid;">
+                            <div style="width: 160px; height: 60px; border: 1px #777 solid;">
 
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <p style="font-size:9px;">Saisi le {{ $item->created_at->format('d/m/Y à H:i') }} par {{ $item->user?->name }}</p>
         </div>
         <div style="padding-top:0; border:1px #000">
             <img style="height: 60px; width:120px; margin: 1px auto;" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/satcongo.jpeg'))) }}" class="image img-thumbnail" height="80px"/>
@@ -175,7 +175,7 @@
     </main>
 
 
-    <main style="border-top:#000 dotted 1px; padding-top:10px;">
+    <main style="border-top:#000 dotted 1px; padding-top:10px; margin-top:20px;">
         <div class="header">
             <div style="text-align:center; width: 400px; margin: 1px auto;">
                 <h5 style="margin-bottom: 0;">PIECE DE DECAISSEMENT</h5>
@@ -257,6 +257,7 @@
                     </tr>
                 </tbody>
             </table>
+            <p style="font-size:10px;">Saisi le {{ $item->created_at->format('d/m/Y à H:i') }} par {{ $item->user?->name }}</p>
         </div>
 
         <div style="padding-top:0px; border:1px #000">
