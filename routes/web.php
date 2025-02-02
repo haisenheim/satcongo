@@ -84,7 +84,8 @@ Route::namespace('App\Http\Controllers\Caissier')
         Route::post('operation/update','DashboardController@updateOperation')->name('operation.update');
         Route::get('caisse/libelles','DashboardController@getLibelles')->name('agence.libelles');
         Route::get('create','DashboardController@create')->name('create');
-        Route::post('store1','DashboardController@store')->name('store');
+        Route::post('store','DashboardController@store')->name('store');
+        Route::get('store','DashboardController@get')->name('store.get');
         Route::post('store2','DashboardController@store2')->name('store2');
         Route::post('store3','DashboardController@store3')->name('store3');
         Route::get('operation/delete/{token}','DashboardController@delete')->name('operation.delele');

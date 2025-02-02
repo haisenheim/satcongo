@@ -90,6 +90,10 @@ class DashboardController extends Controller
         }
     }
 
+    public function get(){
+        return back();
+    }
+
 
     public function delete($token){
         $item = Operation::where('token',$token)->first();

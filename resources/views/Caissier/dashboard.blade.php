@@ -60,7 +60,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header justify-content-between">
-                    <h5 class="modal-title">Nouveau ordre de paiement</h5>
+                    <h5 class="modal-title">Nouvel ordre de paiement</h5>
                     <div style="float: right">
                         <button data-bs-dismiss="modal" id="btn-close" class="btn btn-sm btn-danger close" >x</button>
                     </div>
@@ -274,9 +274,9 @@
     };
 
     function rowSelected(e){
-            console.log(e.data.token)
-            $('#vModal').modal('show');
-            $('#btn-delete').prop('href',`/caissier/operation/delete/${e.data.operation.token}`)
+           // console.log(e.data.token)
+           // $('#vModal').modal('show');
+          //  $('#btn-delete').prop('href',`/caissier/operation/delete/${e.data.operation.token}`)
             
         }
 
