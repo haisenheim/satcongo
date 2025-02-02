@@ -51,9 +51,6 @@
                        <a href="{{ route('admin.caisses.index') }}" class="nav-link {{ $active==702?'active':'' }}">Caisses</a>
                    </li>
                    <li class="nav-item">
-                    <a href="{{ route('admin.tiers.index') }}" class="nav-link {{ $active==705?'active':'' }}">Tiers</a>
-                </li>
-                   <li class="nav-item">
                        <a href="{{ route('admin.comptes.index') }}" class="nav-link {{ $active==706?'active':'' }}">Comptes</a>
                    </li>
                 </ul>
