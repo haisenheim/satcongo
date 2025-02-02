@@ -91,6 +91,17 @@ class DashboardController extends Controller
     }
 
 
+    public function delete($token){
+        $item = Operation::where('token',$token)->first();
+        //dd($item);
+        Operation::where('token',$token)->delete();
+        Transaction::where('operation_id',$item->id)->delete();
+        Session::flash('error','Operation supprimée!');
+        return redirect()->back();
+        //$deleted = DB::table('users')->where('votes', '>', 100)->delete();
+    }
+
+
 
     public function create(){
         $cus = CaisseUser::where('user_id',auth()->user()->id)->get();

@@ -127,12 +127,24 @@
         </div>
     </div>
 
+    <div class="modal fade" id="vModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="mt-1 text-center">
+                        <a class="btn btn-sm btn-danger btn-block" href="#" id="btn-delete">Supprimer cette operation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
 
         window.addEventListener( "pageshow", function ( event ) {
-        var historyTraversal = event.persisted || 
-                                ( typeof window.performance != "undefined" && 
+        var historyTraversal = event.persisted ||
+                                ( typeof window.performance != "undefined" &&
                                     window.performance.navigation.type === 2 );
         if ( historyTraversal ) {
             // Handle page restore.
@@ -256,15 +268,17 @@
         rowSelection: {
             mode: 'singleRow',
             enableClickSelection: true,
-            isRowSelectable: (rowNode) => rowNode.data ? rowNode.data.sens === 'DEBIT' : false,
+            isRowSelectable: (rowNode) => (rowNode.data?rowNode.data.sens ==='DEBIT':false)&&(rowNode.data?rowNode.data.validated===false:true),
             checkboxes: false,
         },
     };
 
     function rowSelected(e){
-        //console.log(e.data.token)
-       //window.location.href = "/caissier/operation/"+e.data.token
-    }
+            console.log(e.data.token)
+            $('#vModal').modal('show');
+            $('#btn-delete').prop('href',`/caissier/operation/delete/${e.data.operation.token}`)
+            
+        }
 
     function onFilterTextBoxChanged() {
         gridApi.setGridOption(

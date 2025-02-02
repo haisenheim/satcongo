@@ -87,7 +87,7 @@ Route::namespace('App\Http\Controllers\Caissier')
         Route::post('store1','DashboardController@store')->name('store');
         Route::post('store2','DashboardController@store2')->name('store2');
         Route::post('store3','DashboardController@store3')->name('store3');
-
+        Route::get('operation/delete/{token}','DashboardController@delete')->name('operation.delele');
         Route::get('data/operations','DashboardController@getOperations')->name('operations.all');
     });
 
@@ -132,4 +132,6 @@ Route::namespace('App\Http\Controllers\Dcomptable')
 
 Route::get('/home',[HomeController::class,'index'])->name('home')->middleware('auth');
 Route::get('/profile',[HomeController::class,'profile'])->name('profile')->middleware('auth');
+//Route::get('/profile',[HomeController::class,'profile'])->name('profile')->middleware('auth');
+Route::post('/profile',[HomeController::class,'storeProfile'])->name('profile.store')->middleware('auth');
 Route::post('/logout',[HomeController::class,'logout'])->name('logout')->middleware('auth');

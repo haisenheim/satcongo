@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\Dossier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class DossierController extends Controller
 {
@@ -47,9 +48,18 @@ class DossierController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $validator = Validator::make($request->all(), [
+            'code' => 'required|unique:dossiers|max:25',
+        ]);
+ 
+        if ($validator->fails()) {
+            Session::flash('error','Ce code de dossier existe déja!');
+            return redirect()->back();
+        }
         $data['user_id'] = auth()->user()->id;
         $data['site_id'] = $this->site_id;
         $data['token'] = sha1(time());
+        Session::flash('success','Nouveau dossier créé avec succès!');
         Dossier::create($data);
         return back();
     }
