@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Compte;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CompteController extends Controller
 {
@@ -23,7 +24,7 @@ class CompteController extends Controller
 
     public function delete($token){
         
-        Compte::where('token',$token)->delete();
+        Compte::where('id',$token)->delete();
         Session::flash('error','Compte  supprimé!');
         return redirect()->back();
     }

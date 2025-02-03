@@ -40,7 +40,7 @@
                             <td>{{ $item->code }}</td>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->credit?'Credit':'Debit' }}</td>
-                            <td><a class="btn btn-xs btn-danger" href="{{ route('admin.compte.delete',$item->token) }}">supprimer</a></td>
+                            <td><a class="btn btn-xs btn-danger" href="{{ route('admin.compte.delete',$item->id) }}">supprimer</a></td>
                         </tr>
                     @endforeach
                 </tbody>
