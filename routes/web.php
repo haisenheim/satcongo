@@ -58,6 +58,7 @@ Route::namespace('App\Http\Controllers\Admin')
         Route::get('caisse/disable/{token}','CaisseController@disable')->name('caisse.disable');
         Route::resource('libelles','LibelleController');
         Route::resource('comptes','CompteController');
+        Route::get('compte/delete/{token}','CompteController@delete')->name('compte.delete');
         Route::resource('agences','AgenceController');
         Route::post('agence/set/libelle','AgenceController@setLibelle')->name('agence.set.libelle');
         Route::get('agence/enable/{token}','AgenceController@enable')->name('agence.enable');

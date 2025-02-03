@@ -21,6 +21,14 @@ class CompteController extends Controller
     }
 
 
+    public function delete($token){
+        
+        Compte::where('token',$token)->delete();
+        Session::flash('error','Compte  supprimé!');
+        return redirect()->back();
+    }
+
+
 
 
 
