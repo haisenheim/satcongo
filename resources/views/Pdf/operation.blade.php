@@ -195,6 +195,9 @@
                     </th>
                     <th>
                         <span>DOSSIER:</span> <span class="fw-bold">{{ $item->dossier?->code }}</span>
+                        <div>
+                            <span style="font-size:10px; font-weight:600">{{ $item->transactions->where('credit',0)->first()->compte }}</span> - <span style="font-size:10px; font-weight:600">{{ $item->caisse?->name }}</span>
+                        </div>
                     </th>
                 </tr>
             </tbody>
