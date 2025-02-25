@@ -135,6 +135,10 @@
         }
     </style>
 
+    <script type="module">
+        import Autocomplete from "{{ asset('js/autocomplete.js') }}";
+    </script>
+
     <script>
         $('#tier_id').change(function(){
             var _compte = $('#tier_id option:selected').data('compte');

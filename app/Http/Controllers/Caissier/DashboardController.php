@@ -118,12 +118,13 @@ class DashboardController extends Controller
 
     public function store(Request $request){
         //dd(request()->all());
-        $data = $request->except('compte_id');
+        $data = $request->except('compte_id','dossier_id');
         $montant = $data['montant'];
         $lettre = NombreHelper::convertirEnLettres($montant);
-
+        
         $user = auth()->user();
-        $dossier = Dossier::find(request()->dossier_id);
+        $dossier = Dossier::where('code',request()->dossier_id)->first();
+        $data['dossier_id'] = $dossier->id;
         $caisse = Caisse::find(request()->caisse_id);
         $data['user_id'] = $user->id;
         $data['client_id'] = $dossier->client_id;

@@ -87,14 +87,14 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="w-25">
+                            <div class="flex-fill">
                                 <label class="text-blue fs-6 fw-bolder" for="">&numero; DU DOSSIER</label>
-                                <select name="dossier_id" required id="" class="form-control">
-                                    <option value="">Selectionner le dossier ...</option>
+                                <input type="text" class="form-control" name="dossier_id" id="dossier_id" data-datalist="dossiers" placeholder="Rechercher un dossier ..." />
+                                <datalist id="dossiers">
                                     @foreach ($dossiers as $dossier)
                                         <option value="{{ $dossier->id }}">{{ $dossier->code }}</option>
                                     @endforeach
-                                </select>
+                                </datalist>
                             </div>
                         </div>
                         <div class="mt-3 d-flex gap-1">
@@ -222,6 +222,13 @@
 
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/ag-grid-community.min.js') }}"></script>
+<script type="module">
+    import Autocomplete from "{{ asset('js/autocomplete.js') }}";
+
+    new Autocomplete(document.getElementById("dossier_id"), {
+        //valueField: "id",
+    });
+</script>
 
 <script>;
         const columnDefs = [
