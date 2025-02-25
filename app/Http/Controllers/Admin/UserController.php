@@ -99,6 +99,14 @@ class UserController extends Controller
         return back();
     }
 
+    public function  setPassword(){
+        $user = User::find(request()->user_id);
+        $user->password = bcrypt(request()->password);
+        $user->save();
+        Session::flash('success','Mot de passe réinitialisé avec succès!');
+        return back();
+    }
+
     /**
      * Display the specified resource.
      *

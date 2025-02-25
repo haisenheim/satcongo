@@ -35,6 +35,7 @@ Route::namespace('App\Http\Controllers\Admin')
     ->group(function(){
         Route::get('dashboard','DashboardController@index')->name('dashboard');
         Route::resource('users','UserController');
+        Route::post('user/password','UserController@setPassword')->name('user.password');
         Route::get('user/enable/{token}','UserController@enable')->name('user.enable');
         Route::get('user/disable/{token}','UserController@disable')->name('user.disable');
         Route::resource('caisses','CaisseController');

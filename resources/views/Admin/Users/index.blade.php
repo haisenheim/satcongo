@@ -53,6 +53,7 @@
                                        <span class="vr"></span>
                                     </button>
                                     <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item btn-user" data-id="{{ $item->id }}" href="#" data-bs-target="#passwordModal" data-bs-toggle="modal">Reinitialiser le mot de passe</a></li>
                                         @if($item->active)
                                             <li><a class="dropdown-item" href="{{ route('admin.user.disable',$item->token) }}">Verrouiller</a></li>
                                         @else
@@ -67,6 +68,7 @@
             </table>
         </div>
     </div>
+
     <div class="modal fade" id="addModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -93,7 +95,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                
+
                                 <div class="mt-2">
                                     <label for="">Telephone</label>
                                     <input required type="text" name="phone" class="form-control">
@@ -116,6 +118,34 @@
         </div>
     </div>
 
+    <div class="modal fade" id="passwordModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header justify-content-between">
+                    <h5 class="modal-title">Editer le mot de passe</h5>
+                    <div style="float: right">
+                        <button data-bs-dismiss="modal" class="btn btn-sm" >x</button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form enctype="" action="{{ route('admin.user.password') }}" method="post">
+                        @csrf
+                            <input type="hidden" name="user_id" id="user_id">
+                            <div class="">
+                                <div class="mt-2">
+                                    <label for="">Nouveau mot de passe</label>
+                                    <input required type="password" name="password" class="form-control">
+                                </div>
+                            </div>
+                        <div class="mt-5">
+                            <button type="submit" class="btn-primary btn">ENREGISTRER</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <script>
@@ -124,7 +154,7 @@
             $('.btn-user').click(function(){
                 var _id = $(this).data('id');
                 $('#user_id').val(_id);
-                $('#_user_id').val(_id);
+                //$('#_user_id').val(_id);
             });
 
             $('#ville_id').change(function(){
