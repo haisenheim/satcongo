@@ -566,6 +566,7 @@
             headerHeight: '30px',
             headerTextColor: 'white',
         }),
+        
         rowData: null,
         columnDefs: columnDefs,
         defaultColDef: {

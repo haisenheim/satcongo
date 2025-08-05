@@ -230,7 +230,7 @@
     });
 </script>
 
-<script>;
+<script>
         const columnDefs = [
                     { field: "operation.date",headerName:'Date'},
                     { field: "operation.journal",headerName:'Journal'},
@@ -284,7 +284,7 @@
            // console.log(e.data.token)
            // $('#vModal').modal('show');
           //  $('#btn-delete').prop('href',`/caissier/operation/delete/${e.data.operation.token}`)
-            
+
         }
 
     function onFilterTextBoxChanged() {
